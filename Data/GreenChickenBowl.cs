@@ -34,7 +34,7 @@
         /// <summary>
         /// Whether this bowl contains fajita veggies
         /// </summary>
-        public bool Veggies { get; set; } = false;
+        public bool Veggies { get; set; } = true;
 
         /// <summary>
         /// Whether this bowl contains queso
