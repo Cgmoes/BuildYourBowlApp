@@ -37,7 +37,7 @@ namespace BuildYourBowl.Data
         public decimal Price { get; } = 3.75m;
 
         /// <summary>
-        /// The total amount of calories in this side
+        /// Total amount of calories in this side
         /// </summary>
         public uint Calories 
         {
