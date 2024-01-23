@@ -29,7 +29,7 @@ namespace BuildYourBowl.Data
         /// <summary>
         /// Whether this side contains Cilantro
         /// </summary>
-        public bool Cilantro { get; } = false;
+        public bool Cilantro { get; } = true;
 
         /// <summary>
         /// The price for this side
@@ -62,7 +62,7 @@ namespace BuildYourBowl.Data
                 List<string> instructions = new ();
 
                 if(!CotijaCheese) instructions.Add("Hold Cotija Cheese");
-                if (Cilantro) instructions.Add("Add Cilantro");
+                if (Cilantro) instructions.Add("Hold Cilantro");
 
                 return instructions;
             }
