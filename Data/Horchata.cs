@@ -37,7 +37,7 @@ namespace BuildYourBowl.Data
         public uint Calories { get; } = 280;
 
         /// <summary>
-        /// The information for preparation of this drink
+        /// The information for the preparation of this drink
         /// </summary>
         public IEnumerable<string> PreparationInformation 
         {

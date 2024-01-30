@@ -62,7 +62,7 @@ namespace BuildYourBowl.Data
                 List<string> instructions = new ();
 
                 if(!CotijaCheese) instructions.Add("Hold Cotija Cheese");
-                if (Cilantro) instructions.Add("Hold Cilantro");
+                if (!Cilantro) instructions.Add("Hold Cilantro");
 
                 return instructions;
             }
