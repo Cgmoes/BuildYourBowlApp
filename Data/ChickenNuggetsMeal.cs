@@ -29,13 +29,13 @@ namespace BuildYourBowl.Data
         /// <summary>
         /// The number of nuggets that come in the meal
         /// </summary>
-        public uint Count 
+        public uint Count
         {
-            get 
+            get
             {
                 return _countBacking;
             }
-            set 
+            set
             {
                 if (value >= 5 && value <= 8) _countBacking = value;
             }
@@ -49,13 +49,13 @@ namespace BuildYourBowl.Data
         /// <summary>
         /// Choice of drink for the meal
         /// </summary>
-        public Milk DrinkChoice 
+        public Milk DrinkChoice
         {
-            get 
+            get
             {
                 return _drinkChoiceBacking;
             }
-            set 
+            set
             {
                 _drinkChoiceBacking = value;
             }
@@ -64,8 +64,11 @@ namespace BuildYourBowl.Data
         /// <summary>
         /// backing field for side choice property
         /// </summary>
-        private Fries _sideChoiceBacking = new Fries();
-   
+        private Fries _sideChoiceBacking = new Fries()
+        {
+            FrySize = Size.Kids
+        };
+
         /// <summary>
         /// Choice of side for the meal
         /// </summary>

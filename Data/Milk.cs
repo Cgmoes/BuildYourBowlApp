@@ -29,12 +29,24 @@ namespace BuildYourBowl.Data
         /// <summary>
         /// Property for the size of fries
         /// </summary>
-        public Size MilkeSize { get; } = Size.Kids;
+        public Size MilkSize { get; } = Size.Kids;
 
         /// <summary>
         /// The price of this drink
         /// </summary>
-        public decimal Price { get; } = 2.50m;
+        public decimal Price
+        {
+            get
+            {
+                decimal price = 2.50m;
+
+                if (MilkSize == Size.Kids) price -= 1m;
+                if (MilkSize == Size.Small) price -= 0.50m;
+                if (MilkSize == Size.Large) price += 0.75m;
+
+                return price;
+            }
+        }
 
         /// <summary>
         /// The total amount of calories in this drink
@@ -43,11 +55,15 @@ namespace BuildYourBowl.Data
         {
             get 
             {
-                uint cals = 200;
+                double cals = 200;
 
                 if (Chocolate) cals = 270;
 
-                return cals;
+                if (MilkSize == Size.Kids) cals *= .6;
+                if (MilkSize == Size.Small) cals *= .75;
+                if (MilkSize == Size.Large) cals *= 1.5;
+
+                return (uint)cals;
             }
         }
 
@@ -61,7 +77,7 @@ namespace BuildYourBowl.Data
                 List<string> instructions = new ();
 
                 if (Chocolate) instructions.Add("Chocolate");
-                instructions.Add($"{MilkeSize}");
+                instructions.Add($"{MilkSize}");
 
                 return instructions;
             }
