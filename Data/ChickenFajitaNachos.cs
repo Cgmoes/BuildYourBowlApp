@@ -37,9 +37,9 @@ namespace BuildYourBowl.Data
         public bool Queso { get; set; } = true;
 
         /// <summary>
-        /// Whether this bowl contains medium salsa
+        /// Property for the salsa type of this bowl
         /// </summary>
-        public bool MediumSalsa { get; set; } = true;
+        public Salsa SalsaType { get; set; } = Salsa.Medium;
 
         /// <summary>
         /// Whether this bowl contains Guacamole
@@ -79,7 +79,7 @@ namespace BuildYourBowl.Data
                 if (!Queso) cals -= 110;
                 if (!Veggies) cals -= 20;
                 if (!SourCream) cals -= 100;
-                if (!MediumSalsa) cals -= 20;
+                if (SalsaType == Salsa.None) cals -= 20;
                 if (!Guacamole) cals -= 150;
 
                 return cals;
@@ -99,7 +99,14 @@ namespace BuildYourBowl.Data
                 if (!Queso) instructions.Add("Hold Queso");
                 if (!Veggies) instructions.Add("Hold Veggies");
                 if (!SourCream) instructions.Add("Hold Sour Cream");
-                if (!MediumSalsa) instructions.Add("Hold Medium Salsa");
+                if (SalsaType == Salsa.None)
+                {
+                    instructions.Add("Hold Salsa");
+                }
+                else if (SalsaType != Salsa.Medium)
+                {
+                    instructions.Add($"Swap {SalsaType} Salsa");
+                }
                 if (Guacamole) instructions.Add("Add Guacamole");
 
                 return instructions;

@@ -32,9 +32,26 @@ namespace BuildYourBowl.Data
         public bool Cilantro { get; } = true;
 
         /// <summary>
+        /// Property for the size of corn
+        /// </summary>
+        public Size CornSize { get; set; } = Size.Medium;
+
+        /// <summary>
         /// The price for this side
         /// </summary>
-        public decimal Price { get; } = 4.50m;
+        public decimal Price
+        {
+            get
+            {
+                decimal price = 4.50m;
+
+                if (CornSize == Size.Kids) price -= 1.25m;
+                if (CornSize == Size.Small) price -= 0.75m;
+                if (CornSize == Size.Large) price += 1m;
+
+                return price;
+            }
+        }
 
         /// <summary>
         /// The total amount of calories for this side
@@ -43,12 +60,16 @@ namespace BuildYourBowl.Data
         {
             get 
             {
-                uint cals = 300;
+                double cals = 300;
 
                 if (!CotijaCheese) cals -= 80;
                 if (!Cilantro) cals -= 5;
 
-                return cals;
+                if (CornSize == Size.Kids) cals *= .6;
+                if (CornSize == Size.Small) cals *= .75;
+                if (CornSize == Size.Large) cals *= 1.5;
+
+                return (uint)cals;
             }
         }
 
@@ -63,6 +84,7 @@ namespace BuildYourBowl.Data
 
                 if(!CotijaCheese) instructions.Add("Hold Cotija Cheese");
                 if (!Cilantro) instructions.Add("Hold Cilantro");
+                instructions.Add($"{CornSize}");
 
                 return instructions;
             }

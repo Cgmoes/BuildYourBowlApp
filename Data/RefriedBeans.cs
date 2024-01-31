@@ -32,9 +32,26 @@ namespace BuildYourBowl.Data
         public bool CheddarCheese { get; set; } = true;
 
         /// <summary>
+        /// Property for the size of Beans
+        /// </summary>
+        public Size BeansSize { get; set; } = Size.Medium;
+
+        /// <summary>
         /// The price of this side
         /// </summary>
-        public decimal Price { get; } = 3.75m;
+        public decimal Price 
+        {
+            get
+            {
+                decimal price = 3.75m;
+
+                if (BeansSize == Size.Kids) price -= 1m;
+                if (BeansSize == Size.Small) price -= 0.50m;
+                if (BeansSize == Size.Large) price += 0.75m;
+
+                return price;
+            }
+        }
 
         /// <summary>
         /// Total amount of calories in this side
@@ -43,12 +60,16 @@ namespace BuildYourBowl.Data
         {
             get 
             {
-                uint cals = 300;
+                double cals = 300;
 
                 if (!CheddarCheese) cals -= 90;
                 if (!Onions) cals -= 5;
 
-                return cals;
+                if (BeansSize == Size.Kids) cals *= .6;
+                if (BeansSize == Size.Small) cals *= .75;
+                if (BeansSize == Size.Large) cals *= 1.5;
+
+                return (uint)cals;
             }
         }
 
@@ -63,6 +84,7 @@ namespace BuildYourBowl.Data
 
                 if (!Onions) instructions.Add("Hold Onions");
                 if (CheddarCheese) instructions.Add("Hold Cheddar Cheese");
+                instructions.Add($"{BeansSize}");
 
                 return instructions;
             }

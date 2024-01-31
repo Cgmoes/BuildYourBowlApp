@@ -27,6 +27,11 @@ namespace BuildYourBowl.Data
         public bool Chocolate { get; set; } = false;
 
         /// <summary>
+        /// Property for the size of fries
+        /// </summary>
+        public Size MilkeSize { get; } = Size.Kids;
+
+        /// <summary>
         /// The price of this drink
         /// </summary>
         public decimal Price { get; } = 2.50m;
@@ -56,6 +61,7 @@ namespace BuildYourBowl.Data
                 List<string> instructions = new ();
 
                 if (Chocolate) instructions.Add("Chocolate");
+                instructions.Add($"{MilkeSize}");
 
                 return instructions;
             }

@@ -42,9 +42,9 @@
         public bool Queso { get; set; } = true;
 
         /// <summary>
-        /// Whether this bowl contains green salsa
+        /// Property for the salsa type of this bowl
         /// </summary>
-        public bool GreenSalsa { get; set; } = true;
+        public Salsa SalsaType { get; set; } = Salsa.Green;
 
         /// <summary>
         /// Whether this bowl contains guacamole
@@ -76,7 +76,7 @@
                 if (!BlackBeans) cals -= 130;
                 if (!Queso) cals -= 110;
                 if (!Veggies) cals -= 20;
-                if (!GreenSalsa) cals -= 20;
+                if (SalsaType == Salsa.None) cals -= 20;
                 if (!Guacamole) cals -= 150;
 
                 return cals;
@@ -98,7 +98,14 @@
                 if (!BlackBeans) instructions.Add("Hold Black Beans");
                 if (!Queso) instructions.Add("Hold Queso");
                 if (!Veggies) instructions.Add("Hold Veggies");
-                if (!GreenSalsa) instructions.Add("Hold Green Salsa");
+                if (SalsaType == Salsa.None)
+                {
+                    instructions.Add("Hold Salsa");
+                }
+                else if (SalsaType != Salsa.Green)
+                {
+                    instructions.Add($"Swap {SalsaType} Salsa");
+                }
                 if (!Guacamole) instructions.Add("Hold Guacamole");
 
                 return instructions;

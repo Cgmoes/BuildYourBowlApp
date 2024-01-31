@@ -35,10 +35,11 @@ namespace BuildYourBowl.Data
         /// Whether this bowl contains Queso
         /// </summary>
         public bool Queso { get; set; } = true;
+
         /// <summary>
-        /// Whether this bowl contains hot salsa
+        /// Property for the salsa type of this bowl
         /// </summary>
-        public bool HotSalsa { get; set; } = true;
+        public Salsa SalsaType { get; set; } = Salsa.Hot;
 
         /// <summary>
         /// Whether this bowl contains Guacamole
@@ -78,7 +79,7 @@ namespace BuildYourBowl.Data
                 if (!Queso) cals -= 110;
                 if (!Veggies) cals -= 20;
                 if (!SourCream) cals -= 100;
-                if (!HotSalsa) cals -= 20;
+                if (SalsaType == Salsa.None) cals -= 20;
                 if (!Guacamole) cals -= 150;
 
                 return cals;
@@ -98,7 +99,14 @@ namespace BuildYourBowl.Data
                 if (!Queso) instructions.Add("Hold Queso");
                 if (Veggies) instructions.Add("Add Veggies");
                 if (!SourCream) instructions.Add("Hold Sour Cream");
-                if (!HotSalsa) instructions.Add("Hold Hot Salse");
+                if (SalsaType == Salsa.None)
+                {
+                    instructions.Add("Hold Salsa");
+                }
+                else if (SalsaType != Salsa.Hot)
+                {
+                    instructions.Add($"Swap {SalsaType} Salsa");
+                }
                 if (Guacamole) instructions.Add("Add Guacamole");
 
                 return instructions;
