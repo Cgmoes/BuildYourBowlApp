@@ -83,5 +83,56 @@ namespace BuildYourBowl.Data
                 _sideChoiceBacking = value;
             }
         }
+
+        /// <summary>
+        /// The price of this meal
+        /// </summary>
+        public decimal Price 
+        {
+            get 
+            {
+                decimal totalPrice = 5.99m;
+                if (Count > 5) 
+                {
+                    uint numNugs = Count - 5;
+                    totalPrice += numNugs * .75m;
+                }
+                if (SideChoice.FrySize == Size.Small) totalPrice += 0.50m;
+                if (SideChoice.FrySize == Size.Medium) totalPrice += 1.00m;
+                if (SideChoice.FrySize == Size.Large) totalPrice += 1.50m;
+
+                return totalPrice;
+            }
+        }
+
+        /// <summary>
+        /// The total number of calories in this meal
+        /// </summary>
+        public uint Calories 
+        {
+            get 
+            {
+                uint cals = Count * 60;
+                cals += SideChoice.Calories;
+                cals += DrinkChoice.Calories;
+
+                return cals;
+            }    
+        }
+
+        /// <summary>
+        /// The information for preparation of this meal
+        /// </summary>
+        public IEnumerable<string> PreparationInformation 
+        {
+            get 
+            {
+                List<string> instructions = new List<string>();
+
+                if (Count != 5) instructions.Add($"{Count} Nuggets");
+
+                return instructions;
+            }
+        }
     }
 }
