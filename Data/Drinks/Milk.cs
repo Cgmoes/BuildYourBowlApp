@@ -51,11 +51,11 @@ namespace BuildYourBowl.Data
         {
             get 
             {
-                double cals = 200;
+                uint cals = 200;
 
                 if (Chocolate) cals += 70;
 
-                return (uint)cals;
+                return cals;
             }
         }
 

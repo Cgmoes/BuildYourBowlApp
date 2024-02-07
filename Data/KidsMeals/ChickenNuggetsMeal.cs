@@ -44,7 +44,7 @@ namespace BuildYourBowl.Data
         /// <summary>
         /// backing field for drink choice property
         /// </summary>
-        private Milk _drinkChoiceBacking = new Milk() { Chocolate = false };
+        private Milk _drinkChoiceBacking = new Milk();
 
         /// <summary>
         /// Choice of drink for the meal

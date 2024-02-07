@@ -11,6 +11,17 @@ namespace BuildYourBowl.DataTests
     /// </summary>
     public class ChickenNuggetsMealUnitTests
     {
+        [Fact]
+        public void DefaultPropertiesAreCorrect() 
+        {
+            ChickenNuggetsMeal c = new ChickenNuggetsMeal();
+
+            Assert.Equal((uint)5, c.Count);
+            Assert.False(c.DrinkChoice.Chocolate);
+            Assert.False(c.SideChoice.Curly);
+            Assert.Equal(5.99m, c.Price);
+        }
+
         /// <summary>
         /// Unit test to ensure boundaries of count are enforced
         /// </summary>
@@ -29,25 +40,16 @@ namespace BuildYourBowl.DataTests
         }
 
         /// <summary>
-        /// Unit test to ensure drink choice property is correct
+        /// Unit test to ensure side choice property is correct
         /// </summary>
-        
-        // NOT FINISHED
         [Fact]
-        public void ChickenNuggetsMealDrinkChoiceTest() 
+        public void ChickenNuggetsMealSideChoiceTest() 
         {
             ChickenNuggetsMeal c = new ChickenNuggetsMeal();
-            Milk m = new Milk()
-            {
-                Chocolate = true
-            };
+            Fries fries = new Fries() { FrySize = Size.Kids };
 
-            c.DrinkChoice = m;
-
-            Assert.Equal(m, c.DrinkChoice);
+            Assert.Equal(fries, c.SideChoice);
         }
-
-        //ADD UNIT TEST FOR FRY CHOICE
 
 
         /// <summary>
@@ -65,7 +67,7 @@ namespace BuildYourBowl.DataTests
         [InlineData(7, Size.Medium, 8.49)]
         [InlineData(8, Size.Large, 9.74)]
         [InlineData(5, Size.Large, 7.49)]
-        public void ChickenNuggetsMealPriceIsCorrect(uint count, Size size, decimal expectedPrice) 
+        public void ChickenNuggetsMealPriceIsCorrectTest(uint count, Size size, decimal expectedPrice) 
         {
             ChickenNuggetsMeal c = new ChickenNuggetsMeal();
             c.Count = count;
@@ -88,10 +90,13 @@ namespace BuildYourBowl.DataTests
         [InlineData(7, Size.Kids, false, (60 * 7) + (350 * .6) + 200)]
         [InlineData(8, Size.Kids, false, 690 + 200)]
         [InlineData(6, Size.Small, false, 360 + (350 * .75) + 200)]
+
+        //2 Unit test below are failing
         [InlineData(7, Size.Medium, true, 420 + 350 + 270)]
-        [InlineData(8, Size.Large, false, 480 + (350 * 1.5) + 200)]
+        [InlineData(8, Size.Large, true, 480 + (350 * 1.5) + 270)]
+
         [InlineData(5, Size.Large, false, 300 + (350 * 1.5) + 200)]
-        public void ChickenNuggetsMealCaloriesAreCorrect(uint count, Size size, bool chocolate, double expectedCals)
+        public void ChickenNuggetsMealCaloriesAreCorrectTest(uint count, Size size, bool chocolate, double expectedCals)
         {
             ChickenNuggetsMeal c = new ChickenNuggetsMeal();
             c.Count = count;
@@ -99,6 +104,8 @@ namespace BuildYourBowl.DataTests
             Milk m = new Milk() { Chocolate = chocolate };
             c.SideChoice = f;
 
+            //Want to assert that kids meal calories really is "main " calories + 
+            //SideChoice.Calories + DrinkChoice.Calories
             Assert.Equal((uint)expectedCals, c.Calories);
         }
     }
