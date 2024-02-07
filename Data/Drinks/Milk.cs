@@ -27,7 +27,7 @@ namespace BuildYourBowl.Data
         public bool Chocolate { get; set; } = false;
 
         /// <summary>
-        /// Property for the size of fries
+        /// Property for the size of Milk
         /// </summary>
         public Size MilkSize { get; } = Size.Kids;
 
@@ -39,10 +39,6 @@ namespace BuildYourBowl.Data
             get
             {
                 decimal price = 2.50m;
-
-                if (MilkSize == Size.Kids) price -= 1m;
-                if (MilkSize == Size.Small) price -= 0.50m;
-                if (MilkSize == Size.Large) price += 0.75m;
 
                 return price;
             }
@@ -57,11 +53,7 @@ namespace BuildYourBowl.Data
             {
                 double cals = 200;
 
-                if (Chocolate) cals = 270;
-
-                if (MilkSize == Size.Kids) cals *= .6;
-                if (MilkSize == Size.Small) cals *= .75;
-                if (MilkSize == Size.Large) cals *= 1.5;
+                if (Chocolate) cals += 70;
 
                 return (uint)cals;
             }

@@ -80,7 +80,7 @@ namespace BuildYourBowl.Data
                 if (!Veggies) cals -= 20;
                 if (!SourCream) cals -= 100;
                 if (SalsaType == Salsa.None) cals -= 20;
-                if (!Guacamole) cals -= 150;
+                if (Guacamole) cals += 150;
 
                 return cals;
             }
@@ -98,7 +98,6 @@ namespace BuildYourBowl.Data
                 if (!Chicken) instructions.Add("Hold Chicken");
                 if (!Queso) instructions.Add("Hold Queso");
                 if (!Veggies) instructions.Add("Hold Veggies");
-                if (!SourCream) instructions.Add("Hold Sour Cream");
                 if (SalsaType == Salsa.None)
                 {
                     instructions.Add("Hold Salsa");
@@ -107,6 +106,7 @@ namespace BuildYourBowl.Data
                 {
                     instructions.Add($"Swap {SalsaType} Salsa");
                 }
+                if (!SourCream) instructions.Add("Hold Sour Cream");
                 if (Guacamole) instructions.Add("Add Guacamole");
 
                 return instructions;

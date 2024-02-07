@@ -44,7 +44,7 @@ namespace BuildYourBowl.Data
         /// <summary>
         /// backing field for drink choice property
         /// </summary>
-        private Milk _drinkChoiceBacking = new Milk();
+        private Milk _drinkChoiceBacking = new Milk() { Chocolate = false };
 
         /// <summary>
         /// Choice of drink for the meal
@@ -100,6 +100,9 @@ namespace BuildYourBowl.Data
                 if (SideChoice.FrySize == Size.Small) totalPrice += 0.50m;
                 if (SideChoice.FrySize == Size.Medium) totalPrice += 1.00m;
                 if (SideChoice.FrySize == Size.Large) totalPrice += 1.50m;
+                if (DrinkChoice.MilkSize == Size.Small ) totalPrice += 0.50m;
+                if (DrinkChoice.MilkSize == Size.Medium) totalPrice += 1.00m;
+                if (DrinkChoice.MilkSize == Size.Large) totalPrice += 1.50m;
 
                 return totalPrice;
             }

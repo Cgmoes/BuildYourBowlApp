@@ -73,14 +73,14 @@ namespace BuildYourBowl.Data
         {
             get 
             {
-                uint cals = 640;
+                uint cals = 620;
 
                 if (!Steak) cals -= 180;
                 if (!Queso) cals -= 110;
-                if (!Veggies) cals -= 20;
+                if (Veggies) cals += 20;
                 if (!SourCream) cals -= 100;
                 if (SalsaType == Salsa.None) cals -= 20;
-                if (!Guacamole) cals -= 150;
+                if (Guacamole) cals += 150;
 
                 return cals;
             }
