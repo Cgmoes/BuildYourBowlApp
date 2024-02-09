@@ -24,12 +24,12 @@ namespace BuildYourBowl.Data
         /// <summary>
         /// Whether this side contains Cotija Cheese
         /// </summary>
-        public bool CotijaCheese { get; } = true;
+        public bool CotijaCheese { get; set; } = true;
 
         /// <summary>
         /// Whether this side contains Cilantro
         /// </summary>
-        public bool Cilantro { get; } = true;
+        public bool Cilantro { get; set; } = true;
 
         /// <summary>
         /// Property for the size of corn

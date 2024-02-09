@@ -15,7 +15,7 @@ namespace BuildYourBowl.DataTests
         /// Unit test to ensure that chicken default value is set to true
         /// </summary>
         [Fact]
-        public void GreenChickenBowlDefaultChickenValueIsCorrect() 
+        public void GreenChickenBowlDefaultChickenValueIsCorrectTest() 
         {
             GreenChickenBowl gcb = new GreenChickenBowl();
 
@@ -134,17 +134,35 @@ namespace BuildYourBowl.DataTests
         }
 
         /// <summary>
-        /// 
+        /// Unit tests to ensure the prep info is correct
         /// </summary>
-        [Fact]
-        public void GreenChickenBowlPrepInfoIsCorrectTest() 
+        [Theory]
+        [InlineData(true, true, true, true, Salsa.Green, true, true)]
+        [InlineData(false, false, false, false, Salsa.None, false, false)]
+        [InlineData(true, false, true, false, Salsa.Mild, true, false)]
+        [InlineData(false, true, false, true, Salsa.None, false, true)]
+        [InlineData(true, true, false, false, Salsa.Hot, true, false)]
+        [InlineData(false, false, true, true, Salsa.Green, false, true)]
+        [InlineData(false, true, true, false, Salsa.Medium, true, true)]
+        [InlineData(true, false, false, true, Salsa.Green, false, false)]
+        public void GreenChickenBowlPrepInfoIsCorrectTest(bool chicken, bool beans, bool veggies, bool queso, Salsa salsa, bool guac, bool sourCream) 
         {
             GreenChickenBowl gcb = new GreenChickenBowl();
-            gcb.Chicken = false;
-            gcb.SalsaType = Salsa.Hot;
-            gcb.Guacamole = false;
+            gcb.Chicken = chicken;
+            gcb.BlackBeans = beans;
+            gcb.Veggies = veggies;
+            gcb.Queso = queso;
+            gcb.SalsaType = salsa;
+            gcb.Guacamole = guac;
+            gcb.SourCream = sourCream;
 
-            Assert.Equal(new[] { "Hold Chicken", "Swap Hot Salsa", "Hold Guacamole"}, gcb.PreparationInformation);
+            if (!gcb.Chicken) Assert.Contains("Hold Chicken", gcb.PreparationInformation);
+            if (!gcb.BlackBeans) Assert.Contains("Hold Black Beans", gcb.PreparationInformation);
+            if (!gcb.Queso) Assert.Contains("Hold Queso", gcb.PreparationInformation);
+            if (gcb.SalsaType == Salsa.None) Assert.Contains($"Hold Salsa", gcb.PreparationInformation);
+            else if (gcb.SalsaType != Salsa.Green) Assert.Contains($"Swap {gcb.SalsaType} Salsa", gcb.PreparationInformation);
+            if (!gcb.Guacamole) Assert.Contains("Hold Guacamole", gcb.PreparationInformation);
+            if (!gcb.SourCream) Assert.Contains("Hold Sour Cream", gcb.PreparationInformation);
         }
     }
 }

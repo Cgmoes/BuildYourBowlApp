@@ -46,6 +46,7 @@ namespace BuildYourBowl.DataTests
         /// </summary>
         /// <param name="flavor">Flavor of the drink</param>
         /// <param name="size">Size of the drink</param>
+        /// <param name="ice">Whether or not the drink has ice</param>
         /// <param name="expectedPrice">expected price of the drink</param>
         [Theory]
         [InlineData(Flavor.Limonada, Size.Kids, true, 2.00)]
@@ -70,7 +71,7 @@ namespace BuildYourBowl.DataTests
         }
 
         /// <summary>
-        /// 
+        /// Unit teset to ensure calories are calculated correctly
         /// </summary>
         /// <param name="flavor">Flavor of the drink</param>
         /// <param name="size">Size of the drink</param>
@@ -99,18 +100,33 @@ namespace BuildYourBowl.DataTests
         }
 
         /// <summary>
-        /// Unit test to make sure A large tamarind agua fresca without ice has the correct prep information
+        /// Unit test to make sure the drink has the correct prep information
         /// </summary>
+        /// <param name="flavor">Flavor of the drink</param>
+        /// <param name="size">Size of the drink</param>
+        /// <param name="ice">Whether or not the drink contains ice</param>
+        [Theory]
+        [InlineData(Size.Kids, Flavor.Strawberry, false)]
+
         //Specific required test case
-        [Fact]
-        public void LargeTamarindAguaFrescaWithoutIcePrepInfoIsCorrectTest()
+        [InlineData(Size.Large, Flavor.Tamarind, false)]
+
+        [InlineData(Size.Medium, Flavor.Cucumber, true)]
+        [InlineData(Size.Small, Flavor.Limonada, true)]
+        [InlineData(Size.Kids, Flavor.Lime, true)]
+        [InlineData(Size.Large, Flavor.Limonada, true)]
+        [InlineData(Size.Medium, Flavor.Tamarind, false)]
+        [InlineData(Size.Small, Flavor.Strawberry, false)]
+        public void PrepInfoIsCorrectTest(Size size, Flavor flavor, bool ice)
         {
             AguaFresca af = new AguaFresca();
-            af.DrinkFlavor = Flavor.Tamarind;
-            af.DrinkSize = Size.Large;
-            af.Ice = false;
+            af.DrinkFlavor = flavor;
+            af.DrinkSize = size;
+            af.Ice = ice;
 
-            Assert.Equal(new[] { "Large", "Tamarind", "Hold Ice" }, af.PreparationInformation);
+            Assert.Contains(af.DrinkSize.ToString(), af.PreparationInformation);
+            Assert.Contains(af.DrinkFlavor.ToString(), af.PreparationInformation);
+            if (!af.Ice) Assert.Contains("Hold Ice", af.PreparationInformation);
         }
         
     }

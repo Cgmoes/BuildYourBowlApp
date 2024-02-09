@@ -83,7 +83,7 @@ namespace BuildYourBowl.Data
                 List<string> instructions = new List<string>();
 
                 if (!Onions) instructions.Add("Hold Onions");
-                if (CheddarCheese) instructions.Add("Hold Cheddar Cheese");
+                if (!CheddarCheese) instructions.Add("Hold Cheddar Cheese");
                 instructions.Add($"{BeansSize}");
 
                 return instructions;

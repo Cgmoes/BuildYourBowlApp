@@ -100,6 +100,9 @@ namespace BuildYourBowl.Data
                 if (SideChoice.FrySize == Size.Small) totalPrice += 0.50m;
                 if (SideChoice.FrySize == Size.Medium) totalPrice += 1.00m;
                 if (SideChoice.FrySize == Size.Large) totalPrice += 1.50m;
+                if (DrinkChoice.MilkSize == Size.Small) totalPrice += 0.50m;
+                if (DrinkChoice.MilkSize == Size.Medium) totalPrice += 1.00m;
+                if (DrinkChoice.MilkSize == Size.Large) totalPrice += 1.50m;
 
                 return totalPrice;
             }

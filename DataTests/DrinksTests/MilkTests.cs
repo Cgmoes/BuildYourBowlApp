@@ -15,7 +15,7 @@ namespace BuildYourBowl.DataTests
         /// Unit test to make sure Milk defaults to not having chocolate
         /// </summary>
         [Fact]
-        public void AguaFrescaHasIceDefaultTest()
+        public void MilkHasNoChocolateDefaultTest()
         {
             Milk m = new Milk();
             Assert.False(m.Chocolate);
@@ -44,6 +44,22 @@ namespace BuildYourBowl.DataTests
             Milk m = new Milk();
             m.Chocolate = choc;
             Assert.Equal(expectedCals, m.Calories);
+        }
+
+        /// <summary>
+        /// Unit test to ensure the prep info is calculated correctly
+        /// </summary>
+        /// <param name="choc"></param>
+        [Theory]
+        [InlineData(false)]
+        [InlineData(true)]
+        public void MilkPrepInfoIsCorrectTest(bool choc) 
+        {
+            Milk m = new Milk();
+            m.Chocolate = choc;
+
+            if(m.Chocolate) Assert.Contains("Chocolate", m.PreparationInformation);
+            Assert.Contains(m.MilkSize.ToString(), m.PreparationInformation);
         }
     }
 }

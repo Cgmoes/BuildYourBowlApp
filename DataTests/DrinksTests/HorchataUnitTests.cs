@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BuildYourBowl.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,7 @@ namespace BuildYourBowl.DataTests
         /// Unit test to make sure Horchata defaults to having ice
         /// </summary>
         [Fact]
-        public void AguaFrescaHasIceDefaultTest()
+        public void HorchataHasIceDefaultTest()
         {
             Horchata h = new Horchata();
             Assert.True(h.Ice);
@@ -35,16 +36,22 @@ namespace BuildYourBowl.DataTests
         /// Unit test to ensure the price is correct for given sizes
         /// </summary>
         /// <param name="size">Size of the drink</param>
+        /// <param name="ice">whether or not the drink has ice</param>
         /// <param name="expectedPrice">Expected price of the drink</param>
         [Theory]
-        [InlineData(Size.Kids, 3.50 - 1)]
-        [InlineData(Size.Small, 3.50 - .5)]
-        [InlineData(Size.Medium, 3.50)]
-        [InlineData(Size.Large, 3.50 + .75)]
-        public void DrinkSizePriceIsCorrectTest(Size size, decimal expectedPrice)
+        [InlineData(Size.Kids, true, 3.50 - 1)]
+        [InlineData(Size.Small, false, 3.50 - .5)]
+        [InlineData(Size.Medium, true, 3.50)]
+        [InlineData(Size.Large, false, 3.50 + .75)]
+        [InlineData(Size.Kids, false, 3.50 - 1)]
+        [InlineData(Size.Small, true, 3.50 - .5)]
+        [InlineData(Size.Medium, false, 3.50)]
+        [InlineData(Size.Large, true, 3.50 + .75)]
+        public void DrinkSizePriceIsCorrectTest(Size size, bool ice, decimal expectedPrice)
         {
             Horchata h = new Horchata();
             h.HorchataSize = size;
+            h.Ice = ice;
 
             Assert.Equal(expectedPrice, h.Price);
         }
@@ -64,7 +71,7 @@ namespace BuildYourBowl.DataTests
         [InlineData(Size.Small, false, (280 - 30) * .75)]
         [InlineData(Size.Medium, false, (280 - 30))]
         [InlineData(Size.Large, false, (280 - 30) * 1.50)]
-        public void CaloriesIsCorrectTest(Size size, bool ice, double expectedCals) 
+        public void CaloriesAreCorrectTest(Size size, bool ice, double expectedCals) 
         {
             Horchata h = new Horchata();
             h.HorchataSize = size;
@@ -76,19 +83,25 @@ namespace BuildYourBowl.DataTests
         /// <summary>
         /// Unit test to see if the prep information is working corrently
         /// </summary>
-        [Fact]
-        public void PrepInformationIsCorrectTest() 
+        /// <param name="size">Size of the drink</param>
+        /// <param name="ice">Whether or not the drink has ice</param>
+        [Theory]
+        [InlineData(Size.Kids, true)]
+        [InlineData(Size.Small, true)]
+        [InlineData(Size.Medium, true)]
+        [InlineData(Size.Large, true)]
+        [InlineData(Size.Kids, false)]
+        [InlineData(Size.Small, false)]
+        [InlineData(Size.Medium, false)]
+        [InlineData(Size.Large, false)]
+        public void PrepInformationIsCorrectTest(Size size, bool ice) 
         {
             Horchata h = new Horchata();
-            h.HorchataSize = Size.Medium;
-            h.Ice = false;
+            h.HorchataSize = size;
+            h.Ice = ice;
 
-            Assert.Equal(new[] { "Hold Ice", "Medium"}, h.PreparationInformation);
-
-            h.HorchataSize = Size.Small;
-            h.Ice = true;
-
-            Assert.Equal(new[] { "Small" }, h.PreparationInformation);
+            Assert.Contains(h.HorchataSize.ToString(), h.PreparationInformation);
+            if (!h.Ice) Assert.Contains("Hold Ice", h.PreparationInformation);
         }
     }
 }

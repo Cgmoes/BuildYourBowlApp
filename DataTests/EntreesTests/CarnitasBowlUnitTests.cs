@@ -158,22 +158,43 @@ namespace BuildYourBowl.DataTests
         }
 
         /// <summary>
-        /// Unit test to make sure A large tamarind agua fresca without ice has the correct prep information
+        /// Unit test to make sure the carnitas bowl has the correct prep information
         /// </summary>
-        // Specific required test case
-        [Fact]
-        public void CarnitasBowlPrepInfoIsCorrectTest()
+        /// <param name="carnitas">Whether or not the bowl has carnitas</param>
+        /// <param name="veggies">Whether or not the bowl has veggies</param>
+        /// <param name="queso">Whether or not the bowl has queso</param>
+        /// <param name="pintoBeans">Whether or not the bowl has pinto beans</param>
+        /// <param name="salsa">The type of salsa in the bowl</param>
+        /// <param name="guac">Whether or not the bowl has guacamole</param>
+        /// <param name="sourCream">Whether or not the bowl has sour cream</param>
+        [Theory]
+
+        //Specific required test case
+        [InlineData(false, true, false, false, Salsa.Medium, true, true)]
+
+        [InlineData(true, false, true, true, Salsa.Medium, false, false)]
+        [InlineData(false, true, false, false, Salsa.None, true, true)]
+        [InlineData(false, true, true, false, Salsa.Medium, true, true)]
+        [InlineData(false, false, true, true, Salsa.Hot, true, false)]
+        [InlineData(true, false, false, true, Salsa.Medium, false, false)]
+        [InlineData(false, false, false, false, Salsa.None, false, false)]
+        [InlineData(true, true, true, true, Salsa.Medium, true, true)]
+        public void CarnitasBowlPrepInfoIsCorrectTest(bool carnitas, bool veggies, bool queso, bool beans, Salsa salsa, bool guac, bool sourCream)
         {
             CarnitasBowl cb = new CarnitasBowl();
-            cb.Carnitas = false;
-            cb.Veggies = true;
-            cb.Queso = false;
-            cb.PintoBeans = false;
-            cb.SalsaType = Salsa.Medium;
-            cb.Guacamole = true;
-            cb.SourCream = true;
+            cb.Carnitas = carnitas;
+            cb.Veggies = veggies;
+            cb.Queso = queso;
+            cb.PintoBeans = beans;
+            cb.SalsaType = salsa;
+            cb.Guacamole = guac;
+            cb.SourCream = sourCream;
 
-            Assert.Equal(new[] { "Hold Carnitas", "Hold Queso", "Hold Pinto Beans", "Add Guacamole", "Add Sour Cream", "Add Veggies" }, cb.PreparationInformation);
+            if (!cb.Carnitas) Assert.Contains("Hold Carnitas", cb.PreparationInformation);
+            if (!cb.Queso) Assert.Contains("Hold Queso", cb.PreparationInformation);
+            if (!cb.PintoBeans) Assert.Contains("Hold Pinto Beans", cb.PreparationInformation);
+            if (cb.Guacamole) Assert.Contains("Add Guacamole", cb.PreparationInformation);
+            if (cb.SourCream) Assert.Contains("Add Sour Cream", cb.PreparationInformation);
         }
     }
 }

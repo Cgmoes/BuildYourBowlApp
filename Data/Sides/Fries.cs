@@ -25,7 +25,7 @@ namespace BuildYourBowl.Data
         /// <summary>
         /// Whether the fries are curly
         /// </summary>
-        public bool Curly { get; } = false;
+        public bool Curly { get; set; } = false;
 
         /// <summary>
         /// Property for the size of fries

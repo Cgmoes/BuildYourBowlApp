@@ -146,19 +146,40 @@ namespace BuildYourBowl.DataTests
         /// <summary>
         /// Unit test to ensure the prep information is correct
         /// </summary>
+        /// <param name="chicken">Whether the bowl contains chicken</param>
+        /// <param name="veggies">Whether the bowl contains veggies</param>
+        /// <param name="queso">Whether the bowl contains queso</param>
+        /// <param name="salsa">The type of salsa in the bowl</param>
+        /// <param name="guac">Whether the bowl contains guacamole</param>
+        /// <param name="sourCream">Whether the bowl contains sour cream</param>
+        [Theory]
         //Specific required test case
-        [Fact]
-        public void ChickenFajitaPrepInformationIsCorrectTest() 
+        [InlineData(false, false, true, Salsa.Hot, false, false)]
+
+        [InlineData(true, true, true, Salsa.Medium, false, true)]
+        [InlineData(true, true, true, Salsa.None, false, true)]
+        [InlineData(false, false, true, Salsa.Medium, false, true)]
+        [InlineData(true, true, true, Salsa.Medium, true, false)]
+        [InlineData(false, true, false, Salsa.Mild, false, true)]
+        [InlineData(true, true, true, Salsa.Medium, true, true)]
+        [InlineData(false, false, false, Salsa.None, false, false)]
+        public void ChickenFajitaPrepInformationIsCorrectTest(bool chicken, bool veggies, bool queso, Salsa salsa, bool guac, bool sourCream) 
         {
             ChickenFajitaNachos c = new ChickenFajitaNachos();
-            c.Chicken = false;
-            c.Veggies = false;
-            c.Queso = true;
-            c.SalsaType = Salsa.Hot;
-            c.Guacamole = false;
-            c.SourCream = false;
+            c.Chicken = chicken;
+            c.Veggies = veggies;
+            c.Queso = queso;
+            c.SalsaType = salsa;
+            c.Guacamole = guac;
+            c.SourCream = sourCream;
 
-            Assert.Equal(new[] { "Hold Chicken", "Hold Veggies", "Swap Hot Salsa", "Hold Sour Cream"}, c.PreparationInformation);
+            if (!c.Chicken) Assert.Contains("Hold Chicken", c.PreparationInformation);
+            if (!c.Veggies) Assert.Contains("Hold Veggies", c.PreparationInformation);
+            if (!c.Queso) Assert.Contains("Hold Queso", c.PreparationInformation);
+            if(c.SalsaType == Salsa.None) Assert.Contains($"Hold Salsa", c.PreparationInformation);
+            else if (c.SalsaType != Salsa.Medium) Assert.Contains($"Swap {c.SalsaType} Salsa", c.PreparationInformation);
+            if (c.Guacamole) Assert.Contains("Add Guacamole", c.PreparationInformation);
+            if (!c.SourCream) Assert.Contains("Hold Sour Cream", c.PreparationInformation);
         }
     }
 }

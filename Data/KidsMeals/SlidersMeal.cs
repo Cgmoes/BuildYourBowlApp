@@ -24,7 +24,7 @@ namespace BuildYourBowl.Data
         /// <summary>
         /// backing field for count property
         /// </summary>
-        private uint _countBacking = 5;
+        private uint _countBacking = 2;
 
         /// <summary>
         /// The number of sliders that come in this meal
@@ -105,6 +105,9 @@ namespace BuildYourBowl.Data
                 if (SideChoice.FrySize == Size.Small) totalPrice += 0.50m;
                 if (SideChoice.FrySize == Size.Medium) totalPrice += 1.00m;
                 if (SideChoice.FrySize == Size.Large) totalPrice += 1.50m;
+                if (DrinkChoice.MilkSize == Size.Small) totalPrice += 0.50m;
+                if (DrinkChoice.MilkSize == Size.Medium) totalPrice += 1.00m;
+                if (DrinkChoice.MilkSize == Size.Large) totalPrice += 1.50m;
 
                 return totalPrice;
             }
@@ -138,7 +141,7 @@ namespace BuildYourBowl.Data
             {
                 List<string> instructions = new List<string>();
 
-                if (Count != 5) instructions.Add($"{Count} Sliders");
+                if (Count != 2) instructions.Add($"{Count} Sliders");
                 if (!AmericanCheese) instructions.Add("Hold American Cheese");
 
                 return instructions;
