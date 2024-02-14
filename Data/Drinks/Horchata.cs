@@ -9,7 +9,7 @@ namespace BuildYourBowl.Data
     /// <summary>
     /// Definition of the Horchata class
     /// </summary>
-    public class Horchata
+    public class Horchata : IMenuItem
     {
         /// <summary>
         /// The name of the horchata instance

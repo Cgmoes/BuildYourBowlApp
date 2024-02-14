@@ -9,7 +9,7 @@ namespace BuildYourBowl.Data
     /// <summary>
     /// The definition of the SpicySteakBowl class
     /// </summary>
-    public class SpicySteakBowl
+    public class SpicySteakBowl : IMenuItem
     {
         /// <summary>
         /// The name os the spicy steak bowl instance

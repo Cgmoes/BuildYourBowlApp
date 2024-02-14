@@ -9,7 +9,7 @@ namespace BuildYourBowl.Data
     /// <summary>
     /// The definition of the ChickenFajitaNachos class
     /// </summary>
-    public class ChickenFajitaNachos
+    public class ChickenFajitaNachos : IMenuItem
     {
         /// <summary>
         /// The name of the chicken fajita nachos instance

@@ -9,7 +9,7 @@ namespace BuildYourBowl.Data
     /// <summary>
     /// The definition of the AguaFresca class
     /// </summary>
-    public class AguaFresca
+    public class AguaFresca : IMenuItem
     {
         /// <summary>
         /// The name of the agua fresca instance

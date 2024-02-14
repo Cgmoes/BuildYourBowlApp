@@ -9,7 +9,7 @@ namespace BuildYourBowl.Data
     /// <summary>
     /// The definition of the corn dog bites meal clss
     /// </summary>
-    public class CornDogBitesMeal
+    public class CornDogBitesMeal : IMenuItem
     {
         /// <summary>
         /// The name of the corn dog bites meal instance

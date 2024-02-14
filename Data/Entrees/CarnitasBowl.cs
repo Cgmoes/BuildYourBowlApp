@@ -9,7 +9,7 @@ namespace BuildYourBowl.Data
     /// <summary>
     /// The definition of the CarnitasBowl class
     /// </summary>
-    public class CarnitasBowl
+    public class CarnitasBowl : IMenuItem
     {
         /// <summary>
         /// The name of the carnitas bowl instance

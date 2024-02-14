@@ -3,7 +3,7 @@
     /// <summary>
     /// The definition of the GreenChickenBowl class
     /// </summary>
-    public class GreenChickenBowl
+    public class GreenChickenBowl : IMenuItem
     {
         /// <summary>
         /// The name of the green chicken bowl instance

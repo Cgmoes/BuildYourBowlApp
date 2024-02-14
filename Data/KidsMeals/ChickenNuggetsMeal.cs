@@ -9,7 +9,7 @@ namespace BuildYourBowl.Data
     /// <summary>
     /// Definition of the chicken nuggets meal class
     /// </summary>
-    public class ChickenNuggetsMeal
+    public class ChickenNuggetsMeal : IMenuItem
     {
         /// <summary>
         /// Then name of the chicken nuggets meal instance

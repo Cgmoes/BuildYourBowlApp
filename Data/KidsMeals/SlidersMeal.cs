@@ -9,7 +9,7 @@ namespace BuildYourBowl.Data
     /// <summary>
     /// Definition of the sliders meal class
     /// </summary>
-    public class SlidersMeal
+    public class SlidersMeal : IMenuItem
     {
         /// <summary>
         /// The name of the sliders meal instance

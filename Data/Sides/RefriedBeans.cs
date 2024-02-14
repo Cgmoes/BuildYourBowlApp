@@ -9,7 +9,7 @@ namespace BuildYourBowl.Data
     /// <summary>
     /// The definition of the RefriedBeans class
     /// </summary>
-    public class RefriedBeans
+    public class RefriedBeans : IMenuItem
     {
         /// <summary>
         /// The name of the RefriedBeans instance

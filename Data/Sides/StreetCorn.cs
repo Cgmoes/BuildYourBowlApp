@@ -9,7 +9,7 @@ namespace BuildYourBowl.Data
     /// <summary>
     /// The definition of the StreetCorn class
     /// </summary>
-    public class StreetCorn
+    public class StreetCorn : IMenuItem
     {
         /// <summary>
         /// The name of the street corn instance

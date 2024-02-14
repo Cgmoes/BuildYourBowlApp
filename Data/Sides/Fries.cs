@@ -10,7 +10,7 @@ namespace BuildYourBowl.Data
     /// <summary>
     /// The definitiona of the Fries class
     /// </summary>
-    public class Fries
+    public class Fries : IMenuItem
     {
         /// <summary>
         /// The name of the Fries instance

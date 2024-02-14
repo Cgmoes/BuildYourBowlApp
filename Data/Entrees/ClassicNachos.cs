@@ -9,7 +9,7 @@ namespace BuildYourBowl.Data
     /// <summary>
     /// The definition of the ClassicNachos class
     /// </summary>
-    public class ClassicNachos
+    public class ClassicNachos : IMenuItem
     {
         /// <summary>
         /// The name of the classic nachos instance

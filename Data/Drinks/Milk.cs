@@ -9,7 +9,7 @@ namespace BuildYourBowl.Data
     /// <summary>
     /// Definition of the milk class
     /// </summary>
-    public class Milk
+    public class Milk : IMenuItem
     {
         /// <summary>
         /// The name of the Milk instance
