@@ -23,7 +23,7 @@ namespace BuildYourBowl.Data
 
         public Nacho()
         {
-            BaseIngredient = Ingredient.Chips;
+            BaseIngredient = new IngredientItem(Ingredient.Chips);
         }
     }
 }

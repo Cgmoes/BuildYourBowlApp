@@ -22,31 +22,6 @@ namespace BuildYourBowl.Data
         public override string Description { get; } = "Spicy rice bowl with steak and fajita toppings";
 
         /// <summary>
-        /// Whether this bowl contains steak
-        /// </summary>
-        public bool Steak { get; set; } = true;
-
-        /// <summary>
-        /// Whether this bowl contains Veggies
-        /// </summary>
-        public bool Veggies { get; set; } = false;
-
-        /// <summary>
-        /// Whether this bowl contains Queso
-        /// </summary>
-        public bool Queso { get; set; } = true;
-
-        /// <summary>
-        /// Whether this bowl contains Guacamole
-        /// </summary>
-        public bool Guacamole { get; set; } = false;
-
-        /// <summary>
-        /// Whether this bowl contains SourCream
-        /// </summary>
-        public bool SourCream { get; set; } = true;
-
-        /// <summary>
         /// The price of these nachos
         /// </summary>
         public override decimal Price
@@ -70,32 +45,6 @@ namespace BuildYourBowl.Data
         }
 
         /// <summary>
-        /// Seets the default and included values for ingredients
-        /// </summary>
-        public void SetDefaultsAndIncluded() 
-        {
-            IngredientItem steak = new(Ingredient.Steak);
-            steak.Default = true;
-            steak.Included = true;
-
-            IngredientItem veggies = new(Ingredient.Veggies);
-            veggies.Default = false;
-            veggies.Included = false;
-
-            IngredientItem queso = new(Ingredient.Queso);
-            queso.Default = true;
-            queso.Included = true;
-
-            IngredientItem guac = new(Ingredient.Guacamole);
-            guac.Default = false;
-            guac.Included = false;
-
-            IngredientItem sourCream = new(Ingredient.SourCream);
-            sourCream.Default = true;
-            sourCream.Included = true;
-        }
-
-        /// <summary>
         /// Default constructor for spicy steak bowl
         /// </summary>
         public SpicySteakBowl() 
@@ -104,11 +53,11 @@ namespace BuildYourBowl.Data
             PossibleToppings.Clear();
 
             //Add back possible toppings
-            PossibleToppings.Add(new IngredientItem(Ingredient.Steak));
+            PossibleToppings.Add(new IngredientItem(Ingredient.Steak) { Default = true, Included = true });
             PossibleToppings.Add(new IngredientItem(Ingredient.Veggies));
-            PossibleToppings.Add(new IngredientItem(Ingredient.Queso));
+            PossibleToppings.Add(new IngredientItem(Ingredient.Queso) { Default = true, Included = true });
             PossibleToppings.Add(new IngredientItem(Ingredient.Guacamole));
-            PossibleToppings.Add(new IngredientItem(Ingredient.SourCream));
+            PossibleToppings.Add(new IngredientItem(Ingredient.SourCream) { Default = true, Included = true });
 
             //Pick Salsa Choice
             SalsaType = Salsa.Hot;

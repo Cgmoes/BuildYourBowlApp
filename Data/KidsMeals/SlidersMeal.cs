@@ -12,16 +12,6 @@ namespace BuildYourBowl.Data
     public class SlidersMeal : KidsMeal, IMenuItem
     {
         /// <summary>
-        /// The name of the sliders meal instance
-        /// </summary>
-        public override string Name { get; } = "Sliders Kids Meal";
-
-        /// <summary>
-        /// The description of this meal
-        /// </summary>
-        public override string Description { get; } = "Sliders with side and drink";
-
-        /// <summary>
         /// Whether the sliders contain cheese
         /// </summary>
         public bool AmericanCheese { get; set; } = true;
@@ -90,6 +80,8 @@ namespace BuildYourBowl.Data
         /// </summary>
         public SlidersMeal() 
         {
+            Name = "Sliders Kids Meal";
+            Description = "Sliders with side and drink";
             _countBacking = 2;
             _maxCount = 4;
             _sideChoiceBacking = new Fries() { Size = Size.Kids };

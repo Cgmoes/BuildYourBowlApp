@@ -36,7 +36,7 @@ namespace BuildYourBowl.Data
                     case Ingredient.Carnitas: return "Carnitas";
                     case Ingredient.Rice: return "Rice";
                     case Ingredient.Chips: return "Chips";
-                    default: throw new ArgumentException("Not a valid ingredient");
+                    default: return IngredientType.ToString();
                 }
             }
         }
@@ -61,7 +61,7 @@ namespace BuildYourBowl.Data
                     case Ingredient.Carnitas: return 210;
                     case Ingredient.Rice: return 210;
                     case Ingredient.Chips: return 250;
-                    default: throw new ArgumentException("Not a valid ingredient");
+                    default: return 0;
                 }
             }
         }

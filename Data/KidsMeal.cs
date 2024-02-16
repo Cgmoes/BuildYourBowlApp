@@ -14,12 +14,12 @@ namespace BuildYourBowl.Data
         /// <summary>
         /// Name of the kids meal
         /// </summary>
-        public abstract string Name { get; }
+        public virtual string Name { get; set; } = "Kids Meal";
 
         /// <summary>
         /// Description of the kids meal
         /// </summary>
-        public abstract string Description { get; }
+        public virtual string Description { get; set; } = "Kids Meal Description";
 
         /// <summary>
         /// price of the meal

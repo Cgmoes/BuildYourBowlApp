@@ -12,16 +12,6 @@ namespace BuildYourBowl.Data
     public class CornDogBitesMeal : KidsMeal, IMenuItem
     {
         /// <summary>
-        /// The name of the corn dog bites meal instance
-        /// </summary>
-        public override string Name { get; } = "Corn Dog Bites Kids Meal";
-
-        /// <summary>
-        /// The description of this meal
-        /// </summary>
-        public override string Description { get; } = "Mini corn dogs with side and drink";
-
-        /// <summary>
         /// The price of this meal
         /// </summary>
         public override decimal Price
@@ -77,6 +67,8 @@ namespace BuildYourBowl.Data
 
         public CornDogBitesMeal() 
         {
+            Name = "Corn Dog Bites Kids Meal";
+            Description = "Mini corn dogs with side and drink";
             _countBacking = 5;
             _maxCount = 8;
             _sideChoiceBacking = new Fries() { Size = Size.Kids };

@@ -26,35 +26,6 @@
         /// </summary>
         public override decimal Price => 9.99m;
 
-        /// <summary>
-        /// Sets the default and included values for ingredients
-        /// </summary>
-        public void SetDefaultsAndIncluded() 
-        {
-            IngredientItem chicken = new(Ingredient.Chicken);
-            chicken.Default = true;
-            chicken.Included = true;
-
-            IngredientItem blackBeans = new(Ingredient.BlackBeans);
-            blackBeans.Default = true;
-            blackBeans.Included = true;
-
-            IngredientItem veggies = new(Ingredient.Veggies);
-            veggies.Default = true;
-            veggies.Included = true;
-
-            IngredientItem queso = new(Ingredient.Queso);
-            queso.Default = true;
-            queso.Included = true;
-
-            IngredientItem guac = new(Ingredient.Guacamole);
-            guac.Default = true;
-            guac.Included = true;
-
-            IngredientItem sourCream = new(Ingredient.SourCream);
-            sourCream.Default = true;
-            sourCream.Included = true;
-        }
 
         /// <summary>
         /// Default constructor for green chicken bowl
@@ -65,12 +36,12 @@
             PossibleToppings.Clear();
 
             //Add back possible toppings
-            PossibleToppings.Add(new IngredientItem(Ingredient.Chicken));
-            PossibleToppings.Add(new IngredientItem(Ingredient.BlackBeans));
-            PossibleToppings.Add(new IngredientItem(Ingredient.Veggies));
-            PossibleToppings.Add(new IngredientItem(Ingredient.Queso));
-            PossibleToppings.Add(new IngredientItem(Ingredient.Guacamole));
-            PossibleToppings.Add(new IngredientItem(Ingredient.SourCream));
+            PossibleToppings.Add(new IngredientItem(Ingredient.Chicken) { Default = true, Included = true });
+            PossibleToppings.Add(new IngredientItem(Ingredient.BlackBeans) { Default = true, Included = true });
+            PossibleToppings.Add(new IngredientItem(Ingredient.Veggies) { Default = true, Included = true });
+            PossibleToppings.Add(new IngredientItem(Ingredient.Queso) { Default = true, Included = true });
+            PossibleToppings.Add(new IngredientItem(Ingredient.Guacamole) { Default = true, Included = true });
+            PossibleToppings.Add(new IngredientItem(Ingredient.SourCream) { Default = true, Included = true });
 
             //Pick Salsa Choice
             SalsaType = Salsa.Green;

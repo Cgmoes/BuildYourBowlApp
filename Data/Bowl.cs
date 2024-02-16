@@ -26,7 +26,7 @@ namespace BuildYourBowl.Data
         /// </summary>
         public Bowl() 
         {
-            BaseIngredient = Ingredient.Rice;
+            BaseIngredient = new IngredientItem(Ingredient.Rice);
         }
     }
 }

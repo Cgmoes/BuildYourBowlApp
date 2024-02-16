@@ -12,16 +12,6 @@ namespace BuildYourBowl.Data
     public class ChickenNuggetsMeal : KidsMeal, IMenuItem
     {
         /// <summary>
-        /// Then name of the chicken nuggets meal instance
-        /// </summary>
-        public override string Name { get; } = "Chicken Nuggets Kids Meal";
-
-        /// <summary>
-        /// The description of this meal
-        /// </summary>
-        public override string Description { get; } = "Chicken nuggets with side and drink";
-
-        /// <summary>
         /// The price of this meal
         /// </summary>
         public override decimal Price 
@@ -75,8 +65,13 @@ namespace BuildYourBowl.Data
             }
         }
 
+        /// <summary>
+        /// Constructor for chicken nuggets meal
+        /// </summary>
         public ChickenNuggetsMeal() 
         {
+            Name = "Chicken Nuggets Kids Meal";
+            Description = "Chicken nuggets with side and drink";
             _countBacking = 5;
             _maxCount = 8;
             _sideChoiceBacking = new Fries() { Size = Size.Kids};

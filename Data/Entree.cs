@@ -42,6 +42,11 @@ namespace BuildYourBowl.Data
         }
 
         /// <summary>
+        /// Base ingredient of the menu item
+        /// </summary>
+        public virtual IngredientItem BaseIngredient { get; protected set; }
+
+        /// <summary>
         /// Calories of this menu item
         /// </summary>
         public virtual uint Calories 
@@ -49,6 +54,7 @@ namespace BuildYourBowl.Data
             get
             {
                 uint additionalToppingsCals = 0;
+                
                 foreach (IngredientItem i in PossibleToppings) 
                 {
                     if (i.Included) 
@@ -56,22 +62,23 @@ namespace BuildYourBowl.Data
                         additionalToppingsCals += i.Calories;
                     }
                 }
-
-                IngredientItem baseItem = new IngredientItem(BaseIngredient);
-
-                return baseItem.Calories + additionalToppingsCals + 20;
+                if (SalsaType != Salsa.None)
+                {
+                    additionalToppingsCals += 20;
+                }
+                return BaseIngredient.Calories + additionalToppingsCals;
             }
         }
 
         /// <summary>
         /// Property for the salsa type of this entree
         /// </summary>
-        public virtual Salsa SalsaType { get; set; }
+        public virtual Salsa SalsaType { get; protected set; }
 
         /// <summary>
         /// Property for the salsa type of this entree
         /// </summary>
-        public virtual Salsa DefaultSalsa { get; set; } = Salsa.Medium;
+        public virtual Salsa DefaultSalsa { get; protected set; } = Salsa.Medium;
 
         /// <summary>
         /// Information for the preparation of this menu item
@@ -92,7 +99,11 @@ namespace BuildYourBowl.Data
                     {
                         instructions.Add($"Hold {i.Name}");
                     }
-                    if (SalsaType != DefaultSalsa) 
+                    if (SalsaType == Salsa.None)
+                    {
+                        instructions.Add($"Swap {SalsaType.ToString()}");
+                    }
+                    else if (SalsaType != DefaultSalsa) 
                     {
                         instructions.Add($"Swap {SalsaType.ToString()}");
                     }
@@ -101,11 +112,6 @@ namespace BuildYourBowl.Data
                 return instructions;
             } 
         }
-
-        /// <summary>
-        /// Base ingredient of the menu item
-        /// </summary>
-        public virtual Ingredient BaseIngredient { get; set; }
 
         /// <summary>
         /// Additional ingredients in the menu item
