@@ -24,31 +24,104 @@ namespace BuildYourBowl.Data
         /// <summary>
         /// Price of this menu item
         /// </summary>
-        public abstract decimal Price { get; }
+        public virtual decimal Price 
+        { 
+            get 
+            {
+                decimal price = 7.99m;
+                foreach (IngredientItem i in PossibleToppings)
+                {
+                    if (i.Included) 
+                    {
+                        price += i.UnitCost;
+                    }
+                }
+
+                return price;
+            } 
+        }
 
         /// <summary>
         /// Calories of this menu item
         /// </summary>
-        public abstract uint Calories { get; }
+        public virtual uint Calories 
+        {
+            get
+            {
+                uint additionalToppingsCals = 0;
+                foreach (IngredientItem i in PossibleToppings) 
+                {
+                    if (i.Included) 
+                    {
+                        additionalToppingsCals += i.Calories;
+                    }
+                }
+
+                IngredientItem baseItem = new IngredientItem(BaseIngredient);
+
+                return baseItem.Calories + additionalToppingsCals + 20;
+            }
+        }
 
         /// <summary>
         /// Property for the salsa type of this entree
         /// </summary>
-        public abstract Salsa SalsaType { get; set; }
+        public virtual Salsa SalsaType { get; set; }
+
+        /// <summary>
+        /// Property for the salsa type of this entree
+        /// </summary>
+        public virtual Salsa DefaultSalsa { get; set; } = Salsa.Medium;
 
         /// <summary>
         /// Information for the preparation of this menu item
         /// </summary>
-        public abstract IEnumerable<string> PreparationInformation { get; }
+        public virtual IEnumerable<string> PreparationInformation 
+        {
+            get 
+            {
+                List<string> instructions = new();
+
+                foreach (IngredientItem i in PossibleToppings) 
+                {
+                    if (i.Included == true && i.Default == false)
+                    {
+                        instructions.Add($"Add {i.Name}");
+                    }
+                    else if (i.Included == false && i.Default == true) 
+                    {
+                        instructions.Add($"Hold {i.Name}");
+                    }
+                    if (SalsaType != DefaultSalsa) 
+                    {
+                        instructions.Add($"Swap {SalsaType.ToString()}");
+                    }
+                }
+
+                return instructions;
+            } 
+        }
 
         /// <summary>
         /// Base ingredient of the menu item
         /// </summary>
-        public abstract Ingredient BaseIngredient { get; }
+        public virtual Ingredient BaseIngredient { get; set; }
 
         /// <summary>
         /// Additional ingredients in the menu item
         /// </summary>
-        public abstract List<IngredientItem> AdditionalIngredients { get; }
+        public List<IngredientItem> PossibleToppings { get; } = new List<IngredientItem>();
+
+        /// <summary>
+        /// Constructor for entree object
+        /// </summary>
+        public Entree() 
+        {
+            foreach (Ingredient i in Enum.GetValues(typeof(Ingredient))) 
+            {
+                IngredientItem ingredient = new IngredientItem(i);
+                PossibleToppings.Add(ingredient);
+            }
+        }
     }
 }

@@ -7,26 +7,23 @@ using System.Threading.Tasks;
 namespace BuildYourBowl.Data
 {
     /// <summary>
-    /// Definition of the bowl class
+    /// Class definition for Nacho
     /// </summary>
-    public class Bowl : Entree
+    public class Nacho : Entree
     {
         /// <summary>
         /// The name of this entree
         /// </summary>
-        public override string Name { get; } = "Build-Your-Own Bowl";
+        public override string Name { get; } = "Build-Your-Own Nachos";
 
         /// <summary>
         /// The description of this entree
         /// </summary>
-        public override string Description { get; } = "A bowl you get to build";
+        public override string Description { get; } = "Nachos you get to build";
 
-        /// <summary>
-        /// constructor for the bowl
-        /// </summary>
-        public Bowl() 
+        public Nacho()
         {
-            BaseIngredient = Ingredient.Rice;
+            BaseIngredient = Ingredient.Chips;
         }
     }
 }

@@ -9,17 +9,17 @@ namespace BuildYourBowl.Data
     /// <summary>
     /// The definition of the SpicySteakBowl class
     /// </summary>
-    public class SpicySteakBowl : IMenuItem
+    public class SpicySteakBowl : Bowl, IMenuItem
     {
         /// <summary>
         /// The name os the spicy steak bowl instance
         /// </summary>
-        public string Name { get; } = "Spicy Steak Bowl";
+        public override string Name { get; } = "Spicy Steak Bowl";
 
         /// <summary>
         /// The description of this bowl
         /// </summary>
-        public string Description { get; } = "Spicy rice bowl with steak and fajita toppings";
+        public override string Description { get; } = "Spicy rice bowl with steak and fajita toppings";
 
         /// <summary>
         /// Whether this bowl contains steak
@@ -37,11 +37,6 @@ namespace BuildYourBowl.Data
         public bool Queso { get; set; } = true;
 
         /// <summary>
-        /// Property for the salsa type of this bowl
-        /// </summary>
-        public Salsa SalsaType { get; set; } = Salsa.Hot;
-
-        /// <summary>
         /// Whether this bowl contains Guacamole
         /// </summary>
         public bool Guacamole { get; set; } = false;
@@ -52,65 +47,72 @@ namespace BuildYourBowl.Data
         public bool SourCream { get; set; } = true;
 
         /// <summary>
-        /// The price of this bowl
+        /// The price of these nachos
         /// </summary>
-        public decimal Price 
-        {
-            get 
-            {
-                if (Guacamole)
-                {
-                    return 11.99m;
-                }
-                else return 10.99m;
-            }
-        }
-
-        /// <summary>
-        /// The total number of calories in this bowl
-        /// </summary>
-        public uint Calories 
-        {
-            get 
-            {
-                uint cals = 620;
-
-                if (!Steak) cals -= 180;
-                if (!Queso) cals -= 110;
-                if (Veggies) cals += 20;
-                if (!SourCream) cals -= 100;
-                if (SalsaType == Salsa.None) cals -= 20;
-                if (Guacamole) cals += 150;
-
-                return cals;
-            }
-        }
-
-        /// <summary>
-        /// Information for preparation of this bowl
-        /// </summary>
-        public IEnumerable<string> PreparationInformation
+        public override decimal Price
         {
             get
             {
-                List<string> instructions = new();
+                decimal price = 10.99m;
 
-                if (!Steak) instructions.Add("Hold Steak");
-                if (!Queso) instructions.Add("Hold Queso");
-                if (Veggies) instructions.Add("Add Veggies");
-                if (!SourCream) instructions.Add("Hold Sour Cream");
-                if (SalsaType == Salsa.None)
+                foreach (IngredientItem i in PossibleToppings)
                 {
-                    instructions.Add("Hold Salsa");
+                    if (i.Included)
+                    {
+                        if (i.Equals(Ingredient.Guacamole))
+                        {
+                            price = 11.99m;
+                        }
+                    }
                 }
-                else if (SalsaType != Salsa.Hot)
-                {
-                    instructions.Add($"Swap {SalsaType} Salsa");
-                }
-                if (Guacamole) instructions.Add("Add Guacamole");
-
-                return instructions;
+                return price;
             }
+        }
+
+        /// <summary>
+        /// Seets the default and included values for ingredients
+        /// </summary>
+        public void SetDefaultsAndIncluded() 
+        {
+            IngredientItem steak = new(Ingredient.Steak);
+            steak.Default = true;
+            steak.Included = true;
+
+            IngredientItem veggies = new(Ingredient.Veggies);
+            veggies.Default = false;
+            veggies.Included = false;
+
+            IngredientItem queso = new(Ingredient.Queso);
+            queso.Default = true;
+            queso.Included = true;
+
+            IngredientItem guac = new(Ingredient.Guacamole);
+            guac.Default = false;
+            guac.Included = false;
+
+            IngredientItem sourCream = new(Ingredient.SourCream);
+            sourCream.Default = true;
+            sourCream.Included = true;
+        }
+
+        /// <summary>
+        /// Default constructor for spicy steak bowl
+        /// </summary>
+        public SpicySteakBowl() 
+        {
+            //Clear toppings selection
+            PossibleToppings.Clear();
+
+            //Add back possible toppings
+            PossibleToppings.Add(new IngredientItem(Ingredient.Steak));
+            PossibleToppings.Add(new IngredientItem(Ingredient.Veggies));
+            PossibleToppings.Add(new IngredientItem(Ingredient.Queso));
+            PossibleToppings.Add(new IngredientItem(Ingredient.Guacamole));
+            PossibleToppings.Add(new IngredientItem(Ingredient.SourCream));
+
+            //Pick Salsa Choice
+            SalsaType = Salsa.Hot;
+            DefaultSalsa = Salsa.Hot;
         }
     }
 }

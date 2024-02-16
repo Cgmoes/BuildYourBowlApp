@@ -29,7 +29,7 @@ namespace BuildYourBowl.DataTests
         public void DrinkSizeDefaultValueTest()
         {
             Horchata h = new Horchata();
-            Assert.Equal(Size.Medium, h.HorchataSize);
+            Assert.Equal(Size.Medium, h.Size);
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace BuildYourBowl.DataTests
         public void DrinkSizePriceIsCorrectTest(Size size, bool ice, decimal expectedPrice)
         {
             Horchata h = new Horchata();
-            h.HorchataSize = size;
+            h.Size = size;
             h.Ice = ice;
 
             Assert.Equal(expectedPrice, h.Price);
@@ -74,7 +74,7 @@ namespace BuildYourBowl.DataTests
         public void CaloriesAreCorrectTest(Size size, bool ice, double expectedCals) 
         {
             Horchata h = new Horchata();
-            h.HorchataSize = size;
+            h.Size = size;
             h.Ice = ice;
 
             Assert.Equal((uint)expectedCals, h.Calories);
@@ -97,10 +97,10 @@ namespace BuildYourBowl.DataTests
         public void PrepInformationIsCorrectTest(Size size, bool ice) 
         {
             Horchata h = new Horchata();
-            h.HorchataSize = size;
+            h.Size = size;
             h.Ice = ice;
 
-            Assert.Contains(h.HorchataSize.ToString(), h.PreparationInformation);
+            Assert.Contains(h.Size.ToString(), h.PreparationInformation);
             if (!h.Ice) Assert.Contains("Hold Ice", h.PreparationInformation);
         }
     }

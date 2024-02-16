@@ -3,7 +3,7 @@
     /// <summary>
     /// The definition of the GreenChickenBowl class
     /// </summary>
-    public class GreenChickenBowl : IMenuItem
+    public class GreenChickenBowl : Bowl, IMenuItem
     {
         /// <summary>
         /// The name of the green chicken bowl instance
@@ -11,7 +11,7 @@
         /// <remarks>
         /// This is an example of an get-only autoproperty with a default value
         /// </remarks>
-        public string Name { get; } = "Green Chicken Bowl";
+        public override string Name { get; } = "Green Chicken Bowl";
 
         /// <summary>
         /// The description of this bowl
@@ -19,97 +19,62 @@
         /// <remarks>
         /// This is also a get-only autoproperty, but it was declared using lambda syntax
         /// </remarks>
-        public string Description => "Rice bowl with chicken and green things";
-
-        /// <summary>
-        /// Whether this bowl contains chicken
-        /// </summary>
-        public bool Chicken { get; set; } = true;
-
-        /// <summary>
-        /// Whether this bowl contains black beans 
-        /// </summary>
-        public bool BlackBeans { get; set; } = true;
-
-        /// <summary>
-        /// Whether this bowl contains fajita veggies
-        /// </summary>
-        public bool Veggies { get; set; } = true;
-
-        /// <summary>
-        /// Whether this bowl contains queso
-        /// </summary>
-        public bool Queso { get; set; } = true;
-
-        /// <summary>
-        /// Property for the salsa type of this bowl
-        /// </summary>
-        public Salsa SalsaType { get; set; } = Salsa.Green;
-
-        /// <summary>
-        /// Whether this bowl contains guacamole
-        /// </summary>
-        public bool Guacamole { get; set; } = true;
-
-        /// <summary>
-        /// Whether this bowl contains sour cream
-        /// </summary>
-        public bool SourCream { get; set; } = true;
+        public override string Description => "Rice bowl with chicken and green things";
 
         /// <summary>
         /// The price of this bowl
         /// </summary>
-        public decimal Price => 9.99m;
+        public override decimal Price => 9.99m;
 
         /// <summary>
-        /// The total number of calories in this bowl
+        /// Sets the default and included values for ingredients
         /// </summary>
-        public uint Calories
+        public void SetDefaultsAndIncluded() 
         {
-            get
-            {
-                uint cals = 890;
+            IngredientItem chicken = new(Ingredient.Chicken);
+            chicken.Default = true;
+            chicken.Included = true;
 
-                //YOU DO THIS: take customizations into account
-                if (!SourCream) cals -= 100;
-                if (!Chicken) cals -= 150;
-                if (!BlackBeans) cals -= 130;
-                if (!Queso) cals -= 110;
-                if (!Veggies) cals -= 20;
-                if (SalsaType == Salsa.None) cals -= 20;
-                if (!Guacamole) cals -= 150;
+            IngredientItem blackBeans = new(Ingredient.BlackBeans);
+            blackBeans.Default = true;
+            blackBeans.Included = true;
 
-                return cals;
-            }
+            IngredientItem veggies = new(Ingredient.Veggies);
+            veggies.Default = true;
+            veggies.Included = true;
+
+            IngredientItem queso = new(Ingredient.Queso);
+            queso.Default = true;
+            queso.Included = true;
+
+            IngredientItem guac = new(Ingredient.Guacamole);
+            guac.Default = true;
+            guac.Included = true;
+
+            IngredientItem sourCream = new(Ingredient.SourCream);
+            sourCream.Default = true;
+            sourCream.Included = true;
         }
 
         /// <summary>
-        /// Information for the preparation of this bowl
+        /// Default constructor for green chicken bowl
         /// </summary>
-        public IEnumerable<string> PreparationInformation
+        public GreenChickenBowl() 
         {
-            get
-            {
-                List<string> instructions = new();
+            //Clear toppings selection
+            PossibleToppings.Clear();
 
-                //YOU DO THIS: take customizations into account
-                if (!SourCream) instructions.Add("Hold Sour Cream");
-                if (!Chicken) instructions.Add("Hold Chicken");
-                if (!BlackBeans) instructions.Add("Hold Black Beans");
-                if (!Queso) instructions.Add("Hold Queso");
-                if (!Veggies) instructions.Add("Hold Veggies");
-                if (SalsaType == Salsa.None)
-                {
-                    instructions.Add("Hold Salsa");
-                }
-                else if (SalsaType != Salsa.Green)
-                {
-                    instructions.Add($"Swap {SalsaType} Salsa");
-                }
-                if (!Guacamole) instructions.Add("Hold Guacamole");
+            //Add back possible toppings
+            PossibleToppings.Add(new IngredientItem(Ingredient.Chicken));
+            PossibleToppings.Add(new IngredientItem(Ingredient.BlackBeans));
+            PossibleToppings.Add(new IngredientItem(Ingredient.Veggies));
+            PossibleToppings.Add(new IngredientItem(Ingredient.Queso));
+            PossibleToppings.Add(new IngredientItem(Ingredient.Guacamole));
+            PossibleToppings.Add(new IngredientItem(Ingredient.SourCream));
 
-                return instructions;
-            }
+            //Pick Salsa Choice
+            SalsaType = Salsa.Green;
+            DefaultSalsa = Salsa.Green;
         }
     }
 }

@@ -9,37 +9,17 @@ namespace BuildYourBowl.Data
     /// <summary>
     /// Definition of the sliders meal class
     /// </summary>
-    public class SlidersMeal : IMenuItem
+    public class SlidersMeal : KidsMeal, IMenuItem
     {
         /// <summary>
         /// The name of the sliders meal instance
         /// </summary>
-        public string Name { get; } = "Sliders Kids Meal";
+        public override string Name { get; } = "Sliders Kids Meal";
 
         /// <summary>
         /// The description of this meal
         /// </summary>
-        public string Description { get; } = "Sliders with side and drink";
-
-        /// <summary>
-        /// backing field for count property
-        /// </summary>
-        private uint _countBacking = 2;
-
-        /// <summary>
-        /// The number of sliders that come in this meal
-        /// </summary>
-        public uint Count
-        {
-            get 
-            {
-                return _countBacking;
-            }
-            set
-            {
-                if (value >= 2 && value <= 4) _countBacking = value;
-            }
-        }
+        public override string Description { get; } = "Sliders with side and drink";
 
         /// <summary>
         /// Whether the sliders contain cheese
@@ -47,52 +27,9 @@ namespace BuildYourBowl.Data
         public bool AmericanCheese { get; set; } = true;
 
         /// <summary>
-        /// backing field for drink choice property
-        /// </summary>
-        private Milk _drinkChoiceBacking = new Milk();
-
-        /// <summary>
-        /// Choice of drink for the meal
-        /// </summary>
-        public Milk DrinkChoice
-        {
-            get
-            {
-                return _drinkChoiceBacking;
-            }
-            set
-            {
-                _drinkChoiceBacking = value;
-            }
-        }
-
-        /// <summary>
-        /// backing field for side choice property
-        /// </summary>
-        private Fries _sideChoiceBacking = new Fries()
-        {
-            FrySize = Size.Kids
-        };
-
-        /// <summary>
-        /// Choice of side for the meal
-        /// </summary>
-        public Fries SideChoice
-        {
-            get
-            {
-                return _sideChoiceBacking;
-            }
-            set
-            {
-                _sideChoiceBacking = value;
-            }
-        }
-
-        /// <summary>
         /// The total price for this meal
         /// </summary>
-        public decimal Price 
+        public override decimal Price 
         {
             get
             {
@@ -102,12 +39,12 @@ namespace BuildYourBowl.Data
                     uint numNugs = Count - 2;
                     totalPrice += numNugs * 2m;
                 }
-                if (SideChoice.FrySize == Size.Small) totalPrice += 0.50m;
-                if (SideChoice.FrySize == Size.Medium) totalPrice += 1.00m;
-                if (SideChoice.FrySize == Size.Large) totalPrice += 1.50m;
-                if (DrinkChoice.MilkSize == Size.Small) totalPrice += 0.50m;
-                if (DrinkChoice.MilkSize == Size.Medium) totalPrice += 1.00m;
-                if (DrinkChoice.MilkSize == Size.Large) totalPrice += 1.50m;
+                if (_sideChoiceBacking.Size == Size.Small) totalPrice += 0.50m;
+                if (_sideChoiceBacking.Size == Size.Medium) totalPrice += 1.00m;
+                if (_sideChoiceBacking.Size == Size.Large) totalPrice += 1.50m;
+                if (_sideChoiceBacking.Size == Size.Small) totalPrice += 0.50m;
+                if (_sideChoiceBacking.Size == Size.Medium) totalPrice += 1.00m;
+                if (_sideChoiceBacking.Size == Size.Large) totalPrice += 1.50m;
 
                 return totalPrice;
             }
@@ -116,7 +53,7 @@ namespace BuildYourBowl.Data
         /// <summary>
         /// The total amount of calories for this meal
         /// </summary>
-        public uint Calories 
+        public override uint Calories 
         {
             get
             {
@@ -135,7 +72,7 @@ namespace BuildYourBowl.Data
         /// <summary>
         /// The information for preparation of this meal
         /// </summary>
-        public IEnumerable<string> PreparationInformation
+        public override IEnumerable<string> PreparationInformation
         {
             get
             {
@@ -146,6 +83,17 @@ namespace BuildYourBowl.Data
 
                 return instructions;
             }
+        }
+
+        /// <summary>
+        /// constructor for sliders meal
+        /// </summary>
+        public SlidersMeal() 
+        {
+            _countBacking = 2;
+            _maxCount = 4;
+            _sideChoiceBacking = new Fries() { Size = Size.Kids };
+            _drinkBacking = new Milk() { Size = Size.Kids };
         }
     }
 }

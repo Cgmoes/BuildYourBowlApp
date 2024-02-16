@@ -9,108 +9,85 @@ namespace BuildYourBowl.Data
     /// <summary>
     /// The definition of the ClassicNachos class
     /// </summary>
-    public class ClassicNachos : IMenuItem
+    public class ClassicNachos : Nacho, IMenuItem
     {
         /// <summary>
         /// The name of the classic nachos instance
         /// </summary>
-        public string Name { get; } = "Classic Nachos";
+        public override string Name { get; } = "Classic Nachos";
 
         /// <summary>
         /// The description of this bowl
         /// </summary>
-        public string Description { get; } = "Standard nachos with steak, chicken, and cheese";
+        public override string Description { get; } = "Standard nachos with steak, chicken, and cheese";
 
         /// <summary>
-        /// Whether this bowl contains steak
+        /// The price of these nachos
         /// </summary>
-        public bool Steak { get; set; } = true;
-
-        /// <summary>
-        /// Whether this bowl contains Chicken
-        /// </summary>
-        public bool Chicken { get; set; } = true;
-
-        /// <summary>
-        /// Whether this bowl contains Queso
-        /// </summary>
-        public bool Queso { get; set; } = true;
-
-        /// <summary>
-        /// Property for the salsa type of this bowl
-        /// </summary>
-        public Salsa SalsaType { get; set; } = Salsa.Medium;
-
-        /// <summary>
-        /// Whether this bowl contains Guacamole
-        /// </summary>
-        public bool Guacamole { get; set; } = false;
-
-        /// <summary>
-        /// Whether this bowl contains sour cream
-        /// </summary>
-        public bool SourCream { get; set; } = false;
-
-        /// <summary>
-        /// The price of this bowl
-        /// </summary>
-        public decimal Price 
+        public override decimal Price
         {
-            get 
+            get
             {
-                if (Guacamole)
+                decimal price = 12.99m;
+
+                foreach (IngredientItem i in PossibleToppings)
                 {
-                    return 13.99m;
+                    if (i.Included)
+                    {
+                        if (i.Equals(Ingredient.Guacamole))
+                        {
+                            price = 13.99m;
+                        }
+                    }
                 }
-                else return 12.99m;
+                return price;
             }
         }
 
         /// <summary>
-        /// The total number of calories in this bowl
+        /// Sets the default and included values for ingredients
         /// </summary>
-        public uint Calories
+        public void SetDefaultsAndIncluded() 
         {
-            get
-            {
-                uint cals = 710;
+            IngredientItem steak = new(Ingredient.Steak);
+            steak.Default = true;
+            steak.Included = true;
 
-                if (!Chicken) cals -= 150;
-                if (!Steak) cals -= 180;
-                if (!Queso) cals -= 110;
-                if (SourCream) cals += 100;
-                if (SalsaType == Salsa.None) cals -= 20;
-                if (Guacamole) cals += 150;
+            IngredientItem chicken = new(Ingredient.Chicken);
+            chicken.Default = true;
+            chicken.Included = true;
 
-                return cals;
-            }
+            IngredientItem queso = new(Ingredient.Queso);
+            queso.Default = true;
+            queso.Included = true;
+
+            IngredientItem guac = new(Ingredient.Guacamole);
+            guac.Default = false;
+            guac.Included = false;
+
+            IngredientItem sourCream = new(Ingredient.SourCream);
+            sourCream.Default = false;
+            sourCream.Included = false;
         }
 
         /// <summary>
-        /// Information for preparation of this bowl
+        /// Default Constructor for classic nachos
         /// </summary>
-        public IEnumerable<string> PreparationInformation
+        public ClassicNachos()
         {
-            get
-            {
-                List<string> instructions = new();
+            //Clear toppings selection
+            PossibleToppings.Clear();
 
-                if (!Chicken) instructions.Add("Hold Chicken");
-                if (!Steak) instructions.Add("Hold Steak");
-                if (!Queso) instructions.Add("Hold Queso");
-                if (SourCream) instructions.Add("Add Sour Cream");
-                if (SalsaType == Salsa.None)
-                {
-                    instructions.Add("Hold Salsa");
-                }
-                else if (SalsaType != Salsa.Medium)
-                {
-                    instructions.Add($"Swap {SalsaType} Salsa");
-                }
-                if (Guacamole) instructions.Add("Add Guacamole");
+            //Add back possible toppings
+            PossibleToppings.Add(new IngredientItem(Ingredient.Steak));
+            PossibleToppings.Add(new IngredientItem(Ingredient.Chicken));
+            PossibleToppings.Add(new IngredientItem(Ingredient.Queso));
+            PossibleToppings.Add(new IngredientItem(Ingredient.Guacamole));
+            PossibleToppings.Add(new IngredientItem(Ingredient.SourCream));
 
-                return instructions;
-            }
+            //Pick Salsa Choice
+            SalsaType = Salsa.Medium;
+            DefaultSalsa = Salsa.Medium;
         }
     }
 }

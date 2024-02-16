@@ -1,4 +1,4 @@
-﻿    using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,108 +9,85 @@ namespace BuildYourBowl.Data
     /// <summary>
     /// The definition of the ChickenFajitaNachos class
     /// </summary>
-    public class ChickenFajitaNachos : IMenuItem
+    public class ChickenFajitaNachos : Nacho, IMenuItem
     {
         /// <summary>
         /// The name of the chicken fajita nachos instance
         /// </summary>
-        public string Name { get; } = "Chicken Fajita Nachos";
+        public override string Name { get; } = "Chicken Fajita Nachos";
 
         /// <summary>
         /// The description of this bowl
         /// </summary>
-        public string Description { get; } = "Chicken fajitas but with chips";
+        public override string Description { get; } = "Chicken fajitas but with chips";
 
         /// <summary>
-        /// Whether this bowl contains chicken
+        /// The price of these nachos
         /// </summary>
-        public bool Chicken { get; set; } = true;
-
-        /// <summary>
-        /// Whether this bowl contains Veggies
-        /// </summary>
-        public bool Veggies { get; set; } = true;
-
-        /// <summary>
-        /// Whether this bowl contains Queso
-        /// </summary>
-        public bool Queso { get; set; } = true;
-
-        /// <summary>
-        /// Property for the salsa type of this bowl
-        /// </summary>
-        public Salsa SalsaType { get; set; } = Salsa.Medium;
-
-        /// <summary>
-        /// Whether this bowl contains Guacamole
-        /// </summary>
-        public bool Guacamole { get; set; } = false;
-
-        /// <summary>
-        /// Whether this bowl contains sour cream
-        /// </summary>
-        public bool SourCream { get; set; } = true;
-
-        /// <summary>
-        /// The price of this bowl
-        /// </summary>
-        public decimal Price
+        public override decimal Price
         {
             get
             {
-                if (Guacamole)
+                decimal price = 9.99m;
+
+                foreach (IngredientItem i in PossibleToppings)
                 {
-                    return 11.99m;
+                    if (i.Included)
+                    {
+                        if (i.Equals(Ingredient.Guacamole))
+                        {
+                            price = 10.99m;
+                        }
+                    }
                 }
-                else return 10.99m;
+                return price;
             }
         }
 
         /// <summary>
-        /// The total number of calories in this bowl
+        /// Sets the default and included values for ingredients
         /// </summary>
-        public uint Calories 
+        public void SetDefaultsAndIncluded() 
         {
-            get 
-            {
-                uint cals = 650;
+            IngredientItem chicken = new(Ingredient.Chicken);
+            chicken.Default = true;
+            chicken.Included = true;
 
-                if (!Chicken) cals -= 150;
-                if (!Queso) cals -= 110;
-                if (!Veggies) cals -= 20;
-                if (!SourCream) cals -= 100;
-                if (SalsaType == Salsa.None) cals -= 20;
-                if (Guacamole) cals += 150;
+            IngredientItem veggies = new(Ingredient.Veggies);
+            veggies.Default = true;
+            veggies.Included = true;
 
-                return cals;
-            }
+            IngredientItem queso = new(Ingredient.Queso);
+            queso.Default = true;
+            queso.Included = true;
+
+            IngredientItem guac = new(Ingredient.Guacamole);
+            guac.Default = false;
+            guac.Included = false;
+
+            IngredientItem sourCream = new(Ingredient.SourCream);
+            sourCream.Default = true;
+            sourCream.Included = true;
         }
 
         /// <summary>
-        /// Information for preparation of this bowl
+        /// Default constructor for chicken fajita nachos
         /// </summary>
-        public IEnumerable<string> PreparationInformation 
+        public ChickenFajitaNachos() 
         {
-            get 
-            {
-                List<string> instructions = new();
+            //Clear toppings selection
+            PossibleToppings.Clear();
 
-                if (!Chicken) instructions.Add("Hold Chicken");
-                if (!Queso) instructions.Add("Hold Queso");
-                if (!Veggies) instructions.Add("Hold Veggies");
-                if (SalsaType == Salsa.None)
-                {
-                    instructions.Add("Hold Salsa");
-                }
-                else if (SalsaType != Salsa.Medium)
-                {
-                    instructions.Add($"Swap {SalsaType} Salsa");
-                }
-                if (!SourCream) instructions.Add("Hold Sour Cream");
-                if (Guacamole) instructions.Add("Add Guacamole");
+            //Add back possible toppings
+            PossibleToppings.Add(new IngredientItem(Ingredient.Chicken));
+            PossibleToppings.Add(new IngredientItem(Ingredient.Veggies));
+            PossibleToppings.Add(new IngredientItem(Ingredient.Queso));
+            PossibleToppings.Add(new IngredientItem(Ingredient.Guacamole));
+            PossibleToppings.Add(new IngredientItem(Ingredient.SourCream));
 
-                return instructions;
-            }
+            //Pick Salsa Choice
+            SalsaType = Salsa.Medium;
+            DefaultSalsa = Salsa.Medium;
         }
     }
 }

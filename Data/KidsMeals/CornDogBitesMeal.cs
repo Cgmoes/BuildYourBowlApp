@@ -9,85 +9,22 @@ namespace BuildYourBowl.Data
     /// <summary>
     /// The definition of the corn dog bites meal clss
     /// </summary>
-    public class CornDogBitesMeal : IMenuItem
+    public class CornDogBitesMeal : KidsMeal, IMenuItem
     {
         /// <summary>
         /// The name of the corn dog bites meal instance
         /// </summary>
-        public string Name { get; set; } = "Corn Dog Bites Kids Meal";
+        public override string Name { get; } = "Corn Dog Bites Kids Meal";
 
         /// <summary>
         /// The description of this meal
         /// </summary>
-        public string Description { get; } = "Mini corn dogs with side and drink";
-
-        /// <summary>
-        /// backing field for count property
-        /// </summary>
-        private uint _countBacking = 5;
-
-        /// <summary>
-        /// The number of sliders that come in this meal
-        /// </summary>
-        public uint Count
-        {
-            get
-            {
-                return _countBacking;
-            }
-            set
-            {
-                if (value >= 5 && value <= 8) _countBacking = value;
-            }
-        }
-
-        /// <summary>
-        /// backing field for drink choice property
-        /// </summary>
-        private Milk _drinkChoiceBacking = new Milk();
-
-        /// <summary>
-        /// Choice of drink for the meal
-        /// </summary>
-        public Milk DrinkChoice
-        {
-            get
-            {
-                return _drinkChoiceBacking;
-            }
-            set
-            {
-                _drinkChoiceBacking = value;
-            }
-        }
-
-        /// <summary>
-        /// backing field for side choice property
-        /// </summary>
-        private Fries _sideChoiceBacking = new Fries()
-        {
-            FrySize = Size.Kids
-        };
-
-        /// <summary>
-        /// Choice of side for the meal
-        /// </summary>
-        public Fries SideChoice
-        {
-            get
-            {
-                return _sideChoiceBacking;
-            }
-            set
-            {
-                _sideChoiceBacking = value;
-            }
-        }
+        public override string Description { get; } = "Mini corn dogs with side and drink";
 
         /// <summary>
         /// The price of this meal
         /// </summary>
-        public decimal Price
+        public override decimal Price
         {
             get
             {
@@ -97,12 +34,12 @@ namespace BuildYourBowl.Data
                     uint numNugs = Count - 5;
                     totalPrice += numNugs * .75m;
                 }
-                if (SideChoice.FrySize == Size.Small) totalPrice += 0.50m;
-                if (SideChoice.FrySize == Size.Medium) totalPrice += 1.00m;
-                if (SideChoice.FrySize == Size.Large) totalPrice += 1.50m;
-                if (DrinkChoice.MilkSize == Size.Small) totalPrice += 0.50m;
-                if (DrinkChoice.MilkSize == Size.Medium) totalPrice += 1.00m;
-                if (DrinkChoice.MilkSize == Size.Large) totalPrice += 1.50m;
+                if (_sideChoiceBacking.Size == Size.Small) totalPrice += 0.50m;
+                if (_sideChoiceBacking.Size == Size.Medium) totalPrice += 1.00m;
+                if (_sideChoiceBacking.Size == Size.Large) totalPrice += 1.50m;
+                if (_sideChoiceBacking.Size == Size.Small) totalPrice += 0.50m;
+                if (_sideChoiceBacking.Size == Size.Medium) totalPrice += 1.00m;
+                if (_sideChoiceBacking.Size == Size.Large) totalPrice += 1.50m;
 
                 return totalPrice;
             }
@@ -111,7 +48,7 @@ namespace BuildYourBowl.Data
         /// <summary>
         /// The total number of calories in this meal
         /// </summary>
-        public uint Calories
+        public override uint Calories
         {
             get
             {
@@ -126,7 +63,7 @@ namespace BuildYourBowl.Data
         /// <summary>
         /// The information for preparation of this meal
         /// </summary>
-        public IEnumerable<string> PreparationInformation
+        public override IEnumerable<string> PreparationInformation
         {
             get
             {
@@ -136,6 +73,14 @@ namespace BuildYourBowl.Data
 
                 return instructions;
             }
+        }
+
+        public CornDogBitesMeal() 
+        {
+            _countBacking = 5;
+            _maxCount = 8;
+            _sideChoiceBacking = new Fries() { Size = Size.Kids };
+            _drinkBacking = new Milk() { Size = Size.Kids };
         }
     }
 }

@@ -28,7 +28,7 @@ namespace BuildYourBowl.DataTests
         public void DrinkSizeDefaultValueTest()
         {
             AguaFresca af = new AguaFresca();
-            Assert.Equal(Size.Medium, af.DrinkSize);
+            Assert.Equal(Size.Medium, af.Size);
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace BuildYourBowl.DataTests
         public void AguaFrescaPriceCheckTest(Flavor flavor, Size size, bool ice, decimal expectedPrice) 
         {
             AguaFresca af = new AguaFresca();
-            af.DrinkSize = size;
+            af.Size = size;
             af.DrinkFlavor = flavor;
             af.Ice = ice;
 
@@ -93,7 +93,7 @@ namespace BuildYourBowl.DataTests
         {
             AguaFresca af = new AguaFresca();
             af.DrinkFlavor = flavor;
-            af.DrinkSize = size;
+            af.Size = size;
             af.Ice = ice;
 
             Assert.Equal((uint)expectedCals, af.Calories);
@@ -121,10 +121,10 @@ namespace BuildYourBowl.DataTests
         {
             AguaFresca af = new AguaFresca();
             af.DrinkFlavor = flavor;
-            af.DrinkSize = size;
+            af.Size = size;
             af.Ice = ice;
 
-            Assert.Contains(af.DrinkSize.ToString(), af.PreparationInformation);
+            Assert.Contains(af.Size.ToString(), af.PreparationInformation);
             Assert.Contains(af.DrinkFlavor.ToString(), af.PreparationInformation);
             if (!af.Ice) Assert.Contains("Hold Ice", af.PreparationInformation);
         }

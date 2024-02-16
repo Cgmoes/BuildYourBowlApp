@@ -9,17 +9,17 @@ namespace BuildYourBowl.Data
     /// <summary>
     /// The definition of the RefriedBeans class
     /// </summary>
-    public class RefriedBeans : IMenuItem
+    public class RefriedBeans : Side, IMenuItem
     {
         /// <summary>
         /// The name of the RefriedBeans instance
         /// </summary>
-        public string Name { get; } = "Refried Beans";
+        public override string Name { get; } = "Refried Beans";
 
         /// <summary>
         /// The description of this side
         /// </summary>
-        public string Description { get; } = "Beans fried not just once but twice";
+        public override string Description { get; } = "Beans fried not just once but twice";
 
         /// <summary>
         /// Whether this side contains onions
@@ -32,31 +32,9 @@ namespace BuildYourBowl.Data
         public bool CheddarCheese { get; set; } = true;
 
         /// <summary>
-        /// Property for the size of Beans
-        /// </summary>
-        public Size BeansSize { get; set; } = Size.Medium;
-
-        /// <summary>
-        /// The price of this side
-        /// </summary>
-        public decimal Price 
-        {
-            get
-            {
-                decimal price = 3.75m;
-
-                if (BeansSize == Size.Kids) price -= 1m;
-                if (BeansSize == Size.Small) price -= 0.50m;
-                if (BeansSize == Size.Large) price += 0.75m;
-
-                return price;
-            }
-        }
-
-        /// <summary>
         /// Total amount of calories in this side
         /// </summary>
-        public uint Calories 
+        public override uint Calories 
         {
             get 
             {
@@ -65,9 +43,9 @@ namespace BuildYourBowl.Data
                 if (!CheddarCheese) cals -= 90;
                 if (!Onions) cals -= 5;
 
-                if (BeansSize == Size.Kids) cals *= .6;
-                if (BeansSize == Size.Small) cals *= .75;
-                if (BeansSize == Size.Large) cals *= 1.5;
+                if (Size == Size.Kids) cals *= .6;
+                if (Size == Size.Small) cals *= .75;
+                if (Size == Size.Large) cals *= 1.5;
 
                 return (uint)cals;
             }
@@ -76,7 +54,7 @@ namespace BuildYourBowl.Data
         /// <summary>
         /// Information for preparation of this side
         /// </summary>
-        public IEnumerable<string> PreparationInformation 
+        public override IEnumerable<string> PreparationInformation 
         {
             get 
             {
@@ -84,10 +62,18 @@ namespace BuildYourBowl.Data
 
                 if (!Onions) instructions.Add("Hold Onions");
                 if (!CheddarCheese) instructions.Add("Hold Cheddar Cheese");
-                instructions.Add($"{BeansSize}");
+                instructions.Add($"{Size}");
 
                 return instructions;
             }
+        }
+
+        /// <summary>
+        /// refried beans constructor
+        /// </summary>
+        public RefriedBeans() 
+        {
+            Size = Size.Medium;
         }
     }
 }

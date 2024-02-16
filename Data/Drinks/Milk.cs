@@ -9,17 +9,17 @@ namespace BuildYourBowl.Data
     /// <summary>
     /// Definition of the milk class
     /// </summary>
-    public class Milk : IMenuItem
+    public class Milk : Drink, IMenuItem
     {
         /// <summary>
         /// The name of the Milk instance
         /// </summary>
-        public string Name { get; } = "Milk";
+        public override string Name { get; } = "Milk";
 
         /// <summary>
         /// The definition of the drink
         /// </summary>
-        public string Description { get; } = "Creamy beverage in plain or chocolate";
+        public override string Description { get; } = "Creamy beverage in plain or chocolate";
 
         /// <summary>
         /// Whether this drink contains chocolate
@@ -27,27 +27,9 @@ namespace BuildYourBowl.Data
         public bool Chocolate { get; set; } = false;
 
         /// <summary>
-        /// Property for the size of Milk
-        /// </summary>
-        public Size MilkSize { get; } = Size.Kids;
-
-        /// <summary>
-        /// The price of this drink
-        /// </summary>
-        public decimal Price
-        {
-            get
-            {
-                decimal price = 2.50m;
-
-                return price;
-            }
-        }
-
-        /// <summary>
         /// The total amount of calories in this drink
         /// </summary>
-        public uint Calories 
+        public override uint Calories 
         {
             get 
             {
@@ -62,17 +44,26 @@ namespace BuildYourBowl.Data
         /// <summary>
         /// Information for the preparation of this drink
         /// </summary>
-        public IEnumerable<string> PreparationInformation 
+        public override IEnumerable<string> PreparationInformation 
         {
             get 
             {
                 List<string> instructions = new ();
 
                 if (Chocolate) instructions.Add("Chocolate");
-                instructions.Add($"{MilkSize}");
+                instructions.Add($"{Size}");
 
                 return instructions;
             }
+        }
+
+        /// <summary>
+        /// Constructor for milk
+        /// </summary>
+        public Milk() 
+        {
+            _defaultPrice = 2.50m;
+            Size = Size.Kids;
         }
     }
 }

@@ -9,17 +9,17 @@ namespace BuildYourBowl.Data
     /// <summary>
     /// The definition of the StreetCorn class
     /// </summary>
-    public class StreetCorn : IMenuItem
+    public class StreetCorn : Side, IMenuItem
     {
         /// <summary>
         /// The name of the street corn instance
         /// </summary>
-        public string Name { get; } = "Street Corn";
+        public override string Name { get; } = "Street Corn";
 
         /// <summary>
         /// The description of this side
         /// </summary>
-        public string Description { get; } = "The zestiest corn out there";
+        public override string Description { get; } = "The zestiest corn out there";
 
         /// <summary>
         /// Whether this side contains Cotija Cheese
@@ -32,31 +32,9 @@ namespace BuildYourBowl.Data
         public bool Cilantro { get; set; } = true;
 
         /// <summary>
-        /// Property for the size of corn
-        /// </summary>
-        public Size CornSize { get; set; } = Size.Medium;
-
-        /// <summary>
-        /// The price for this side
-        /// </summary>
-        public decimal Price
-        {
-            get
-            {
-                decimal price = 4.50m;
-
-                if (CornSize == Size.Kids) price -= 1.25m;
-                if (CornSize == Size.Small) price -= 0.75m;
-                if (CornSize == Size.Large) price += 1m;
-
-                return price;
-            }
-        }
-
-        /// <summary>
         /// The total amount of calories for this side
         /// </summary>
-        public uint Calories 
+        public override uint Calories 
         {
             get 
             {
@@ -65,9 +43,9 @@ namespace BuildYourBowl.Data
                 if (!CotijaCheese) cals -= 80;
                 if (!Cilantro) cals -= 5;
 
-                if (CornSize == Size.Kids) cals *= .6;
-                if (CornSize == Size.Small) cals *= .75;
-                if (CornSize == Size.Large) cals *= 1.5;
+                if (Size == Size.Kids) cals *= .6;
+                if (Size == Size.Small) cals *= .75;
+                if (Size == Size.Large) cals *= 1.5;
 
                 return (uint)cals;
             }
@@ -76,7 +54,7 @@ namespace BuildYourBowl.Data
         /// <summary>
         /// Information for the preparation of this side
         /// </summary>
-        public IEnumerable<string> PreparationInformation 
+        public override IEnumerable<string> PreparationInformation 
         {
             get 
             {
@@ -84,10 +62,18 @@ namespace BuildYourBowl.Data
 
                 if(!CotijaCheese) instructions.Add("Hold Cotija Cheese");
                 if (!Cilantro) instructions.Add("Hold Cilantro");
-                instructions.Add($"{CornSize}");
+                instructions.Add($"{Size}");
 
                 return instructions;
             }
+        }
+
+        /// <summary>
+        /// street corn constructor
+        /// </summary>
+        public StreetCorn() 
+        {
+            Size = Size.Medium;
         }
     }
 }

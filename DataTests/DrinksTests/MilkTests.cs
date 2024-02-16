@@ -59,7 +59,7 @@ namespace BuildYourBowl.DataTests
             m.Chocolate = choc;
 
             if(m.Chocolate) Assert.Contains("Chocolate", m.PreparationInformation);
-            Assert.Contains(m.MilkSize.ToString(), m.PreparationInformation);
+            Assert.Contains(m.Size.ToString(), m.PreparationInformation);
         }
     }
 }
