@@ -61,5 +61,16 @@ namespace BuildYourBowl.DataTests
             if(m.Chocolate) Assert.Contains("Chocolate", m.PreparationInformation);
             Assert.Contains(m.Size.ToString(), m.PreparationInformation);
         }
+
+        /// <summary>
+        /// Unit test to make sure this class can be casted to inherited classes
+        /// </summary>
+        [Fact]
+        public void CanBeCastedTest()
+        {
+            Milk m = new Milk();
+            Assert.IsAssignableFrom<IMenuItem>(m);
+            Assert.IsAssignableFrom<Drink>(m);
+        }
     }
 }

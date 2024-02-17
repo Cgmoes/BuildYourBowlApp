@@ -20,7 +20,7 @@ namespace BuildYourBowl.DataTests
         {
             SpicySteakBowl s = new SpicySteakBowl();
 
-            Assert.True(s.Steak);
+            Assert.True(s.PossibleToppings[Ingredient.Steak].Included);
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace BuildYourBowl.DataTests
         {
             SpicySteakBowl s = new SpicySteakBowl();
 
-            Assert.False(s.Veggies);
+            Assert.False(s.PossibleToppings[Ingredient.Veggies].Included);
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace BuildYourBowl.DataTests
         {
             SpicySteakBowl s = new SpicySteakBowl();
 
-            Assert.True(s.Queso);
+            Assert.True(s.PossibleToppings[Ingredient.Queso].Included);
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace BuildYourBowl.DataTests
         {
             SpicySteakBowl s = new SpicySteakBowl();
 
-            Assert.False(s.Guacamole);
+            Assert.False(s.PossibleToppings[Ingredient.Guacamole].Included);
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace BuildYourBowl.DataTests
         {
             SpicySteakBowl s = new SpicySteakBowl();
 
-            Assert.True(s.SourCream);
+            Assert.True(s.PossibleToppings[Ingredient.SourCream].Included);
         }
 
         /// <summary>
@@ -112,12 +112,15 @@ namespace BuildYourBowl.DataTests
         public void SpicySteakBowlPriceIsCorrectTest(bool steak, bool veggies, bool queso, Salsa salsa, bool guac, bool sourCream, decimal expectedPrice) 
         {
             SpicySteakBowl s = new SpicySteakBowl();
-            s.Steak = steak;
-            s.Veggies = veggies;
-            s.Queso = queso;
-            s.SalsaType = salsa;
-            s.Guacamole = guac;
-            s.SourCream = sourCream;
+            if (s.PossibleToppings != null)
+            {
+                s.PossibleToppings[Ingredient.Steak].Included = steak;
+                s.PossibleToppings[Ingredient.Veggies].Included = veggies;
+                s.PossibleToppings[Ingredient.Queso].Included = queso;
+                s.SalsaType = salsa;
+                s.PossibleToppings[Ingredient.Guacamole].Included = guac;
+                s.PossibleToppings[Ingredient.SourCream].Included = sourCream;
+            }
 
             Assert.Equal(expectedPrice, s.Price);
         }
@@ -144,12 +147,15 @@ namespace BuildYourBowl.DataTests
         public void SpicySteakBowlCaloriesAreCorrectTest(bool steak, bool veggies, bool queso, Salsa salsa, bool guac, bool sourCream, uint expectedCals)
         {
             SpicySteakBowl s = new SpicySteakBowl();
-            s.Steak = steak;
-            s.Veggies = veggies;
-            s.Queso = queso;
-            s.SalsaType = salsa;
-            s.Guacamole = guac;
-            s.SourCream = sourCream;
+            if (s.PossibleToppings != null)
+            {
+                s.PossibleToppings[Ingredient.Steak].Included = steak;
+                s.PossibleToppings[Ingredient.Veggies].Included = veggies;
+                s.PossibleToppings[Ingredient.Queso].Included = queso;
+                s.SalsaType = salsa;
+                s.PossibleToppings[Ingredient.Guacamole].Included = guac;
+                s.PossibleToppings[Ingredient.SourCream].Included = sourCream;
+            }
 
             Assert.Equal(expectedCals, s.Calories);
         }
@@ -164,31 +170,39 @@ namespace BuildYourBowl.DataTests
         /// <param name="guac">whether or not the bowl contains quacamole</param>
         /// <param name="sourCream">whether or not the bowl contains sour cream</param>
         [Theory]
-        [InlineData(true, false, true, Salsa.Hot, false, true)]
-        [InlineData(false, true, false, Salsa.None, true, false)]
-        [InlineData(true, false, true, Salsa.Mild, false, true)]
-        [InlineData(true, false, true, Salsa.Hot, false, false)]
-        [InlineData(true, true, true, Salsa.Hot, true, true)]
-        [InlineData(true, true, true, Salsa.Green, true, true)]
-        [InlineData(false, false, false, Salsa.Hot, false, false)]
-        [InlineData(false, false, false, Salsa.None, false, false)]
-        public void SpicySteakBowlPrepInfoIsCorrectTest(bool steak, bool veggies, bool queso, Salsa salsa, bool guac, bool sourCream) 
+        [InlineData(true, false, true, Salsa.Hot, false, true, new string[] { })]
+        [InlineData(false, true, false, Salsa.None, true, false, new string[] { "Hold Steak", "Add Veggies", "Hold Queso", "Hold Salsa", "Add Guacamole", "Hold Sour Cream" })]
+        [InlineData(true, false, true, Salsa.Mild, false, true, new string[] { "Swap Mild Salsa" })]
+        [InlineData(true, false, true, Salsa.Hot, false, false, new string[] { "Hold Sour Cream" })]
+        [InlineData(true, true, true, Salsa.Hot, true, true, new string[] { "Add Veggies", "Add Guacamole" })]
+        [InlineData(true, true, true, Salsa.Green, true, true, new string[] { "Add Veggies", "Swap Green Salsa", "Add Guacamole" })]
+        [InlineData(false, false, false, Salsa.Hot, false, false, new string[] { "Hold Steak", "Hold Queso", "Hold Sour Cream" })]
+        [InlineData(false, false, false, Salsa.None, false, false, new string[] { "Hold Steak", "Hold Queso", "Hold Salsa", "Hold Sour Cream" })]
+        public void SpicySteakBowlPrepInfoIsCorrectTest(bool steak, bool veggies, bool queso, Salsa salsa, bool guac, bool sourCream, string[] prepInfo) 
         {
             SpicySteakBowl s = new SpicySteakBowl();
-            s.Steak = steak;
-            s.Veggies = veggies;
-            s.Queso = queso;
-            s.SalsaType = salsa;
-            s.Guacamole = guac;
-            s.SourCream = sourCream;
+            if (s.PossibleToppings != null)
+            {
+                s.PossibleToppings[Ingredient.Steak].Included = steak;
+                s.PossibleToppings[Ingredient.Veggies].Included = veggies;
+                s.PossibleToppings[Ingredient.Queso].Included = queso;
+                s.SalsaType = salsa;
+                s.PossibleToppings[Ingredient.Guacamole].Included = guac;
+                s.PossibleToppings[Ingredient.SourCream].Included = sourCream;
+            }
 
-            if (!s.Steak) Assert.Contains("Hold Steak", s.PreparationInformation);
-            if (!s.Queso) Assert.Contains("Hold Queso", s.PreparationInformation);
-            if (s.Veggies) Assert.Contains("Add Veggies", s.PreparationInformation);
-            if (!s.SourCream) Assert.Contains("Hold Sour Cream", s.PreparationInformation);
-            if (s.SalsaType == Salsa.None) Assert.Contains($"Hold Salsa", s.PreparationInformation);
-            else if (s.SalsaType != Salsa.Hot) Assert.Contains($"Swap {s.SalsaType} Salsa", s.PreparationInformation);
-            if (s.Guacamole) Assert.Contains("Add Guacamole", s.PreparationInformation);
+            Assert.All(prepInfo, list => Assert.Contains(list, s.PreparationInformation));
+        }
+
+        /// <summary>
+        /// Unit test to make sure this class can be casted to inherited classes
+        /// </summary>
+        [Fact]
+        public void CanBeCastedTest()
+        {
+            SpicySteakBowl s = new SpicySteakBowl();
+            Assert.IsAssignableFrom<IMenuItem>(s);
+            Assert.IsAssignableFrom<Bowl>(s);
         }
     }
 }

@@ -29,11 +29,11 @@ namespace BuildYourBowl.Data
             get 
             {
                 decimal price = 7.99m;
-                foreach (IngredientItem i in PossibleToppings)
+                foreach (KeyValuePair<Ingredient, IngredientItem> i in PossibleToppings)
                 {
-                    if (i.Included) 
+                    if (i.Value.Included) 
                     {
-                        price += i.UnitCost;
+                        price += i.Value.UnitCost;
                     }
                 }
 
@@ -44,7 +44,7 @@ namespace BuildYourBowl.Data
         /// <summary>
         /// Base ingredient of the menu item
         /// </summary>
-        public virtual IngredientItem BaseIngredient { get; protected set; }
+        public virtual IngredientItem BaseIngredient { get; protected set; } = new IngredientItem(Ingredient.Rice);
 
         /// <summary>
         /// Calories of this menu item
@@ -55,11 +55,11 @@ namespace BuildYourBowl.Data
             {
                 uint additionalToppingsCals = 0;
                 
-                foreach (IngredientItem i in PossibleToppings) 
+                foreach (KeyValuePair<Ingredient, IngredientItem> i in PossibleToppings) 
                 {
-                    if (i.Included) 
+                    if (i.Value.Included) 
                     {
-                        additionalToppingsCals += i.Calories;
+                        additionalToppingsCals += i.Value.Calories;
                     }
                 }
                 if (SalsaType != Salsa.None)
@@ -73,7 +73,7 @@ namespace BuildYourBowl.Data
         /// <summary>
         /// Property for the salsa type of this entree
         /// </summary>
-        public virtual Salsa SalsaType { get; protected set; }
+        public virtual Salsa SalsaType { get; set; }
 
         /// <summary>
         /// Property for the salsa type of this entree
@@ -89,23 +89,23 @@ namespace BuildYourBowl.Data
             {
                 List<string> instructions = new();
 
-                foreach (IngredientItem i in PossibleToppings) 
+                foreach (KeyValuePair<Ingredient, IngredientItem> i in PossibleToppings) 
                 {
-                    if (i.Included == true && i.Default == false)
+                    if (i.Value.Included == true && i.Value.Default == false)
                     {
-                        instructions.Add($"Add {i.Name}");
+                        instructions.Add($"Add {i.Value.Name}");
                     }
-                    else if (i.Included == false && i.Default == true) 
+                    else if (i.Value.Included == false && i.Value.Default == true) 
                     {
-                        instructions.Add($"Hold {i.Name}");
+                        instructions.Add($"Hold {i.Value.Name}");
                     }
                     if (SalsaType == Salsa.None)
                     {
-                        instructions.Add($"Swap {SalsaType.ToString()}");
+                        instructions.Add($"Hold Salsa");
                     }
                     else if (SalsaType != DefaultSalsa) 
                     {
-                        instructions.Add($"Swap {SalsaType.ToString()}");
+                        instructions.Add($"Swap {SalsaType.ToString()} Salsa");
                     }
                 }
 
@@ -116,7 +116,7 @@ namespace BuildYourBowl.Data
         /// <summary>
         /// Additional ingredients in the menu item
         /// </summary>
-        public List<IngredientItem> PossibleToppings { get; } = new List<IngredientItem>();
+        public Dictionary<Ingredient, IngredientItem> PossibleToppings { get; } = new Dictionary<Ingredient, IngredientItem>();
 
         /// <summary>
         /// Constructor for entree object
@@ -126,7 +126,7 @@ namespace BuildYourBowl.Data
             foreach (Ingredient i in Enum.GetValues(typeof(Ingredient))) 
             {
                 IngredientItem ingredient = new IngredientItem(i);
-                PossibleToppings.Add(ingredient);
+                PossibleToppings.Add(ingredient.IngredientType, new IngredientItem(i));
             }
         }
     }

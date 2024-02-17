@@ -74,6 +74,7 @@ namespace BuildYourBowl.Data
         public RefriedBeans() 
         {
             Size = Size.Medium;
+            _defaultPrice = 3.75m;
         }
     }
 }

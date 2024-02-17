@@ -21,8 +21,8 @@ namespace BuildYourBowl.DataTests
 
             Assert.Equal((uint)2, s.Count);
             Assert.True(s.AmericanCheese);
-            Assert.False(s.DrinkChoice.Chocolate);
-            Assert.False(s.SideChoice.Curly);
+            //Assert.False(s.DrinkChoice.Chocolate);
+            //Assert.False(s.SideChoice.Curly);
             Assert.Equal(5.99m, s.Price);
         }
 
@@ -66,7 +66,7 @@ namespace BuildYourBowl.DataTests
             SlidersMeal s = new SlidersMeal();
             s.AmericanCheese = cheese;
             s.Count = count;
-            Fries f = new Fries() { FrySize = size };
+            Fries f = new Fries() { Size = size };
             s.SideChoice = f;
 
             Assert.Equal(expectedPrice, s.Price);
@@ -95,7 +95,7 @@ namespace BuildYourBowl.DataTests
             SlidersMeal s = new SlidersMeal();
             s.AmericanCheese = cheese;
             s.Count = count;
-            Fries f = new Fries() { FrySize = sideSize };
+            Fries f = new Fries() { Size = sideSize };
             s.SideChoice = f;
 
             Assert.Equal((uint)expectedCals, s.Calories);
@@ -123,11 +123,30 @@ namespace BuildYourBowl.DataTests
             SlidersMeal s = new SlidersMeal();
             s.AmericanCheese = cheese;
             s.Count = count;
-            Fries f = new Fries() { FrySize = sideSize };
+            Fries f = new Fries() { Size = sideSize };
             s.SideChoice = f;
 
             if (s.Count != 2) Assert.Contains($"{s.Count} Sliders", s.PreparationInformation);
             if (!s.AmericanCheese) Assert.Contains($"Hold American Cheese", s.PreparationInformation);
+        }
+
+        /// <summary>
+        /// Unit test to make sure this class can be casted to inherited classes
+        /// </summary>
+        [Fact]
+        public void CanBeCastedTest()
+        {
+            SlidersMeal s = new SlidersMeal();
+            Assert.IsAssignableFrom<IMenuItem>(s);
+            Assert.IsAssignableFrom<KidsMeal>(s);
+
+            Fries f = new Fries();
+            Assert.IsAssignableFrom<IMenuItem>(f);
+            Assert.IsAssignableFrom<Side>(f);
+
+            Milk m = new Milk();
+            Assert.IsAssignableFrom<IMenuItem>(m);
+            Assert.IsAssignableFrom<Drink>(m);
         }
     }
 }

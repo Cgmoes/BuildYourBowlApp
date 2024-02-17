@@ -102,7 +102,7 @@ namespace BuildYourBowl.Data
         /// <summary>
         /// tax rate
         /// </summary>
-        public decimal TaxRate { get; set; } = 9.15m;
+        public decimal TaxRate { get; set; } = .0915m;
 
         /// <summary>
         /// tax of the order

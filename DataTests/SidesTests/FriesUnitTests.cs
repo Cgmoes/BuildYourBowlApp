@@ -20,7 +20,7 @@ namespace BuildYourBowl.DataTests
             Fries f = new Fries();
 
             Assert.False(f.Curly);
-            Assert.Equal(Size.Medium, f.FrySize);
+            Assert.Equal(Size.Medium, f.Size);
             Assert.Equal(3.50m, f.Price);
             Assert.Equal((uint)350, f.Calories);
         }
@@ -32,18 +32,18 @@ namespace BuildYourBowl.DataTests
         /// <param name="curly">whether or not the fry is curly</param>
         /// <param name="expectedPrice">expected price of the fries</param>
         [Theory]
-        [InlineData(Size.Kids, false, 2.50)]
-        [InlineData(Size.Small, false, 3.00)]
+        [InlineData(Size.Kids, false, 2.25)]
+        [InlineData(Size.Small, false, 2.75)]
         [InlineData(Size.Medium, false, 3.50)]
-        [InlineData(Size.Large, false, 4.25)]
-        [InlineData(Size.Kids, true, 2.50)]
-        [InlineData(Size.Small, true, 3.00)]
+        [InlineData(Size.Large, false, 4.50)]
+        [InlineData(Size.Kids, true, 2.25)]
+        [InlineData(Size.Small, true, 2.75)]
         [InlineData(Size.Medium, true, 3.50)]
-        [InlineData(Size.Large, true, 4.25)]
+        [InlineData(Size.Large, true, 4.50)]
         public void FryPriceTest(Size size, bool curly, decimal expectedPrice) 
         {
             Fries f = new Fries();
-            f.FrySize = size;
+            f.Size = size;
             f.Curly = curly;
 
             Assert.Equal(expectedPrice, f.Price);
@@ -67,7 +67,7 @@ namespace BuildYourBowl.DataTests
         public void FryCaloriesTest(Size size, bool curly, uint expectedCalories) 
         {
             Fries f = new Fries();
-            f.FrySize = size;
+            f.Size = size;
             f.Curly = curly;
 
             Assert.Equal(expectedCalories, f.Calories);
@@ -90,11 +90,22 @@ namespace BuildYourBowl.DataTests
         public void PrepInforIsCorrectTest(Size size, bool curly)
         {
             Fries f = new Fries();
-            f.FrySize = size;
+            f.Size = size;
             f.Curly = curly;
 
             if(f.Curly) Assert.Contains("Curly", f.PreparationInformation);
-            Assert.Contains($"{f.FrySize}", f.PreparationInformation);
+            Assert.Contains($"{f.Size}", f.PreparationInformation);
+        }
+
+        /// <summary>
+        /// Unit test to make sure this class can be casted to inherited classes
+        /// </summary>
+        [Fact]
+        public void CanBeCastedTest()
+        {
+            Fries f = new Fries();
+            Assert.IsAssignableFrom<IMenuItem>(f);
+            Assert.IsAssignableFrom<Side>(f);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace BuildYourBowl.DataTests
 
             Assert.True(s.CotijaCheese);
             Assert.True(s.Cilantro);
-            Assert.Equal(Size.Medium, s.CornSize);
+            Assert.Equal(Size.Medium, s.Size);
             Assert.Equal(4.50m, s.Price);
             Assert.Equal((uint)300, s.Calories);
         }
@@ -46,7 +46,7 @@ namespace BuildYourBowl.DataTests
         public void CornPriceTest(bool cheese, bool cilantro, Size size, decimal expectedPrice)
         {
             StreetCorn s = new StreetCorn();
-            s.CornSize = size;
+            s.Size = size;
             s.CotijaCheese = cheese;
             s.Cilantro = cilantro;
 
@@ -77,7 +77,7 @@ namespace BuildYourBowl.DataTests
             StreetCorn s = new StreetCorn();
             s.CotijaCheese = cheese;
             s.Cilantro = cilantro;
-            s.CornSize = size;
+            s.Size = size;
 
             Assert.Equal((uint)expectedCals, s.Calories);
         }
@@ -106,11 +106,22 @@ namespace BuildYourBowl.DataTests
             StreetCorn s = new StreetCorn();
             s.CotijaCheese = cheese;
             s.Cilantro = cilantro;
-            s.CornSize = size;
+            s.Size = size;
 
             if(!s.CotijaCheese)Assert.Contains("Hold Cotija Cheese", s.PreparationInformation);
             if (!s.Cilantro) Assert.Contains("Hold Cilantro", s.PreparationInformation);
-            Assert.Contains($"{s.CornSize}", s.PreparationInformation);
+            Assert.Contains($"{s.Size}", s.PreparationInformation);
+        }
+
+        /// <summary>
+        /// Unit test to make sure this class can be casted to inherited classes
+        /// </summary>
+        [Fact]
+        public void CanBeCastedTest()
+        {
+            StreetCorn s = new StreetCorn();
+            Assert.IsAssignableFrom<IMenuItem>(s);
+            Assert.IsAssignableFrom<Side>(s);
         }
     }
 }

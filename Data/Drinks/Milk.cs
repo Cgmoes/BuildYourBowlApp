@@ -63,7 +63,7 @@ namespace BuildYourBowl.Data
         public Milk() 
         {
             _defaultPrice = 2.50m;
-            Size = Size.Kids;
+            Size = Size.Medium;
         }
     }
 }

@@ -30,7 +30,6 @@ namespace BuildYourBowl.Data
         /// <summary>
         /// The total amount of calories for this side
         /// </summary>
-        //public uint Calories { get; } = 350;
         public override uint Calories 
         {
             get 
@@ -67,6 +66,7 @@ namespace BuildYourBowl.Data
         public Fries() 
         {
             Size = Size.Medium;
+            _defaultPrice = 3.50m;
         }
     }
 }

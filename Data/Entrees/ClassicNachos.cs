@@ -30,15 +30,9 @@ namespace BuildYourBowl.Data
             {
                 decimal price = 12.99m;
 
-                foreach (IngredientItem i in PossibleToppings)
+                if (PossibleToppings[Ingredient.Guacamole].Included)
                 {
-                    if (i.Included)
-                    {
-                        if (i.Equals(Ingredient.Guacamole))
-                        {
-                            price = 13.99m;
-                        }
-                    }
+                    price = 13.99m;
                 }
                 return price;
             }
@@ -53,11 +47,11 @@ namespace BuildYourBowl.Data
             PossibleToppings.Clear();
 
             //Add back possible toppings
-            PossibleToppings.Add(new IngredientItem(Ingredient.Steak) { Default = true, Included = true });
-            PossibleToppings.Add(new IngredientItem(Ingredient.Chicken) { Default = true, Included = true });
-            PossibleToppings.Add(new IngredientItem(Ingredient.Queso) { Default = true, Included = true });
-            PossibleToppings.Add(new IngredientItem(Ingredient.Guacamole));
-            PossibleToppings.Add(new IngredientItem(Ingredient.SourCream));
+            PossibleToppings.Add(Ingredient.Steak, new IngredientItem(Ingredient.Steak) { Default = true, Included = true });
+            PossibleToppings.Add(Ingredient.Chicken, new IngredientItem(Ingredient.Chicken) { Default = true, Included = true });
+            PossibleToppings.Add(Ingredient.Queso, new IngredientItem(Ingredient.Queso) { Default = true, Included = true });
+            PossibleToppings.Add(Ingredient.Guacamole, new IngredientItem(Ingredient.Guacamole));
+            PossibleToppings.Add(Ingredient.SourCream, new IngredientItem(Ingredient.SourCream));
 
             //Pick Salsa Choice
             SalsaType = Salsa.Medium;

@@ -30,15 +30,9 @@ namespace BuildYourBowl.Data
             {
                 decimal price = 9.99m;
 
-                foreach (IngredientItem i in PossibleToppings) 
+                if (PossibleToppings[Ingredient.Guacamole].Included)
                 {
-                    if (i.Included) 
-                    {
-                        if(i.Equals(Ingredient.Guacamole))
-                        {
-                            price = 10.99m;
-                        }
-                    }
+                    price = 10.99m;
                 }
                 return price;
             }
@@ -53,12 +47,12 @@ namespace BuildYourBowl.Data
             PossibleToppings.Clear();
 
             //Add back possible toppings
-            PossibleToppings.Add(new IngredientItem(Ingredient.Carnitas) { Default = true, Included = true}); ;
-            PossibleToppings.Add(new IngredientItem(Ingredient.Queso) { Default = true, Included = true });
-            PossibleToppings.Add(new IngredientItem(Ingredient.PintoBeans) { Default = true, Included = true });
-            PossibleToppings.Add(new IngredientItem(Ingredient.Guacamole));
-            PossibleToppings.Add(new IngredientItem(Ingredient.SourCream));
-            PossibleToppings.Add(new IngredientItem(Ingredient.Veggies));
+            PossibleToppings.Add(Ingredient.Carnitas, new IngredientItem(Ingredient.Carnitas) { Default = true, Included = true}); ;
+            PossibleToppings.Add(Ingredient.Queso, new IngredientItem(Ingredient.Queso) { Default = true, Included = true });
+            PossibleToppings.Add(Ingredient.PintoBeans, new IngredientItem(Ingredient.PintoBeans) { Default = true, Included = true });
+            PossibleToppings.Add(Ingredient.Guacamole, new IngredientItem(Ingredient.Guacamole));
+            PossibleToppings.Add(Ingredient.SourCream, new IngredientItem(Ingredient.SourCream));
+            PossibleToppings.Add(Ingredient.Veggies, new IngredientItem(Ingredient.Veggies));
 
             //Pick Salsa Choice
             SalsaType = Salsa.Medium;

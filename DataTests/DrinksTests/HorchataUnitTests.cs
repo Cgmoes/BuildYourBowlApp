@@ -103,5 +103,16 @@ namespace BuildYourBowl.DataTests
             Assert.Contains(h.Size.ToString(), h.PreparationInformation);
             if (!h.Ice) Assert.Contains("Hold Ice", h.PreparationInformation);
         }
+
+        /// <summary>
+        /// Unit test to make sure this class can be casted to inherited classes
+        /// </summary>
+        [Fact]
+        public void CanBeCastedTest()
+        {
+            Horchata h = new Horchata();
+            Assert.IsAssignableFrom<IMenuItem>(h);
+            Assert.IsAssignableFrom<Drink>(h);
+        }
     }
 }

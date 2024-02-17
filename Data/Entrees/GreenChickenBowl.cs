@@ -36,12 +36,12 @@
             PossibleToppings.Clear();
 
             //Add back possible toppings
-            PossibleToppings.Add(new IngredientItem(Ingredient.Chicken) { Default = true, Included = true });
-            PossibleToppings.Add(new IngredientItem(Ingredient.BlackBeans) { Default = true, Included = true });
-            PossibleToppings.Add(new IngredientItem(Ingredient.Veggies) { Default = true, Included = true });
-            PossibleToppings.Add(new IngredientItem(Ingredient.Queso) { Default = true, Included = true });
-            PossibleToppings.Add(new IngredientItem(Ingredient.Guacamole) { Default = true, Included = true });
-            PossibleToppings.Add(new IngredientItem(Ingredient.SourCream) { Default = true, Included = true });
+            PossibleToppings.Add(Ingredient.Chicken, new IngredientItem(Ingredient.Chicken) { Default = true, Included = true });
+            PossibleToppings.Add(Ingredient.BlackBeans, new IngredientItem(Ingredient.BlackBeans) { Default = true, Included = true });
+            PossibleToppings.Add(Ingredient.Veggies, new IngredientItem(Ingredient.Veggies) { Default = true, Included = true });
+            PossibleToppings.Add(Ingredient.Queso, new IngredientItem(Ingredient.Queso) { Default = true, Included = true });
+            PossibleToppings.Add(Ingredient.Guacamole, new IngredientItem(Ingredient.Guacamole) { Default = true, Included = true });
+            PossibleToppings.Add(Ingredient.SourCream, new IngredientItem(Ingredient.SourCream) { Default = true, Included = true });
 
             //Pick Salsa Choice
             SalsaType = Salsa.Green;

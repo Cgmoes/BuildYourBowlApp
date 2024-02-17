@@ -19,7 +19,7 @@ namespace BuildYourBowl.DataTests
         {
             GreenChickenBowl gcb = new GreenChickenBowl();
 
-            Assert.True(gcb.Chicken);
+            Assert.True(gcb.PossibleToppings[Ingredient.Chicken].Included);
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace BuildYourBowl.DataTests
         {
             GreenChickenBowl gcb = new GreenChickenBowl();
 
-            Assert.True(gcb.BlackBeans);
+            Assert.True(gcb.PossibleToppings[Ingredient.BlackBeans].Included);
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace BuildYourBowl.DataTests
         {
             GreenChickenBowl gcb = new GreenChickenBowl();
 
-            Assert.True(gcb.Veggies);
+            Assert.True(gcb.PossibleToppings[Ingredient.Veggies].Included);
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace BuildYourBowl.DataTests
         {
             GreenChickenBowl gcb = new GreenChickenBowl();
 
-            Assert.True(gcb.Queso);
+            Assert.True(gcb.PossibleToppings[Ingredient.Queso].Included);
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace BuildYourBowl.DataTests
         {
             GreenChickenBowl gcb = new GreenChickenBowl();
 
-            Assert.True(gcb.Guacamole);
+            Assert.True(gcb.PossibleToppings[Ingredient.Guacamole].Included);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace BuildYourBowl.DataTests
         {
             GreenChickenBowl gcb = new GreenChickenBowl();
 
-            Assert.True(gcb.SourCream);
+            Assert.True(gcb.PossibleToppings[Ingredient.SourCream].Included);
         }
 
         /// <summary>
@@ -122,13 +122,16 @@ namespace BuildYourBowl.DataTests
         public void GreenChickenBowlCaloriesAreCorrectTest(bool chicken, bool beans, bool veggies, bool queso, Salsa salsa, bool guac, bool sourCream, uint expectedCals) 
         {
             GreenChickenBowl gcb = new GreenChickenBowl();
-            gcb.Chicken = chicken;
-            gcb.BlackBeans = beans;
-            gcb.Veggies = veggies;
-            gcb.Queso = queso;
-            gcb.SalsaType = salsa;
-            gcb.Guacamole = guac;
-            gcb.SourCream = sourCream;
+            if (gcb.PossibleToppings != null)
+            {
+                gcb.PossibleToppings[Ingredient.Chicken].Included = chicken;
+                gcb.PossibleToppings[Ingredient.BlackBeans].Included = beans;
+                gcb.PossibleToppings[Ingredient.Veggies].Included = veggies;
+                gcb.PossibleToppings[Ingredient.Queso].Included = queso;
+                gcb.SalsaType = salsa;
+                gcb.PossibleToppings[Ingredient.Guacamole].Included = guac;
+                gcb.PossibleToppings[Ingredient.SourCream].Included = sourCream;
+            }
 
             Assert.Equal(expectedCals, gcb.Calories);
         }
@@ -137,32 +140,40 @@ namespace BuildYourBowl.DataTests
         /// Unit tests to ensure the prep info is correct
         /// </summary>
         [Theory]
-        [InlineData(true, true, true, true, Salsa.Green, true, true)]
-        [InlineData(false, false, false, false, Salsa.None, false, false)]
-        [InlineData(true, false, true, false, Salsa.Mild, true, false)]
-        [InlineData(false, true, false, true, Salsa.None, false, true)]
-        [InlineData(true, true, false, false, Salsa.Hot, true, false)]
-        [InlineData(false, false, true, true, Salsa.Green, false, true)]
-        [InlineData(false, true, true, false, Salsa.Medium, true, true)]
-        [InlineData(true, false, false, true, Salsa.Green, false, false)]
-        public void GreenChickenBowlPrepInfoIsCorrectTest(bool chicken, bool beans, bool veggies, bool queso, Salsa salsa, bool guac, bool sourCream) 
+        [InlineData(true, true, true, true, Salsa.Green, true, true, new string[] { })]
+        [InlineData(false, false, false, false, Salsa.None, false, false, new string[] { "Hold Chicken", "Hold Black Beans", "Hold Veggies", "Hold Queso", "Hold Salsa", "Hold Guacamole", "Hold Sour Cream" })]
+        [InlineData(true, false, true, false, Salsa.Mild, true, false, new string[] { "Hold Black Beans", "Hold Queso", "Swap Mild Salsa", "Hold Sour Cream" })]
+        [InlineData(false, true, false, true, Salsa.None, false, true, new string[] { "Hold Chicken", "Hold Veggies", "Hold Salsa", "Hold Guacamole" })]
+        [InlineData(true, true, false, false, Salsa.Hot, true, false, new string[] { "Hold Veggies", "Hold Queso", "Swap Hot Salsa", "Hold Sour Cream" })]
+        [InlineData(false, false, true, true, Salsa.Green, false, true, new string[] { "Hold Chicken", "Hold Black Beans", "Hold Guacamole" })]
+        [InlineData(false, true, true, false, Salsa.Medium, true, true, new string[] { "Hold Chicken", "Hold Queso", "Swap Medium Salsa" })]
+        [InlineData(true, false, false, true, Salsa.Green, false, false, new string[] { "Hold Black Beans", "Hold Veggies", "Hold Guacamole", "Hold Sour Cream" })]
+        public void GreenChickenBowlPrepInfoIsCorrectTest(bool chicken, bool beans, bool veggies, bool queso, Salsa salsa, bool guac, bool sourCream, string[] prepInfo) 
         {
             GreenChickenBowl gcb = new GreenChickenBowl();
-            gcb.Chicken = chicken;
-            gcb.BlackBeans = beans;
-            gcb.Veggies = veggies;
-            gcb.Queso = queso;
-            gcb.SalsaType = salsa;
-            gcb.Guacamole = guac;
-            gcb.SourCream = sourCream;
+            if (gcb.PossibleToppings != null)
+            {
+                gcb.PossibleToppings[Ingredient.Chicken].Included = chicken;
+                gcb.PossibleToppings[Ingredient.BlackBeans].Included = beans;
+                gcb.PossibleToppings[Ingredient.Veggies].Included = veggies;
+                gcb.PossibleToppings[Ingredient.Queso].Included = queso;
+                gcb.SalsaType = salsa;
+                gcb.PossibleToppings[Ingredient.Guacamole].Included = guac;
+                gcb.PossibleToppings[Ingredient.SourCream].Included = sourCream;
+            }
 
-            if (!gcb.Chicken) Assert.Contains("Hold Chicken", gcb.PreparationInformation);
-            if (!gcb.BlackBeans) Assert.Contains("Hold Black Beans", gcb.PreparationInformation);
-            if (!gcb.Queso) Assert.Contains("Hold Queso", gcb.PreparationInformation);
-            if (gcb.SalsaType == Salsa.None) Assert.Contains($"Hold Salsa", gcb.PreparationInformation);
-            else if (gcb.SalsaType != Salsa.Green) Assert.Contains($"Swap {gcb.SalsaType} Salsa", gcb.PreparationInformation);
-            if (!gcb.Guacamole) Assert.Contains("Hold Guacamole", gcb.PreparationInformation);
-            if (!gcb.SourCream) Assert.Contains("Hold Sour Cream", gcb.PreparationInformation);
+            Assert.All(prepInfo, list => Assert.Contains(list, gcb.PreparationInformation));
+        }
+
+        /// <summary>
+        /// Unit test to make sure this class can be casted to inherited classes
+        /// </summary>
+        [Fact]
+        public void CanBeCastedTest()
+        {
+            GreenChickenBowl gcb = new GreenChickenBowl();
+            Assert.IsAssignableFrom<IMenuItem>(gcb);
+            Assert.IsAssignableFrom<Bowl>(gcb);
         }
     }
 }

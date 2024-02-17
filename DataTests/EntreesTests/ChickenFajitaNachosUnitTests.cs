@@ -20,7 +20,7 @@ namespace BuildYourBowl.DataTests
         public void ChickenFajitaNachosDefaultCarnitasIsCorrectTest()
         {
             ChickenFajitaNachos c = new ChickenFajitaNachos();
-            Assert.True(c.Chicken);
+            Assert.True(c.PossibleToppings[Ingredient.Chicken].Included);
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace BuildYourBowl.DataTests
         public void ChickenFajitaNachosDefaultVeggiesIsCorrectTest()
         {
             ChickenFajitaNachos c = new ChickenFajitaNachos();
-            Assert.True(c.Veggies);
+            Assert.True(c.PossibleToppings[Ingredient.Veggies].Included);
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace BuildYourBowl.DataTests
         public void ChickenFajitaNachosDefaultQuesoIsCorrectTest()
         {
             ChickenFajitaNachos c = new ChickenFajitaNachos();
-            Assert.True(c.Queso);
+            Assert.True(c.PossibleToppings[Ingredient.Queso].Included);
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace BuildYourBowl.DataTests
         public void ChickenFajitaNachosDefaultGuacIsCorrectTest()
         {
             ChickenFajitaNachos c = new ChickenFajitaNachos();
-            Assert.False(c.Guacamole);
+            Assert.False(c.PossibleToppings[Ingredient.Guacamole].Included);
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace BuildYourBowl.DataTests
         public void ChickenFajitaNachosDefaultSourCreamIsCorrectTest()
         {
             ChickenFajitaNachos c = new ChickenFajitaNachos();
-            Assert.True(c.SourCream);
+            Assert.True(c.PossibleToppings[Ingredient.SourCream].Included);
         }
 
         /// <summary>
@@ -98,13 +98,15 @@ namespace BuildYourBowl.DataTests
         public void ChickenFajitaCaloriesAreCorrectTest(bool chicken, bool veggies, bool queso, Salsa salsa, bool guac, bool sourCream, uint expectedPrice) 
         {
             ChickenFajitaNachos c = new ChickenFajitaNachos();
-            c.Chicken = chicken;
-            c.Veggies = veggies;
-            c.Queso = queso;
-            c.SalsaType = salsa;
-            c.Guacamole = guac;
-            c.SourCream = sourCream;
-
+            if (c.PossibleToppings != null)
+            {
+                c.PossibleToppings[Ingredient.Chicken].Included = chicken;
+                c.PossibleToppings[Ingredient.Veggies].Included = veggies;
+                c.PossibleToppings[Ingredient.Queso].Included = queso;
+                c.SalsaType = salsa;
+                c.PossibleToppings[Ingredient.Guacamole].Included = guac;
+                c.PossibleToppings[Ingredient.SourCream].Included = sourCream;
+            }
             Assert.Equal(expectedPrice, c.Calories);
         }
 
@@ -133,12 +135,15 @@ namespace BuildYourBowl.DataTests
         public void ChickenFajitaPriceIsCorrectTest(bool chicken, bool veggies, bool queso, Salsa salsa, bool guac, bool sourCream, decimal expectedPrice)
         {
             ChickenFajitaNachos c = new ChickenFajitaNachos();
-            c.Chicken = chicken;
-            c.Veggies = veggies;
-            c.Queso = queso;
-            c.SalsaType = salsa;
-            c.Guacamole = guac;
-            c.SourCream = sourCream;
+            if (c.PossibleToppings != null)
+            {
+                c.PossibleToppings[Ingredient.Chicken].Included = chicken;
+                c.PossibleToppings[Ingredient.Veggies].Included = veggies;
+                c.PossibleToppings[Ingredient.Queso].Included = queso;
+                c.SalsaType = salsa;
+                c.PossibleToppings[Ingredient.Guacamole].Included = guac;
+                c.PossibleToppings[Ingredient.SourCream].Included = sourCream;
+            }
 
             Assert.Equal(expectedPrice, c.Price);
         }
@@ -154,32 +159,40 @@ namespace BuildYourBowl.DataTests
         /// <param name="sourCream">Whether the bowl contains sour cream</param>
         [Theory]
         //Specific required test case
-        [InlineData(false, false, true, Salsa.Hot, false, false)]
+        [InlineData(false, false, true, Salsa.Hot, false, false, new string[] { "Hold Chicken", "Hold Veggies", "Swap Hot Salsa", "Hold Sour Cream" })]
 
-        [InlineData(true, true, true, Salsa.Medium, false, true)]
-        [InlineData(true, true, true, Salsa.None, false, true)]
-        [InlineData(false, false, true, Salsa.Medium, false, true)]
-        [InlineData(true, true, true, Salsa.Medium, true, false)]
-        [InlineData(false, true, false, Salsa.Mild, false, true)]
-        [InlineData(true, true, true, Salsa.Medium, true, true)]
-        [InlineData(false, false, false, Salsa.None, false, false)]
-        public void ChickenFajitaPrepInformationIsCorrectTest(bool chicken, bool veggies, bool queso, Salsa salsa, bool guac, bool sourCream) 
+        [InlineData(true, true, true, Salsa.Medium, false, true, new string[] { })]
+        [InlineData(true, true, true, Salsa.None, false, true, new string[] { "Hold Salsa" })]
+        [InlineData(false, false, true, Salsa.Medium, false, true, new string[] { "Hold Chicken", "Hold Veggies" })]
+        [InlineData(true, true, true, Salsa.Medium, true, false, new string[] { "Add Guacamole", "Hold Sour Cream" })]
+        [InlineData(false, true, false, Salsa.Mild, false, true, new string[] { "Hold Chicken", "Hold Queso", "Swap Mild Salsa" })]
+        [InlineData(true, true, true, Salsa.Medium, true, true, new string[] { "Add Guacamole" })]
+        [InlineData(false, false, false, Salsa.None, false, false, new string[] { "Hold Chicken", "Hold Veggies", "Hold Queso", "Hold Salsa", "Hold Sour Cream" })]
+        public void ChickenFajitaPrepInformationIsCorrectTest(bool chicken, bool veggies, bool queso, Salsa salsa, bool guac, bool sourCream, string[] prepInfo) 
         {
             ChickenFajitaNachos c = new ChickenFajitaNachos();
-            c.Chicken = chicken;
-            c.Veggies = veggies;
-            c.Queso = queso;
-            c.SalsaType = salsa;
-            c.Guacamole = guac;
-            c.SourCream = sourCream;
+            if (c.PossibleToppings != null)
+            {
+                c.PossibleToppings[Ingredient.Chicken].Included = chicken;
+                c.PossibleToppings[Ingredient.Veggies].Included = veggies;
+                c.PossibleToppings[Ingredient.Queso].Included = queso;
+                c.SalsaType = salsa;
+                c.PossibleToppings[Ingredient.Guacamole].Included = guac;
+                c.PossibleToppings[Ingredient.SourCream].Included = sourCream;
+            }
 
-            if (!c.Chicken) Assert.Contains("Hold Chicken", c.PreparationInformation);
-            if (!c.Veggies) Assert.Contains("Hold Veggies", c.PreparationInformation);
-            if (!c.Queso) Assert.Contains("Hold Queso", c.PreparationInformation);
-            if(c.SalsaType == Salsa.None) Assert.Contains($"Hold Salsa", c.PreparationInformation);
-            else if (c.SalsaType != Salsa.Medium) Assert.Contains($"Swap {c.SalsaType} Salsa", c.PreparationInformation);
-            if (c.Guacamole) Assert.Contains("Add Guacamole", c.PreparationInformation);
-            if (!c.SourCream) Assert.Contains("Hold Sour Cream", c.PreparationInformation);
+            Assert.All(prepInfo, list => Assert.Contains(list, c.PreparationInformation));
+        }
+
+        /// <summary>
+        /// Unit test to make sure this class can be casted to inherited classes
+        /// </summary>
+        [Fact]
+        public void CanBeCastedTest()
+        {
+            ChickenFajitaNachos c = new ChickenFajitaNachos();
+            Assert.IsAssignableFrom<IMenuItem>(c);
+            Assert.IsAssignableFrom<Nacho>(c);
         }
     }
 }

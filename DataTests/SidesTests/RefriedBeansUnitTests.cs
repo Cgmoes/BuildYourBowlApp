@@ -21,7 +21,7 @@ namespace BuildYourBowl.DataTests
 
             Assert.True(r.Onions);
             Assert.True(r.CheddarCheese);
-            Assert.Equal(Size.Medium, r.BeansSize);
+            Assert.Equal(Size.Medium, r.Size);
             Assert.Equal(3.75m, r.Price);
             Assert.Equal((uint)300, r.Calories);
         }
@@ -34,18 +34,18 @@ namespace BuildYourBowl.DataTests
         /// <param name="size">Size of the side</param>
         /// <param name="expectedPrice">expected price of the side</param>
         [Theory]
-        [InlineData(true, true, Size.Kids, 2.75)]
-        [InlineData(true, false, Size.Small, 3.25)]
+        [InlineData(true, true, Size.Kids, 2.50)]
+        [InlineData(true, false, Size.Small, 3.00)]
         [InlineData(false, true, Size.Medium, 3.75)]
-        [InlineData(false, false, Size.Large, 4.50)]
-        [InlineData(false, false, Size.Kids, 2.75)]
-        [InlineData(false, true, Size.Small, 3.25)]
+        [InlineData(false, false, Size.Large, 4.75)]
+        [InlineData(false, false, Size.Kids, 2.50)]
+        [InlineData(false, true, Size.Small, 3.00)]
         [InlineData(true, false, Size.Medium, 3.75)]
-        [InlineData(true, true, Size.Large, 4.50)]
+        [InlineData(true, true, Size.Large, 4.75)]
         public void PriceIsCorrectTest(bool cheese, bool onions, Size size, decimal expectedPrice)
         {
             RefriedBeans r = new RefriedBeans();
-            r.BeansSize = size;
+            r.Size = size;
             r.CheddarCheese = cheese;
             r.Onions = onions;
 
@@ -73,7 +73,7 @@ namespace BuildYourBowl.DataTests
             RefriedBeans r = new RefriedBeans();
             r.CheddarCheese = cheese;
             r.Onions = onions;
-            r.BeansSize = size;
+            r.Size = size;
 
             Assert.Equal((uint)expectedCals, r.Calories);
         }
@@ -98,11 +98,22 @@ namespace BuildYourBowl.DataTests
             RefriedBeans r = new RefriedBeans();
             r.CheddarCheese = cheese;
             r.Onions = onions;
-            r.BeansSize = size;
+            r.Size = size;
 
             if(!r.Onions)Assert.Contains("Hold Onions", r.PreparationInformation);
             if (!r.CheddarCheese) Assert.Contains("Hold Cheddar Cheese", r.PreparationInformation);
-            Assert.Contains($"{r.BeansSize}", r.PreparationInformation);
+            Assert.Contains($"{r.Size}", r.PreparationInformation);
+        }
+
+        /// <summary>
+        /// Unit test to make sure this class can be casted to inherited classes
+        /// </summary>
+        [Fact]
+        public void CanBeCastedTest()
+        {
+            RefriedBeans r = new RefriedBeans();
+            Assert.IsAssignableFrom<IMenuItem>(r);
+            Assert.IsAssignableFrom<Side>(r);
         }
     }
 }

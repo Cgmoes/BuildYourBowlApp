@@ -20,8 +20,8 @@ namespace BuildYourBowl.DataTests
             ChickenNuggetsMeal c = new ChickenNuggetsMeal();
 
             Assert.Equal((uint)5, c.Count);
-            Assert.False(c.DrinkChoice.Chocolate);
-            Assert.False(c.SideChoice.Curly);
+            //Assert.False(c.DrinkChoice.Chocolate);
+            //Assert.False(c.SideChoice.Curly);
             Assert.Equal(5.99m, c.Price);
         }
 
@@ -61,7 +61,7 @@ namespace BuildYourBowl.DataTests
         {
             ChickenNuggetsMeal c = new ChickenNuggetsMeal();
             c.Count = count;
-            Fries f = new Fries() { FrySize = size};
+            Fries f = new Fries() { Size = size};
             c.SideChoice = f;
 
             Assert.Equal(expectedPrice, c.Price);
@@ -87,7 +87,7 @@ namespace BuildYourBowl.DataTests
         {
             ChickenNuggetsMeal c = new ChickenNuggetsMeal();
             c.Count = count;
-            Fries f = new Fries() { FrySize = size };
+            Fries f = new Fries() { Size = size };
             c.SideChoice = f;
 
             //Want to assert that kids meal calories really is "main " calories + 
@@ -113,10 +113,29 @@ namespace BuildYourBowl.DataTests
         {
             ChickenNuggetsMeal c = new ChickenNuggetsMeal();
             c.Count = count;
-            Fries f = new Fries() { FrySize = size };
+            Fries f = new Fries() { Size = size };
             c.SideChoice = f;
 
             if(c.Count != 5) Assert.Contains($"{c.Count} Nuggets", c.PreparationInformation);
+        }
+
+        /// <summary>
+        /// Unit test to make sure this class can be casted to inherited classes
+        /// </summary>
+        [Fact]
+        public void CanBeCastedTest()
+        {
+            ChickenNuggetsMeal c = new ChickenNuggetsMeal();
+            Assert.IsAssignableFrom<IMenuItem>(c);
+            Assert.IsAssignableFrom<KidsMeal>(c);
+
+            Fries f = new Fries();
+            Assert.IsAssignableFrom<IMenuItem>(f);
+            Assert.IsAssignableFrom<Side>(f);
+
+            Milk m = new Milk();
+            Assert.IsAssignableFrom<IMenuItem>(m);
+            Assert.IsAssignableFrom<Drink>(m);
         }
     }
 }

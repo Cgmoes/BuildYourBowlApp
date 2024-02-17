@@ -128,6 +128,16 @@ namespace BuildYourBowl.DataTests
             Assert.Contains(af.DrinkFlavor.ToString(), af.PreparationInformation);
             if (!af.Ice) Assert.Contains("Hold Ice", af.PreparationInformation);
         }
-        
+
+        /// <summary>
+        /// Unit test to make sure this class can be casted to inherited classes
+        /// </summary>
+        [Fact]
+        public void CanBeCastedTest()
+        {
+            AguaFresca af = new AguaFresca();
+            Assert.IsAssignableFrom<IMenuItem>(af);
+            Assert.IsAssignableFrom<Drink>(af);
+        }
     }
 }

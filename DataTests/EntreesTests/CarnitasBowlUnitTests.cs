@@ -20,7 +20,7 @@ namespace BuildYourBowl.DataTests
         public void CarnitasBowlDefaultCarnitasIsCorrectTest() 
         {
             CarnitasBowl cb = new CarnitasBowl();
-            Assert.True(cb.Carnitas);
+            Assert.True(cb.PossibleToppings[Ingredient.Carnitas].Included);
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace BuildYourBowl.DataTests
         public void CarnitasBowlDefaultVeggiesIsCorrectTest() 
         {
             CarnitasBowl cb = new CarnitasBowl();
-            Assert.False(cb.Veggies);
+            Assert.False(cb.PossibleToppings[Ingredient.Veggies].Included);
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace BuildYourBowl.DataTests
         public void CarnitasBowlDefaultQuesoIsCorrectTest()
         {
             CarnitasBowl cb = new CarnitasBowl();
-            Assert.True(cb.Queso);
+            Assert.True(cb.PossibleToppings[Ingredient.Queso].Included);
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace BuildYourBowl.DataTests
         public void CarnitasBowlDefaultPintoBeansIsCorrectTest()
         {
             CarnitasBowl cb = new CarnitasBowl();
-            Assert.True(cb.PintoBeans);
+            Assert.True(cb.PossibleToppings[Ingredient.PintoBeans].Included);
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace BuildYourBowl.DataTests
         public void CarnitasBowlDefaultGuacIsCorrectTest()
         {
             CarnitasBowl cb = new CarnitasBowl();
-            Assert.False(cb.Guacamole);
+            Assert.False(cb.PossibleToppings[Ingredient.Guacamole].Included);
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace BuildYourBowl.DataTests
         public void CarnitasBowlDefaultSourCreamIsCorrectTest()
         {
             CarnitasBowl cb = new CarnitasBowl();
-            Assert.False(cb.SourCream);
+            Assert.False(cb.PossibleToppings[Ingredient.SourCream].Included);
         }
 
         /// <summary>
@@ -109,13 +109,16 @@ namespace BuildYourBowl.DataTests
         public void CarnitasBowlCaloriesIsCorrectTest(bool carnitas, bool veggies, bool queso, bool pintoBeans, Salsa salsa, bool guac, bool sourCream, uint expectedCals) 
         {
             CarnitasBowl cb = new CarnitasBowl();
-            cb.Carnitas = carnitas;
-            cb.Veggies = veggies;
-            cb.Queso = queso;
-            cb.PintoBeans = pintoBeans;
-            cb.SalsaType = salsa;
-            cb.Guacamole = guac;
-            cb.SourCream = sourCream;
+            if (cb.PossibleToppings != null)
+            {
+                cb.PossibleToppings[Ingredient.Carnitas].Included = carnitas;
+                cb.PossibleToppings[Ingredient.Veggies].Included = veggies;
+                cb.PossibleToppings[Ingredient.Queso].Included = queso;
+                cb.PossibleToppings[Ingredient.PintoBeans].Included = pintoBeans;
+                cb.SalsaType = salsa;
+                cb.PossibleToppings[Ingredient.Guacamole].Included = guac;
+                cb.PossibleToppings[Ingredient.SourCream].Included = sourCream;
+            }
 
             Assert.Equal(expectedCals, cb.Calories);
         }
@@ -146,13 +149,16 @@ namespace BuildYourBowl.DataTests
         public void CarnitasBowlPriceIsCorrectTest(bool carnitas, bool veggies, bool queso, bool pintoBeans, Salsa salsa, bool guac, bool sourCream, decimal expectedPrice)
         {
             CarnitasBowl cb = new CarnitasBowl();
-            cb.Carnitas = carnitas;
-            cb.Veggies = veggies;
-            cb.Queso = queso;
-            cb.PintoBeans = pintoBeans;
-            cb.SalsaType = salsa;
-            cb.Guacamole = guac;
-            cb.SourCream = sourCream;
+            if (cb.PossibleToppings != null)
+            {
+                cb.PossibleToppings[Ingredient.Carnitas].Included = carnitas;
+                cb.PossibleToppings[Ingredient.Veggies].Included = veggies;
+                cb.PossibleToppings[Ingredient.Queso].Included = queso;
+                cb.PossibleToppings[Ingredient.PintoBeans].Included = pintoBeans;
+                cb.SalsaType = salsa;
+                cb.PossibleToppings[Ingredient.Guacamole].Included = guac;
+                cb.PossibleToppings[Ingredient.SourCream].Included = sourCream;
+            }
 
             Assert.Equal(expectedPrice, cb.Price);
         }
@@ -170,31 +176,41 @@ namespace BuildYourBowl.DataTests
         [Theory]
 
         //Specific required test case
-        [InlineData(false, true, false, false, Salsa.Medium, true, true)]
+        [InlineData(false, true, false, false, Salsa.Medium, true, true, new string[] { "Hold Carnitas", "Add Veggies", "Hold Queso", "Hold Pinto Beans"})]
 
-        [InlineData(true, false, true, true, Salsa.Medium, false, false)]
-        [InlineData(false, true, false, false, Salsa.None, true, true)]
-        [InlineData(false, true, true, false, Salsa.Medium, true, true)]
-        [InlineData(false, false, true, true, Salsa.Hot, true, false)]
-        [InlineData(true, false, false, true, Salsa.Medium, false, false)]
-        [InlineData(false, false, false, false, Salsa.None, false, false)]
-        [InlineData(true, true, true, true, Salsa.Medium, true, true)]
-        public void CarnitasBowlPrepInfoIsCorrectTest(bool carnitas, bool veggies, bool queso, bool beans, Salsa salsa, bool guac, bool sourCream)
+        [InlineData(true, false, true, true, Salsa.Medium, false, false, new string[] {})]
+        [InlineData(false, true, false, false, Salsa.None, true, true, new string[] { "Hold Carnitas", "Add Veggies", "Hold Queso", "Hold Pinto Beans", "Hold Salsa" })]
+        [InlineData(false, true, true, false, Salsa.Medium, true, true, new string[] { "Hold Carnitas", "Add Veggies", "Hold Pinto Beans"})]
+        [InlineData(false, false, true, true, Salsa.Hot, true, false, new string[] { "Hold Carnitas", "Swap Hot Salsa", "Add Guacamole" })]
+        [InlineData(true, false, false, true, Salsa.Medium, false, false, new string[] { "Hold Queso"})]
+        [InlineData(false, false, false, false, Salsa.None, false, false, new string[] { "Hold Carnitas", "Hold Queso", "Hold Pinto Beans", "Hold Salsa" })]
+        [InlineData(true, true, true, true, Salsa.Medium, true, true, new string[] { "Add Veggies", "Add Guacamole", "Add Sour Cream"})]
+        public void CarnitasBowlPrepInfoIsCorrectTest(bool carnitas, bool veggies, bool queso, bool beans, Salsa salsa, bool guac, bool sourCream, string[] prepInfo)
         {
             CarnitasBowl cb = new CarnitasBowl();
-            cb.Carnitas = carnitas;
-            cb.Veggies = veggies;
-            cb.Queso = queso;
-            cb.PintoBeans = beans;
-            cb.SalsaType = salsa;
-            cb.Guacamole = guac;
-            cb.SourCream = sourCream;
+            if (cb.PossibleToppings != null) 
+            {
+                cb.PossibleToppings[Ingredient.Carnitas].Included = carnitas;
+                cb.PossibleToppings[Ingredient.Veggies].Included = veggies;
+                cb.PossibleToppings[Ingredient.Queso].Included = queso;
+                cb.PossibleToppings[Ingredient.PintoBeans].Included = beans;
+                cb.SalsaType = salsa;
+                cb.PossibleToppings[Ingredient.Guacamole].Included = guac;
+                cb.PossibleToppings[Ingredient.SourCream].Included = sourCream;
+            }
 
-            if (!cb.Carnitas) Assert.Contains("Hold Carnitas", cb.PreparationInformation);
-            if (!cb.Queso) Assert.Contains("Hold Queso", cb.PreparationInformation);
-            if (!cb.PintoBeans) Assert.Contains("Hold Pinto Beans", cb.PreparationInformation);
-            if (cb.Guacamole) Assert.Contains("Add Guacamole", cb.PreparationInformation);
-            if (cb.SourCream) Assert.Contains("Add Sour Cream", cb.PreparationInformation);
+            Assert.All(prepInfo, list => Assert.Contains(list, cb.PreparationInformation));
+        }
+
+        /// <summary>
+        /// Unit test to make sure this class can be casted to inherited classes
+        /// </summary>
+        [Fact]
+        public void CanBeCastedTest()
+        {
+            CarnitasBowl cb = new CarnitasBowl();
+            Assert.IsAssignableFrom<IMenuItem>(cb);
+            Assert.IsAssignableFrom<Bowl>(cb);
         }
     }
 }

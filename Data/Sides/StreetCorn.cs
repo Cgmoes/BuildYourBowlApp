@@ -74,6 +74,7 @@ namespace BuildYourBowl.Data
         public StreetCorn() 
         {
             Size = Size.Medium;
+            _defaultPrice = 4.50m;
         }
     }
 }
