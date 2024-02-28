@@ -88,6 +88,9 @@ namespace BuildYourBowl.Data
             }
         }
 
+        /// <summary>
+        /// Constructor for agua fresca
+        /// </summary>
         public AguaFresca() 
         {
             Size = Size.Medium;

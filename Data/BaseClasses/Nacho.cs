@@ -25,5 +25,14 @@ namespace BuildYourBowl.Data
         {
             BaseIngredient = new IngredientItem(Ingredient.Chips);
         }
+
+        /// <summary>
+        /// method to override toString
+        /// </summary>
+        /// <returns>the name of the object</returns>
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

@@ -100,5 +100,14 @@ namespace BuildYourBowl.Data
                 if (value >= _countBacking && value <= _maxCount) _countBacking = value;
             }
         }
+
+        /// <summary>
+        /// method to override toString
+        /// </summary>
+        /// <returns>the name of the object</returns>
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

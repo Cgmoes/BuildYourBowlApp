@@ -55,5 +55,14 @@ namespace BuildYourBowl.Data
         /// preparation information for the drink
         /// </summary>
         public abstract IEnumerable<string> PreparationInformation { get; }
+
+        /// <summary>
+        /// method to override toString
+        /// </summary>
+        /// <returns>the name of the object</returns>
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

@@ -25,6 +25,8 @@ namespace PointOfSale
         public MainWindow()
         {
             InitializeComponent();
+
+            DataContext = new ObservableCollection<IMenuItem>();
         }
     }
 }

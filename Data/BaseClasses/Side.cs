@@ -51,5 +51,14 @@ namespace BuildYourBowl.Data
         /// The size of the side
         /// </summary>
         public virtual Size Size { get; set; }
+
+        /// <summary>
+        /// method to override toString
+        /// </summary>
+        /// <returns>the name of the object</returns>
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

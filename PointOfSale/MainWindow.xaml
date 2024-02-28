@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PointOfSale"
         mc:Ignorable="d"
         Title="Order Kiosk" Height="720" Width="1080">
-    <Grid Background="#f8f9fa">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="4*"/>
             <RowDefinition Height="1*"/>
@@ -51,7 +51,6 @@
 
                 <Setter Property="FontSize" Value="15"/>
                 <Setter Property="Margin" Value="10"/>
-                <Setter Property="Background" Value="#ced4da"/>
             </Style>
         </Grid.Resources>
     </Grid>

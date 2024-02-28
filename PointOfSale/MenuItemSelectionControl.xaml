@@ -27,25 +27,25 @@
         <TextBlock Grid.Column="3" Grid.Row="0">Drinks</TextBlock>
         <TextBlock Grid.Column="4" Grid.Row="0">Kids Meals</TextBlock>
         
-        <Button Grid.Column="0" Grid.Row="1">Custom Bowl</Button>
-        <Button Grid.Column="1" Grid.Row="1">Custom Nachos</Button>
-        <Button Grid.Column="2" Grid.Row="1">Fries</Button>
-        <Button Grid.Column="3" Grid.Row="1">Agua Fresca</Button>
-        <Button Grid.Column="4" Grid.Row="1">Chicken Nuggets</Button>
-        
-        <Button Grid.Column="0" Grid.Row="2">Carnitas</Button>
-        <Button Grid.Column="1" Grid.Row="2">Chicken Fajita</Button>
-        <Button Grid.Column="2" Grid.Row="2">Street Corn</Button>
-        <Button Grid.Column="3" Grid.Row="2">Horchata</Button>
-        <Button Grid.Column="4" Grid.Row="2">Corn Dog Bites</Button>
+        <Button Name="CustomBowlButton" Grid.Column="0" Grid.Row="1" Click="AddName">Custom Bowl</Button>
+        <Button Name="CustomNachosButton" Grid.Column="1" Grid.Row="1" Click="AddName">Custom Nachos</Button>
+        <Button Name="FriesButton" Grid.Column="2" Grid.Row="1" Click="AddName">Fries</Button>
+        <Button Name="AguaFrescaButton" Grid.Column="3" Grid.Row="1" Click="AddName">Agua Fresca</Button>
+        <Button Name="ChickenNuggetsButton" Grid.Column="4" Grid.Row="1" Click="AddName">Chicken Nuggets</Button>
 
-        <Button Grid.Column="0" Grid.Row="3">Green Chicken</Button>
-        <Button Grid.Column="1" Grid.Row="3">Classic</Button>
-        <Button Grid.Column="2" Grid.Row="3">Refried Beans</Button>
-        <Button Grid.Column="3" Grid.Row="3">Milk</Button>
-        <Button Grid.Column="4" Grid.Row="3">Sliders</Button>
+        <Button Name="CarnitasButton" Grid.Column="0" Grid.Row="2" Click="AddName">Carnitas</Button>
+        <Button Name="ChickenFajitaButton" Grid.Column="1" Grid.Row="2" Click="AddName">Chicken Fajita</Button>
+        <Button Name="StreetCornButton" Grid.Column="2" Grid.Row="2" Click="AddName">Street Corn</Button>
+        <Button Name="HorchataButton" Grid.Column="3" Grid.Row="2" Click="AddName">Horchata</Button>
+        <Button Name="CornDogBitesButton" Grid.Column="4" Grid.Row="2" Click="AddName">Corn Dog Bites</Button>
 
-        <Button Grid.Column="0" Grid.Row="4">Spicy Steak</Button>
+        <Button Name="GreenChickenButton" Grid.Column="0" Grid.Row="3" Click="AddName">Green Chicken</Button>
+        <Button Name="ClassicButton" Grid.Column="1" Grid.Row="3" Click="AddName">Classic</Button>
+        <Button Name="RefriedBeansButton" Grid.Column="2" Grid.Row="3" Click="AddName">Refried Beans</Button>
+        <Button Name="MilkButton" Grid.Column="3" Grid.Row="3" Click="AddName">Milk</Button>
+        <Button Name="SlidersButton" Grid.Column="4" Grid.Row="3" Click="AddName">Sliders</Button>
+
+        <Button Name="SpicySteakButton" Grid.Column="0" Grid.Row="4" Click="AddName">Spicy Steak</Button>
 
         <Grid.Resources>
             <Style TargetType="TextBlock">
@@ -63,7 +63,6 @@
                 
                 <Setter Property="FontSize" Value="15"/>
                 <Setter Property="Margin" Value="10"/>
-                <Setter Property="Background" Value="#ced4da"/>
             </Style>
         </Grid.Resources>
     </Grid>

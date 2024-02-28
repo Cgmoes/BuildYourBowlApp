@@ -8,22 +8,14 @@
              d:DesignHeight="720" d:DesignWidth="1080">
 
     <DockPanel Margin="10" LastChildFill="True">
-        <TextBlock DockPanel.Dock="Top">Order Number: 1</TextBlock>
-        <TextBlock DockPanel.Dock="Top">Date: 3/1/2024</TextBlock>
+        <TextBlock DockPanel.Dock="Top" Margin="10" FontSize="20">Order Number: 1</TextBlock>
+        <TextBlock DockPanel.Dock="Top" Margin="10" FontSize="20">Date: 3/1/2024</TextBlock>
 
-        <TextBlock DockPanel.Dock="Bottom" x:Name="TotalGUI">Total: XX</TextBlock>
-        <TextBlock DockPanel.Dock="Bottom" x:Name="TaxGUI">Tax: XX</TextBlock>
-        <TextBlock DockPanel.Dock="Bottom" x:Name="SubtotalGUI">Subtotal: XX</TextBlock>
+        <TextBlock DockPanel.Dock="Bottom" Name="TotalGUI" Margin="10" FontSize="20">Total: XX</TextBlock>
+        <TextBlock DockPanel.Dock="Bottom" Name="TaxGUI" Margin="10" FontSize="20">Tax: XX</TextBlock>
+        <TextBlock DockPanel.Dock="Bottom" Name="SubtotalGUI" Margin="10" FontSize="20">Subtotal: XX</TextBlock>
 
-        <ListView DockPanel.Dock="Bottom" x:Name="ListViewGUI"></ListView>
+        <ListView DockPanel.Dock="Bottom" Name="ListViewGUI" ItemsSource="{Binding}" FontSize="5"/>
 
-        <DockPanel.Resources>
-            <Style TargetType="TextBlock">
-                <Setter Property="Margin" Value="10"/>
-                <Setter Property="FontSize" Value="20"/>
-            </Style>
-        </DockPanel.Resources>
-        
-        
     </DockPanel>
 </UserControl>
