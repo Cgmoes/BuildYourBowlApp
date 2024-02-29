@@ -15,7 +15,13 @@
         <TextBlock DockPanel.Dock="Bottom" Name="TaxGUI" Margin="10" FontSize="20">Tax: XX</TextBlock>
         <TextBlock DockPanel.Dock="Bottom" Name="SubtotalGUI" Margin="10" FontSize="20">Subtotal: XX</TextBlock>
 
-        <ListView DockPanel.Dock="Bottom" Name="ListViewGUI" ItemsSource="{Binding}" FontSize="5"/>
+        <ListView DockPanel.Dock="Bottom" Name="ListViewGUI" ItemsSource="{Binding}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}" FontSize="15"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
     </DockPanel>
 </UserControl>

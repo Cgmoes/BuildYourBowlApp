@@ -107,5 +107,15 @@ namespace BuildYourBowl.DataTests
             Assert.IsAssignableFrom<IMenuItem>(f);
             Assert.IsAssignableFrom<Side>(f);
         }
+
+        /// <summary>
+        /// Unit test to ensure to string is correct
+        /// </summary>
+        [Fact]
+        public void ToStringTest()
+        {
+            Fries f = new Fries();
+            Assert.Equal(f.Name, f.ToString());
+        }
     }
 }

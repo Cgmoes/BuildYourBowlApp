@@ -115,5 +115,15 @@ namespace BuildYourBowl.DataTests
             Assert.IsAssignableFrom<IMenuItem>(r);
             Assert.IsAssignableFrom<Side>(r);
         }
+
+        /// <summary>
+        /// Unit test to ensure to string is correct
+        /// </summary>
+        [Fact]
+        public void ToStringTest()
+        {
+            RefriedBeans r = new RefriedBeans();
+            Assert.Equal(r.Name, r.ToString());
+        }
     }
 }

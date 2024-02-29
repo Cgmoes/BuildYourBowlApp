@@ -148,5 +148,15 @@ namespace BuildYourBowl.DataTests
             Assert.IsAssignableFrom<IMenuItem>(m);
             Assert.IsAssignableFrom<Drink>(m);
         }
+
+        /// <summary>
+        /// Unit test to ensure to string is correct
+        /// </summary>
+        [Fact]
+        public void ToStringTest()
+        {
+            SlidersMeal s = new SlidersMeal();
+            Assert.Equal(s.Name, s.ToString());
+        }
     }
 }

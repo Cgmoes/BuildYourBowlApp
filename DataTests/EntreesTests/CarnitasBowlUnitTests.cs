@@ -212,5 +212,15 @@ namespace BuildYourBowl.DataTests
             Assert.IsAssignableFrom<IMenuItem>(cb);
             Assert.IsAssignableFrom<Bowl>(cb);
         }
+
+        /// <summary>
+        /// Unit test to ensure to string is correct
+        /// </summary>
+        [Fact]
+        public void ToStringTest()
+        {
+            CarnitasBowl cb = new CarnitasBowl();
+            Assert.Equal(cb.Name, cb.ToString());
+        }
     }
 }

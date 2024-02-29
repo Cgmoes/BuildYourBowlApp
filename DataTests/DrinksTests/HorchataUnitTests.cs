@@ -114,5 +114,15 @@ namespace BuildYourBowl.DataTests
             Assert.IsAssignableFrom<IMenuItem>(h);
             Assert.IsAssignableFrom<Drink>(h);
         }
+
+        /// <summary>
+        /// Unit test to ensure to string is correct
+        /// </summary>
+        [Fact]
+        public void ToStringTest()
+        {
+            Horchata h = new Horchata();
+            Assert.Equal(h.Name, h.ToString());
+        }
     }
 }

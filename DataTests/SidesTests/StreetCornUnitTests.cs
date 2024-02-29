@@ -123,5 +123,15 @@ namespace BuildYourBowl.DataTests
             Assert.IsAssignableFrom<IMenuItem>(s);
             Assert.IsAssignableFrom<Side>(s);
         }
+
+        /// <summary>
+        /// Unit test to ensure to string is correct
+        /// </summary>
+        [Fact]
+        public void ToStringTest()
+        {
+            StreetCorn s = new StreetCorn();
+            Assert.Equal(s.Name, s.ToString());
+        }
     }
 }

@@ -175,5 +175,15 @@ namespace BuildYourBowl.DataTests
             Assert.IsAssignableFrom<IMenuItem>(gcb);
             Assert.IsAssignableFrom<Bowl>(gcb);
         }
+
+        /// <summary>
+        /// Unit test to ensure to string is correct
+        /// </summary>
+        [Fact]
+        public void ToStringTest()
+        {
+            GreenChickenBowl gcb = new GreenChickenBowl();
+            Assert.Equal(gcb.Name, gcb.ToString());
+        }
     }
 }

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace BuildYourBowl.DataTests
 {
     /// <summary>
-    /// class definition for nacho unit tests
+    /// Unit test classs for base bowl
     /// </summary>
-    public class NachoUnitTests
+    public class BowlUnitTests
     {
         /// <summary>
         /// Unit test to ensure to string is correct
@@ -17,8 +17,8 @@ namespace BuildYourBowl.DataTests
         [Fact]
         public void ToStringTest()
         {
-            Nacho n = new Nacho();
-            Assert.Equal(n.Name, n.ToString());
+            Bowl b = new Bowl();
+            Assert.Equal(b.Name, b.ToString());
         }
 
         /// <summary>
@@ -27,9 +27,9 @@ namespace BuildYourBowl.DataTests
         [Fact]
         public void CanBeCastedTest()
         {
-            Nacho n = new Nacho();
-            Assert.IsAssignableFrom<IMenuItem>(n);
-            Assert.IsAssignableFrom<Entree>(n);
+            Bowl b = new Bowl();
+            Assert.IsAssignableFrom<IMenuItem>(b);
+            Assert.IsAssignableFrom<Entree>(b);
         }
     }
 }

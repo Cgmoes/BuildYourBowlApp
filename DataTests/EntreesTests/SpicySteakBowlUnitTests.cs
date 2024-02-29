@@ -204,5 +204,15 @@ namespace BuildYourBowl.DataTests
             Assert.IsAssignableFrom<IMenuItem>(s);
             Assert.IsAssignableFrom<Bowl>(s);
         }
+
+        /// <summary>
+        /// Unit test to ensure to string is correct
+        /// </summary>
+        [Fact]
+        public void ToStringTest()
+        {
+            SpicySteakBowl s = new SpicySteakBowl();
+            Assert.Equal(s.Name, s.ToString());
+        }
     }
 }

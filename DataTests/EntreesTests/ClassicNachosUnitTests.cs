@@ -197,5 +197,15 @@ namespace BuildYourBowl.DataTests
             Assert.IsAssignableFrom<IMenuItem>(c);
             Assert.IsAssignableFrom<Nacho>(c);
         }
+
+        /// <summary>
+        /// Unit test to ensure to string is correct
+        /// </summary>
+        [Fact]
+        public void ToStringTest()
+        {
+            ClassicNachos c = new ClassicNachos();
+            Assert.Equal(c.Name, c.ToString());
+        }
     }
 }
