@@ -4,25 +4,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
+using System.Collections.Specialized;
 
 namespace BuildYourBowl.Data
 {
     /// <summary>
     /// definition for order class
     /// </summary>
-    public class Order : ICollection<IMenuItem>
+    public class Order : ICollection<IMenuItem>, INotifyCollectionChanged, INotifyPropertyChanged
     {
-        private readonly List<IMenuItem> items = new List<IMenuItem>();
+        private readonly List<IMenuItem> _items = new List<IMenuItem>();
+
+        public event NotifyCollectionChangedEventHandler? CollectionChanged;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         /// <summary>
         /// Count of the order
         /// </summary>
-        public int Count => items.Count;
+        public int Count => _items.Count;
 
         /// <summary>
         /// If the order is read only
         /// </summary>
         public bool IsReadOnly => true;
+
+        #region CollectionImplementation
 
         /// <summary>
         /// Adds menu item to collection
@@ -30,8 +38,14 @@ namespace BuildYourBowl.Data
         /// <param name="item">item to add</param>
         public void Add(IMenuItem item)
         {
-            items.Add(item);
-            //throw new NotImplementedException();
+            _items.Add(item);
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Count)));
+            CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item));
+
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TaxRate)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Total)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Tax)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Subtotal)));
         }
 
         /// <summary>
@@ -39,8 +53,14 @@ namespace BuildYourBowl.Data
         /// </summary>
         public void Clear()
         {
-            items.Clear();
-            //throw new NotImplementedException();
+            _items.Clear();
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Count)));
+            CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TaxRate)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Total)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Tax)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Subtotal)));
         }
 
         /// <summary>
@@ -50,8 +70,7 @@ namespace BuildYourBowl.Data
         /// <returns>a bool if it is contained</returns>
         public bool Contains(IMenuItem item)
         {
-            return items.Contains(item);
-            //throw new NotImplementedException();
+            return _items.Contains(item);
         }
 
         /// <summary>
@@ -61,8 +80,7 @@ namespace BuildYourBowl.Data
         /// <param name="arrayIndex">Array index to copy</param>
         public void CopyTo(IMenuItem[] array, int arrayIndex)
         {
-            items.CopyTo(array, arrayIndex);
-            //throw new NotImplementedException();
+            _items.CopyTo(array, arrayIndex);
         }
 
         /// <summary>
@@ -71,8 +89,7 @@ namespace BuildYourBowl.Data
         /// <returns>the enumeration</returns>
         public IEnumerator<IMenuItem> GetEnumerator()
         {
-            return items.GetEnumerator();
-            //throw new NotImplementedException();
+            return _items.GetEnumerator();
         }
 
         /// <summary>
@@ -82,8 +99,21 @@ namespace BuildYourBowl.Data
         /// <returns>whether the item was removed</returns>
         public bool Remove(IMenuItem item)
         {
-            return items.Remove(item);
-            //throw new NotImplementedException();
+            int index = _items.IndexOf(item);
+            if(index > -1) 
+            {
+                _items.Remove(item);
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Count)));
+                CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, item, index));
+
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TaxRate)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Total)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Tax)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Subtotal)));
+
+                return true;
+            }
+            return false;
         }
 
         /// <summary>
@@ -93,24 +123,41 @@ namespace BuildYourBowl.Data
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
-            //throw new NotImplementedException();
         }
+
+        #endregion
 
         /// <summary>
         /// subtotal of the order
         /// </summary>
-        public decimal Subtotal 
+        public decimal Subtotal
         {
             get 
             {
-                return items.Sum(item => item.Price);
+                return _items.Sum(item => item.Price);
+            }
+            set 
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Subtotal)));
             }
         }
 
         /// <summary>
         /// tax rate
         /// </summary>
-        public decimal TaxRate { get; set; } = .0915m;
+        public decimal TaxRate 
+        {
+            get 
+            {
+                return .0915m;
+            }
+            set 
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TaxRate)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Total)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Tax)));
+            }
+        }
 
         /// <summary>
         /// tax of the order
@@ -132,6 +179,27 @@ namespace BuildYourBowl.Data
             {
                 return Subtotal + Tax;
             }
+        }
+
+        private static uint lastNumber = 1;
+
+        /// <summary>
+        /// The order number
+        /// </summary>
+        public uint Number { get; init; }
+
+        /// <summary>
+        /// The time the order was placed at
+        /// </summary>
+        public DateTime PlacedAt { get; init; }
+
+        /// <summary>
+        /// Constructor for orders
+        /// </summary>
+        public Order() 
+        {
+            Number = lastNumber++;
+            PlacedAt = DateTime.Now;
         }
     }
 }

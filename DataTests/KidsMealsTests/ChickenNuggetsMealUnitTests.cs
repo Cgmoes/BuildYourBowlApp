@@ -20,8 +20,8 @@ namespace BuildYourBowl.DataTests
             ChickenNuggetsMeal c = new ChickenNuggetsMeal();
 
             Assert.Equal((uint)5, c.Count);
-            //Assert.False(c.DrinkChoice.Chocolate);
-            //Assert.False(c.SideChoice.Curly);
+            Assert.False((c.DrinkChoice as Milk)!.Chocolate);
+            Assert.False((c.SideChoice as Fries)!.Curly);
             Assert.Equal(5.99m, c.Price);
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -74,6 +75,77 @@ namespace BuildYourBowl.DataTests
         {
             Order o = new Order();
             Assert.IsAssignableFrom<ICollection<IMenuItem>>(o);
+        }
+
+        /// <summary>
+        /// Unit test to make sure the subtotal changes the NotifyProperty
+        /// </summary>
+        [Fact]
+        public void ChangingSubtotalShouldNotifyOfPropertyChange()
+        {
+            Order order = new Order();
+            Assert.PropertyChanged(order, "Subtotal", () => { order.Subtotal = 4.50m; });
+        }
+
+        /// <summary>
+        ///Unit test to make sure the tax rate changes the NotifyProperty 
+        /// </summary>
+        [Fact]
+        public void ChangingTaxRateShouldNotifyOfPropertyChange()
+        {
+            Order order = new Order();
+            Assert.PropertyChanged(order, "TaxRate", () => { order.TaxRate = 0.15m; });
+            Assert.PropertyChanged(order, "Tax", () => { order.TaxRate = 0.15m; });
+            Assert.PropertyChanged(order, "Total", () => { order.TaxRate = 0.15m; });
+        }
+
+        /// <summary>
+        /// Unit test to ensure order is assignable from INotifyPropertyChanged
+        /// </summary>
+        [Fact]
+        public void ShouldImplementINotifyPropertyChanged()
+        {
+            Order order = new Order();
+            Assert.IsAssignableFrom<INotifyPropertyChanged>(order);
+        }
+
+        /// <summary>
+        /// Unit test to ensure the number property updates if it is increased
+        /// </summary>
+        [Fact]
+        public void NumberPropertyUpdatesTest() 
+        {
+            Order order1 = new Order();
+            Order order2 = new Order();
+            Assert.NotEqual(order1.Number, order2.Number);
+            Assert.Equal(order1.Number+1, order2.Number);
+        }
+
+        /// <summary>
+        /// Unit test to ensure the PlacedAt property is correct
+        /// </summary>
+        [Fact]
+        public void PlacedAtPropertyTest()
+        {
+            Order order = new Order();
+            Assert.NotStrictEqual(order.PlacedAt, DateTime.Now);
+        }
+
+        /// <summary>
+        /// Unit test to ensure that the properties dont change if they are requested multiple times
+        /// </summary>
+        [Fact]
+        public void PropertiesDontChangeIfRequestedMoreThanOnceTest() 
+        {
+            Order order = new Order();
+
+            DateTime firstDate = order.PlacedAt;
+            DateTime secondDate = order.PlacedAt;
+            uint firstNumber = order.Number;
+            uint secondNumber = order.Number;
+
+            Assert.Equal(firstNumber, secondNumber);
+            Assert.Equal(firstNumber, secondNumber);
         }
     }
 }

@@ -26,7 +26,20 @@ namespace PointOfSale
         {
             InitializeComponent();
 
-            DataContext = new ObservableCollection<IMenuItem>();
+            DataContext = new Order();
+        }
+
+        /// <summary>
+        /// Event handler to cancel the order and create a new one
+        /// </summary>
+        /// <param name="sender">the object</param>
+        /// <param name="e">information about the event</param>
+        private void CancelOrder(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is Order list && sender is Button b)
+            {
+                DataContext = new Order();
+            }
         }
     }
 }

@@ -30,11 +30,11 @@ namespace PointOfSale
         /// <summary>
         /// Event handler to add the name of the item selected to the list view
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">the object</param>
+        /// <param name="e">information about the event</param>
         private void AddName(object sender, RoutedEventArgs e)
         {
-            if (DataContext is ObservableCollection<IMenuItem> list && sender is Button b)
+            if (DataContext is Order list && sender is Button b)
             {
                 if (b.Name == "CustomBowlButton") list.Add(new Bowl());
                 else if (b.Name == "CustomNachosButton") list.Add(new Nacho());

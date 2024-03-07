@@ -21,8 +21,8 @@ namespace BuildYourBowl.DataTests
 
             Assert.Equal((uint)2, s.Count);
             Assert.True(s.AmericanCheese);
-            //Assert.False(s.DrinkChoice.Chocolate);
-            //Assert.False(s.SideChoice.Curly);
+            Assert.False((s.DrinkChoice as Milk)!.Chocolate);
+            Assert.False((s.SideChoice as Fries)!.Curly);
             Assert.Equal(5.99m, s.Price);
         }
 

@@ -58,6 +58,7 @@
                 <Style.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="5"/>
+                        <Setter Property="Height" Value="75"/>
                     </Style>
                 </Style.Resources>
                 

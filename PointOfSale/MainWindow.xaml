@@ -31,7 +31,7 @@
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Row="0" Grid.Column="0" MaxHeight="75">Cancel Order</Button>
+            <Button Grid.Row="0" Grid.Column="0" MaxHeight="75" Click="CancelOrder">Cancel Order</Button>
             <Button Grid.Row="0" Grid.Column="1" MaxHeight="75">Back to Menu</Button>
             <Button Grid.Row="0" Grid.Column="2" MaxHeight="75" >Complete Order</Button>
         </Grid>
@@ -48,7 +48,7 @@
                         <Setter Property="CornerRadius" Value="5"/>
                     </Style>
                 </Style.Resources>
-
+                
                 <Setter Property="FontSize" Value="15"/>
                 <Setter Property="Margin" Value="10"/>
             </Style>

@@ -8,17 +8,23 @@
              d:DesignHeight="720" d:DesignWidth="1080">
 
     <DockPanel Margin="10" LastChildFill="True">
-        <TextBlock DockPanel.Dock="Top" Margin="10" FontSize="20">Order Number: 1</TextBlock>
-        <TextBlock DockPanel.Dock="Top" Margin="10" FontSize="20">Date: 3/1/2024</TextBlock>
+        <TextBlock DockPanel.Dock="Top" Margin="10" FontSize="20" Text="{Binding Number, StringFormat='Order Number: {0}'}"/>
+        <TextBlock DockPanel.Dock="Top" Margin="10" FontSize="20" Text="{Binding PlacedAt, StringFormat='Date: {0:d}'}"/>
 
-        <TextBlock DockPanel.Dock="Bottom" Name="TotalGUI" Margin="10" FontSize="20">Total: XX</TextBlock>
-        <TextBlock DockPanel.Dock="Bottom" Name="TaxGUI" Margin="10" FontSize="20">Tax: XX</TextBlock>
-        <TextBlock DockPanel.Dock="Bottom" Name="SubtotalGUI" Margin="10" FontSize="20">Subtotal: XX</TextBlock>
+        <TextBlock DockPanel.Dock="Bottom" Name="TotalGUI" Margin="10" FontSize="20" Text="{Binding Total, StringFormat='Total: {0:C}'}"/>
+        <TextBlock DockPanel.Dock="Bottom" Name="TaxGUI" Margin="10" FontSize="20" Text="{Binding Tax, StringFormat='Tax: {0:C}'}"/>
+        <TextBlock DockPanel.Dock="Bottom" Name="SubtotalGUI" Margin="10" FontSize="20" Text="{Binding Subtotal, StringFormat='Subtotal: {0:C}'}"/>
 
-        <ListView DockPanel.Dock="Bottom" Name="ListViewGUI" ItemsSource="{Binding}">
+        <ListView Name="ListViewGUI" ItemsSource="{Binding}" HorizontalContentAlignment="Stretch">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding}" FontSize="15"/>
+                    <StackPanel>
+                        <DockPanel>
+                            <TextBlock Text="{Binding Name}" DockPanel.Dock="Left"/>
+                            <TextBlock Text="{Binding Price, StringFormat=' - {0:C}'}" TextAlignment="Right" DockPanel.Dock="Right"/>
+                        </DockPanel>
+                        <Button Background="Red" Click="RemoveItem" Height="20" Width="60" HorizontalAlignment="Right">Remove</Button>
+                    </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

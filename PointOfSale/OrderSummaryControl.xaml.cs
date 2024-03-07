@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BuildYourBowl.Data;
 
 namespace PointOfSale
 {
@@ -23,6 +24,20 @@ namespace PointOfSale
         public OrderSummaryControl()
         {
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// Event handler to remove the item from the order
+        /// </summary>
+        /// <param name="sender">the object</param>
+        /// <param name="e">information about the event</param>
+        private void RemoveItem(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is Order list && sender is Button b)
+            {
+                IMenuItem item = (IMenuItem)b.DataContext;
+                list.Remove(item);
+            }
         }
     }
 }
