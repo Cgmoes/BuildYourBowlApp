@@ -21,15 +21,38 @@ namespace BuildYourBowl.Data
         /// </summary>
         public override string Description { get; } = "Refreshing lightly sweetened fruit drink";
 
+        public Flavor _drinkFlavor = Flavor.Limonada;
         /// <summary>
         /// The flavor of this drink
         /// </summary>
-        public Flavor DrinkFlavor { get; set; } = Flavor.Limonada;
+        public Flavor DrinkFlavor 
+        {
+            get => _drinkFlavor;
+            set 
+            {
+                _drinkFlavor = value;
+                OnPropertyChanged(nameof(DrinkFlavor));
+                OnPropertyChanged(nameof(Price));
+                OnPropertyChanged(nameof(Calories));
+                OnPropertyChanged(nameof(PreparationInformation));
+            }
+        }
 
+        private bool _ice = true;
         /// <summary>
         /// Whether this drink contains ice
         /// </summary>
-        public bool Ice { get; set; } = true;
+        public bool Ice 
+        {
+            get => _ice;
+            set 
+            {
+                _ice = value;
+                OnPropertyChanged(nameof(Ice));
+                OnPropertyChanged(nameof(Calories));
+                OnPropertyChanged(nameof(PreparationInformation));
+            }
+        }
 
         /// <summary>
         /// The price of this drink
@@ -93,7 +116,7 @@ namespace BuildYourBowl.Data
         /// </summary>
         public AguaFresca() 
         {
-            Size = Size.Medium;
+            _size = Size.Medium;
         }
     }
 }

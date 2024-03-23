@@ -46,6 +46,7 @@ namespace BuildYourBowl.Data
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Total)));
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Tax)));
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Subtotal)));
+            item.PropertyChanged += HandleItemPropertyChanged;
         }
 
         /// <summary>
@@ -100,16 +101,16 @@ namespace BuildYourBowl.Data
         public bool Remove(IMenuItem item)
         {
             int index = _items.IndexOf(item);
-            if(index > -1) 
+            if (index > -1)
             {
                 _items.Remove(item);
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Count)));
                 CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, item, index));
 
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TaxRate)));
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Total)));
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Tax)));
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Subtotal)));
+                item.PropertyChanged += HandleItemPropertyChanged;
 
                 return true;
             }
@@ -132,26 +133,28 @@ namespace BuildYourBowl.Data
         /// </summary>
         public decimal Subtotal
         {
-            get 
+            get
             {
                 return _items.Sum(item => item.Price);
             }
-            set 
+            set
             {
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Subtotal)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Total)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Tax)));
             }
         }
 
         /// <summary>
         /// tax rate
         /// </summary>
-        public decimal TaxRate 
+        public decimal TaxRate
         {
-            get 
+            get
             {
                 return .0915m;
             }
-            set 
+            set
             {
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TaxRate)));
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Total)));
@@ -162,9 +165,9 @@ namespace BuildYourBowl.Data
         /// <summary>
         /// tax of the order
         /// </summary>
-        public decimal Tax 
+        public decimal Tax
         {
-            get 
+            get
             {
                 return Subtotal * TaxRate;
             }
@@ -173,9 +176,9 @@ namespace BuildYourBowl.Data
         /// <summary>
         /// total cost of the order
         /// </summary>
-        public decimal Total 
+        public decimal Total
         {
-            get 
+            get
             {
                 return Subtotal + Tax;
             }
@@ -196,10 +199,25 @@ namespace BuildYourBowl.Data
         /// <summary>
         /// Constructor for orders
         /// </summary>
-        public Order() 
+        public Order()
         {
             Number = lastNumber++;
             PlacedAt = DateTime.Now;
+        }
+
+        /// <summary>
+        /// Handles the property changes to attach to item
+        /// </summary>
+        /// <param name="sender">object signaling the event</param>
+        /// <param name="e">information about the event</param>
+        private void HandleItemPropertyChanged(object? sender, PropertyChangedEventArgs e) 
+        {
+            if (e.PropertyName == "Price") 
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Subtotal)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Tax)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Total)));
+            }
         }
     }
 }

@@ -54,7 +54,7 @@ namespace BuildYourBowl.Data
             PossibleToppings.Add(Ingredient.SourCream, new IngredientItem(Ingredient.SourCream) { Default = true, Included = true });
 
             //Pick Salsa Choice
-            SalsaType = Salsa.Medium;
+            _salsa = Salsa.Medium;
             DefaultSalsa = Salsa.Medium;
         }
     }

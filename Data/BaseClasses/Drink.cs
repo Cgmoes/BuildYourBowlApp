@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -7,8 +8,22 @@ using System.Threading.Tasks;
 
 namespace BuildYourBowl.Data
 {
-    public abstract class Drink : IMenuItem
+    public abstract class Drink : IMenuItem, INotifyPropertyChanged
     {
+        /// <summary>
+        /// Implementation of Property changed event handler from interface
+        /// </summary>
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        /// <summary>
+        /// Handles if a property was changed for children classes
+        /// </summary>
+        /// <param name="propertyName">name of property changed</param>
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         /// <summary>
         /// The name of this drink
         /// </summary>
@@ -19,10 +34,22 @@ namespace BuildYourBowl.Data
         /// </summary>
         public abstract string Description { get; }
 
+        public Size _size;
         /// <summary>
-        /// The size of the drink
+        /// The size of the side
         /// </summary>
-        public virtual Size Size { get; set; }
+        public virtual Size Size
+        {
+            get => _size;
+            set
+            {
+                _size = value;
+                OnPropertyChanged(nameof(Size));
+                OnPropertyChanged(nameof(Calories));
+                OnPropertyChanged(nameof(PreparationInformation));
+                OnPropertyChanged(nameof(Price));
+            }
+        }
 
         /// <summary>
         /// backing field for price property

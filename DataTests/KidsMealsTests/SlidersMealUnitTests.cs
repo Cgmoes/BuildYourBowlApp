@@ -19,7 +19,7 @@ namespace BuildYourBowl.DataTests
         {
             SlidersMeal s = new SlidersMeal();
 
-            Assert.Equal((uint)2, s.Count);
+            Assert.Equal((uint)2, s.KidsCount);
             Assert.True(s.AmericanCheese);
             Assert.False((s.DrinkChoice as Milk)!.Chocolate);
             Assert.False((s.SideChoice as Fries)!.Curly);
@@ -38,9 +38,9 @@ namespace BuildYourBowl.DataTests
         public void SlidersMealCountPropertyTest(uint count)
         {
             ChickenNuggetsMeal c = new ChickenNuggetsMeal();
-            c.Count = count;
+            c.KidsCount = count;
 
-            Assert.Equal((uint)5, c.Count);
+            Assert.Equal((uint)5, c.KidsCount);
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace BuildYourBowl.DataTests
         {
             SlidersMeal s = new SlidersMeal();
             s.AmericanCheese = cheese;
-            s.Count = count;
+            s.KidsCount = count;
             Fries f = new Fries() { Size = size };
             s.SideChoice = f;
 
@@ -94,7 +94,7 @@ namespace BuildYourBowl.DataTests
         {
             SlidersMeal s = new SlidersMeal();
             s.AmericanCheese = cheese;
-            s.Count = count;
+            s.KidsCount = count;
             Fries f = new Fries() { Size = sideSize };
             s.SideChoice = f;
 
@@ -122,11 +122,11 @@ namespace BuildYourBowl.DataTests
         {
             SlidersMeal s = new SlidersMeal();
             s.AmericanCheese = cheese;
-            s.Count = count;
+            s.KidsCount = count;
             Fries f = new Fries() { Size = sideSize };
             s.SideChoice = f;
 
-            if (s.Count != 2) Assert.Contains($"{s.Count} Sliders", s.PreparationInformation);
+            if (s.KidsCount != 2) Assert.Contains($"{s.KidsCount} Sliders", s.PreparationInformation);
             if (!s.AmericanCheese) Assert.Contains($"Hold American Cheese", s.PreparationInformation);
         }
 

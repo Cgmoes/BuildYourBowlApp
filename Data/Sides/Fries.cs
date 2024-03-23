@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace BuildYourBowl.Data
     /// <summary>
     /// The definitiona of the Fries class
     /// </summary>
-    public class Fries : Side, IMenuItem
+    public class Fries : Side
     {
         /// <summary>
         /// The name of the Fries instance
@@ -22,10 +23,20 @@ namespace BuildYourBowl.Data
         /// </summary>
         public override string Description { get; } = "Crispy, salty sticks of deliciousness";
 
+        private bool _isCurly = false;
         /// <summary>
         /// Whether the fries are curly
         /// </summary>
-        public bool Curly { get; set; } = false;
+        public bool Curly 
+        {
+            get => _isCurly;
+            set 
+            {
+                _isCurly = value;
+                OnPropertyChanged(nameof(Curly));
+                OnPropertyChanged(nameof(PreparationInformation));
+            }
+        }
 
         /// <summary>
         /// The total amount of calories for this side
@@ -65,7 +76,7 @@ namespace BuildYourBowl.Data
         /// </summary>
         public Fries() 
         {
-            Size = Size.Medium;
+            _size = Size.Medium;
             _defaultPrice = 3.50m;
         }
     }

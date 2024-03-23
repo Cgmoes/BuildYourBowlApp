@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,8 +11,22 @@ namespace BuildYourBowl.Data
     /// <summary>
     /// Class definition for kids meal
     /// </summary>
-    public abstract class KidsMeal : IMenuItem
+    public abstract class KidsMeal : IMenuItem, INotifyPropertyChanged
     {
+        /// <summary>
+        /// Implementation of Property changed event handler from interface
+        /// </summary>
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        /// <summary>
+        /// Handles if a property was changed for children classes
+        /// </summary>
+        /// <param name="propertyName">name of property changed</param>
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         /// <summary>
         /// Name of the kids meal
         /// </summary>
@@ -46,13 +62,15 @@ namespace BuildYourBowl.Data
         /// </summary>
         public virtual Drink DrinkChoice 
         {
-            get
-            {
-                return _drinkBacking;
-            }
+            get => _drinkBacking;
             set
             {
                 _drinkBacking = value;
+                OnPropertyChanged(nameof(DrinkChoice));
+                OnPropertyChanged(nameof(PreparationInformation));
+                OnPropertyChanged(nameof(Calories));
+                OnPropertyChanged(nameof(Price));
+                _drinkBacking.PropertyChanged += HandleItemPropertyChanged;
             }
         }
 
@@ -66,20 +84,22 @@ namespace BuildYourBowl.Data
         /// </summary>
         public Side SideChoice
         {
-            get
-            {
-                return _sideChoiceBacking;
-            }
+            get => _sideChoiceBacking;
             set
             {
                 _sideChoiceBacking = value;
+                OnPropertyChanged(nameof(SideChoice));
+                OnPropertyChanged(nameof(PreparationInformation));
+                OnPropertyChanged(nameof(Calories));
+                OnPropertyChanged(nameof(Price));
+                _sideChoiceBacking.PropertyChanged += HandleItemPropertyChanged;
             }
         }
 
         /// <summary>
         /// backing field for count property
         /// </summary>
-        protected uint _countBacking;
+        protected uint _minCount;
 
         /// <summary>
         /// max count for the meal
@@ -89,15 +109,19 @@ namespace BuildYourBowl.Data
         /// <summary>
         /// The count for the meal
         /// </summary>
-        public uint Count
+        public uint KidsCount
         {
-            get
-            {
-                return _countBacking;
-            }
+            get => _minCount;
             set
             {
-                if (value >= _countBacking && value <= _maxCount) _countBacking = value;
+                if (value >= _minCount && value <= _maxCount) 
+                {
+                    _minCount = value;
+                    OnPropertyChanged(nameof(KidsCount));
+                    OnPropertyChanged(nameof(PreparationInformation));
+                    OnPropertyChanged(nameof(Calories));
+                    OnPropertyChanged(nameof(Price));
+                }
             }
         }
 
@@ -108,6 +132,18 @@ namespace BuildYourBowl.Data
         public override string ToString()
         {
             return Name;
+        }
+
+        /// <summary>
+        /// Handles the property
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void HandleItemPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(Price));
+            OnPropertyChanged(nameof(Calories));
+            OnPropertyChanged(nameof(PreparationInformation));
         }
     }
 }

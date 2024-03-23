@@ -24,9 +24,9 @@ namespace BuildYourBowl.Data
             get
             {
                 decimal totalPrice = 5.99m;
-                if (Count > 2)
+                if (KidsCount > 2)
                 {
-                    uint numNugs = Count - 2;
+                    uint numNugs = KidsCount - 2;
                     totalPrice += numNugs * 2m;
                 }
                 if (_sideChoiceBacking.Size == Size.Small) totalPrice += 0.50m;
@@ -46,8 +46,8 @@ namespace BuildYourBowl.Data
             {
                 uint cals = 0;
 
-                if(AmericanCheese) cals = Count * 150;
-                if (!AmericanCheese) cals = Count * 110;
+                if(AmericanCheese) cals = KidsCount * 150;
+                if (!AmericanCheese) cals = KidsCount * 110;
 
                 cals += SideChoice.Calories;
                 cals += DrinkChoice.Calories;
@@ -65,8 +65,18 @@ namespace BuildYourBowl.Data
             {
                 List<string> instructions = new List<string>();
 
-                if (Count != 2) instructions.Add($"{Count} Sliders");
+                if (KidsCount != 2) instructions.Add($"{KidsCount} Sliders");
                 if (!AmericanCheese) instructions.Add("Hold American Cheese");
+                instructions.Add($"Side: {SideChoice}");
+                foreach (string s in SideChoice.PreparationInformation)
+                {
+                    instructions.Add($"\t{s}");
+                }
+                instructions.Add($"Drink: {DrinkChoice}");
+                foreach (string s in DrinkChoice.PreparationInformation)
+                {
+                    instructions.Add($"\t{s}");
+                }
 
                 return instructions;
             }
@@ -79,7 +89,7 @@ namespace BuildYourBowl.Data
         {
             Name = "Sliders Kids Meal";
             Description = "Sliders with side and drink";
-            _countBacking = 2;
+            _minCount = 2;
             _maxCount = 4;
             _sideChoiceBacking = new Fries() { Size = Size.Kids };
             _drinkBacking = new Milk() { Size = Size.Kids };

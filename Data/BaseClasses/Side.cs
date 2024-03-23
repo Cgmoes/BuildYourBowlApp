@@ -1,13 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace BuildYourBowl.Data
 {
-    public abstract class Side : IMenuItem
+    public abstract class Side : IMenuItem, INotifyPropertyChanged
     {
+        /// <summary>
+        /// Implementation of Property changed event handler from interface
+        /// </summary>
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        /// <summary>
+        /// Handles if a property was changed for children classes
+        /// </summary>
+        /// <param name="propertyName">name of property changed</param>
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         /// <summary>
         /// The name of the side
         /// </summary>
@@ -47,10 +62,22 @@ namespace BuildYourBowl.Data
         /// </summary>
         public abstract IEnumerable<string> PreparationInformation { get; }
 
+        public Size _size = Size.Medium;
         /// <summary>
         /// The size of the side
         /// </summary>
-        public virtual Size Size { get; set; }
+        public virtual Size Size
+        {
+            get => _size;
+            set
+            {
+                _size = value;
+                OnPropertyChanged(nameof(Size));
+                OnPropertyChanged(nameof(Calories));
+                OnPropertyChanged(nameof(PreparationInformation));
+                OnPropertyChanged(nameof(Price));
+            }
+        }
 
         /// <summary>
         /// method to override toString

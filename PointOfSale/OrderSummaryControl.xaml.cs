@@ -21,6 +21,8 @@ namespace PointOfSale
     /// </summary>
     public partial class OrderSummaryControl : UserControl
     {
+        public event EventHandler<CustomMenuEventArgs>? EditItemClicked;
+
         public OrderSummaryControl()
         {
             InitializeComponent();
@@ -37,6 +39,19 @@ namespace PointOfSale
             {
                 IMenuItem item = (IMenuItem)b.DataContext;
                 list.Remove(item);
+            }
+        }
+
+        /// <summary>
+        /// Event handler to add the name of the item selected to the list view
+        /// </summary>
+        /// <param name="sender">the object</param>
+        /// <param name="e">information about the event</param>
+        private void HandleEditClick(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button b && b.DataContext is IMenuItem item) 
+            {
+                EditItemClicked?.Invoke(this, new CustomMenuEventArgs(item));
             }
         }
     }

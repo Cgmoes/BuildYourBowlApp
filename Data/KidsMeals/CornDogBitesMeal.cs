@@ -19,9 +19,9 @@ namespace BuildYourBowl.Data
             get
             {
                 decimal totalPrice = 5.99m;
-                if (Count > 5)
+                if (KidsCount > 5)
                 {
-                    uint numNugs = Count - 5;
+                    uint numNugs = KidsCount - 5;
                     totalPrice += numNugs * .75m;
                 }
                 if (_sideChoiceBacking.Size == Size.Small) totalPrice += 0.50m;
@@ -39,7 +39,7 @@ namespace BuildYourBowl.Data
         {
             get
             {
-                uint cals = Count * 50;
+                uint cals = KidsCount * 50;
                 cals += SideChoice.Calories;
                 cals += DrinkChoice.Calories;
 
@@ -56,7 +56,17 @@ namespace BuildYourBowl.Data
             {
                 List<string> instructions = new List<string>();
 
-                if (Count != 5) instructions.Add($"{Count} Bites");
+                if (KidsCount != 5) instructions.Add($"{KidsCount} Bites");
+                instructions.Add($"Side: {SideChoice}");
+                foreach (string s in SideChoice.PreparationInformation)
+                {
+                    instructions.Add($"\t{s}");
+                }
+                instructions.Add($"Drink: {DrinkChoice}");
+                foreach (string s in DrinkChoice.PreparationInformation)
+                {
+                    instructions.Add($"\t{s}");
+                }
 
                 return instructions;
             }
@@ -66,7 +76,7 @@ namespace BuildYourBowl.Data
         {
             Name = "Corn Dog Bites Kids Meal";
             Description = "Mini corn dogs with side and drink";
-            _countBacking = 5;
+            _minCount = 5;
             _maxCount = 8;
             _sideChoiceBacking = new Fries() { Size = Size.Kids };
             _drinkBacking = new Milk() { Size = Size.Kids };

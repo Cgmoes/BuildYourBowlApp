@@ -27,25 +27,25 @@
         <TextBlock Grid.Column="3" Grid.Row="0">Drinks</TextBlock>
         <TextBlock Grid.Column="4" Grid.Row="0">Kids Meals</TextBlock>
         
-        <Button Name="CustomBowlButton" Grid.Column="0" Grid.Row="1" Click="AddName">Custom Bowl</Button>
-        <Button Name="CustomNachosButton" Grid.Column="1" Grid.Row="1" Click="AddName">Custom Nachos</Button>
-        <Button Name="FriesButton" Grid.Column="2" Grid.Row="1" Click="AddName">Fries</Button>
-        <Button Name="AguaFrescaButton" Grid.Column="3" Grid.Row="1" Click="AddName">Agua Fresca</Button>
-        <Button Name="ChickenNuggetsButton" Grid.Column="4" Grid.Row="1" Click="AddName">Chicken Nuggets</Button>
+        <Button Name="CustomBowlButton" Grid.Column="0" Grid.Row="1" Click="HandleButtonClick">Custom Bowl</Button>
+        <Button Name="CustomNachosButton" Grid.Column="1" Grid.Row="1" Click="HandleButtonClick">Custom Nachos</Button>
+        <Button Name="FriesButton" Grid.Column="2" Grid.Row="1" Click="HandleButtonClick">Fries</Button>
+        <Button Name="AguaFrescaButton" Grid.Column="3" Grid.Row="1" Click="HandleButtonClick">Agua Fresca</Button>
+        <Button Name="ChickenNuggetsButton" Grid.Column="4" Grid.Row="1" Click="HandleButtonClick">Chicken Nuggets</Button>
 
-        <Button Name="CarnitasButton" Grid.Column="0" Grid.Row="2" Click="AddName">Carnitas</Button>
-        <Button Name="ChickenFajitaButton" Grid.Column="1" Grid.Row="2" Click="AddName">Chicken Fajita</Button>
-        <Button Name="StreetCornButton" Grid.Column="2" Grid.Row="2" Click="AddName">Street Corn</Button>
-        <Button Name="HorchataButton" Grid.Column="3" Grid.Row="2" Click="AddName">Horchata</Button>
-        <Button Name="CornDogBitesButton" Grid.Column="4" Grid.Row="2" Click="AddName">Corn Dog Bites</Button>
+        <Button Name="CarnitasButton" Grid.Column="0" Grid.Row="2" Click="HandleButtonClick">Carnitas</Button>
+        <Button Name="ChickenFajitaButton" Grid.Column="1" Grid.Row="2" Click="HandleButtonClick">Chicken Fajita</Button>
+        <Button Name="StreetCornButton" Grid.Column="2" Grid.Row="2" Click="HandleButtonClick">Street Corn</Button>
+        <Button Name="HorchataButton" Grid.Column="3" Grid.Row="2" Click="HandleButtonClick">Horchata</Button>
+        <Button Name="CornDogBitesButton" Grid.Column="4" Grid.Row="2" Click="HandleButtonClick">Corn Dog Bites</Button>
 
-        <Button Name="GreenChickenButton" Grid.Column="0" Grid.Row="3" Click="AddName">Green Chicken</Button>
-        <Button Name="ClassicButton" Grid.Column="1" Grid.Row="3" Click="AddName">Classic</Button>
-        <Button Name="RefriedBeansButton" Grid.Column="2" Grid.Row="3" Click="AddName">Refried Beans</Button>
-        <Button Name="MilkButton" Grid.Column="3" Grid.Row="3" Click="AddName">Milk</Button>
-        <Button Name="SlidersButton" Grid.Column="4" Grid.Row="3" Click="AddName">Sliders</Button>
+        <Button Name="GreenChickenButton" Grid.Column="0" Grid.Row="3" Click="HandleButtonClick">Green Chicken</Button>
+        <Button Name="ClassicButton" Grid.Column="1" Grid.Row="3" Click="HandleButtonClick">Classic</Button>
+        <Button Name="RefriedBeansButton" Grid.Column="2" Grid.Row="3" Click="HandleButtonClick">Refried Beans</Button>
+        <Button Name="MilkButton" Grid.Column="3" Grid.Row="3" Click="HandleButtonClick">Milk</Button>
+        <Button Name="SlidersButton" Grid.Column="4" Grid.Row="3" Click="HandleButtonClick">Sliders</Button>
 
-        <Button Name="SpicySteakButton" Grid.Column="0" Grid.Row="4" Click="AddName">Spicy Steak</Button>
+        <Button Name="SpicySteakButton" Grid.Column="0" Grid.Row="4" Click="HandleButtonClick">Spicy Steak</Button>
 
         <Grid.Resources>
             <Style TargetType="TextBlock">

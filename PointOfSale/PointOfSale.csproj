@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Page Include="App.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DataTests\DataTests.csproj" />
     <ProjectReference Include="..\Data\Data.csproj" />
   </ItemGroup>

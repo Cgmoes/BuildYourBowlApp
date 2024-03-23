@@ -19,7 +19,7 @@ namespace BuildYourBowl.DataTests
         {
             CornDogBitesMeal c = new CornDogBitesMeal();
 
-            Assert.Equal((uint)5, c.Count);
+            Assert.Equal((uint)5, c.KidsCount);
             Assert.False((c.DrinkChoice as Milk)!.Chocolate);
             Assert.False((c.SideChoice as Fries)!.Curly);
             Assert.Equal(5.99m, c.Price);
@@ -37,9 +37,9 @@ namespace BuildYourBowl.DataTests
         public void CountPropertyIsCorrectTest(uint count) 
         {
             CornDogBitesMeal c = new CornDogBitesMeal();
-            c.Count = count;
+            c.KidsCount = count;
 
-            Assert.Equal((uint) 5, c.Count);
+            Assert.Equal((uint) 5, c.KidsCount);
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace BuildYourBowl.DataTests
         public void MealPriceIsCorrectTest(uint count, Size size, decimal expectedPrice)
         {
             CornDogBitesMeal c = new CornDogBitesMeal();
-            c.Count = count;
+            c.KidsCount = count;
             Fries f = new Fries() { Size = size };
             c.SideChoice = f;
 
@@ -84,7 +84,7 @@ namespace BuildYourBowl.DataTests
         public void CaloriesAreCorrectTest(uint count, Size frySize, uint expectedCals) 
         {
             CornDogBitesMeal c = new CornDogBitesMeal();
-            c.Count = count;
+            c.KidsCount = count;
             Fries f = new Fries() { Size = frySize };
             c.SideChoice = f;
 
@@ -108,11 +108,11 @@ namespace BuildYourBowl.DataTests
         public void PrepInfoIsCorrectTest(uint count, Size size)
         {
             CornDogBitesMeal c = new CornDogBitesMeal();
-            c.Count = count;
+            c.KidsCount = count;
             Fries f = new Fries() { Size = size };
             c.SideChoice = f;
 
-            if (c.Count != 5) Assert.Contains($"{c.Count} Bites", c.PreparationInformation);
+            if (c.KidsCount != 5) Assert.Contains($"{c.KidsCount} Bites", c.PreparationInformation);
         }
 
         /// <summary>

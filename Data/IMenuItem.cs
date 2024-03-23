@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ namespace BuildYourBowl.Data
     /// <summary>
     /// Class definition for IMenuItem
     /// </summary>
-    public interface IMenuItem
+    public interface IMenuItem : INotifyPropertyChanged
     {
         /// <summary>
         /// Name of this menu item

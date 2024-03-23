@@ -21,10 +21,21 @@ namespace BuildYourBowl.Data
         /// </summary>
         public override string Description { get; } = "Creamy beverage in plain or chocolate";
 
+        private bool _chocolate = false;
         /// <summary>
         /// Whether this drink contains chocolate
         /// </summary>
-        public bool Chocolate { get; set; } = false;
+        public bool Chocolate 
+        {
+            get => _chocolate;
+            set 
+            {
+                _chocolate = value;
+                OnPropertyChanged(nameof(Chocolate));
+                OnPropertyChanged(nameof(Calories));
+                OnPropertyChanged(nameof(PreparationInformation));
+            }
+        }
 
         /// <summary>
         /// The total amount of calories in this drink
@@ -63,7 +74,7 @@ namespace BuildYourBowl.Data
         public Milk() 
         {
             _defaultPrice = 2.50m;
-            Size = Size.Medium;
+            _size = Size.Medium;
         }
     }
 }

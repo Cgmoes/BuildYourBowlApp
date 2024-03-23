@@ -21,10 +21,21 @@ namespace BuildYourBowl.Data
         /// </summary>
         public override string Description { get; } = "Milky drink with cinnamon";
 
+        private bool _ice = true;
         /// <summary>
         /// Whether this drink contains ice
         /// </summary>
-        public bool Ice { get; set; } = true;
+        public bool Ice
+        {
+            get => _ice;
+            set
+            {
+                _ice = value;
+                OnPropertyChanged(nameof(Ice));
+                OnPropertyChanged(nameof(Calories));
+                OnPropertyChanged(nameof(PreparationInformation));
+            }
+        }
 
         /// <summary>
         /// The total amount of calories in this drink
@@ -67,7 +78,7 @@ namespace BuildYourBowl.Data
         /// </summary>
         public Horchata() 
         {
-            Size = Size.Medium;
+            _size = Size.Medium;
             _defaultPrice = 3.50m;
         }
     }

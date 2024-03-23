@@ -21,15 +21,37 @@ namespace BuildYourBowl.Data
         /// </summary>
         public override string Description { get; } = "Beans fried not just once but twice";
 
+        private bool _onions = true;
         /// <summary>
         /// Whether this side contains onions
         /// </summary>
-        public bool Onions { get; set; } = true;
+        public bool Onions 
+        {
+            get => _onions;
+            set 
+            {
+                _onions = value;
+                OnPropertyChanged(nameof(Onions));
+                OnPropertyChanged(nameof(Calories));
+                OnPropertyChanged(nameof(PreparationInformation));
+            }
+        }
 
+        private bool _cheese = true;
         /// <summary>
         /// Whether this side contains cheddar cheese
         /// </summary>
-        public bool CheddarCheese { get; set; } = true;
+        public bool CheddarCheese 
+        {
+            get => _cheese;
+            set 
+            {
+                _cheese = value;
+                OnPropertyChanged(nameof(CheddarCheese));
+                OnPropertyChanged(nameof(Calories));
+                OnPropertyChanged(nameof(PreparationInformation));
+            }
+        }
 
         /// <summary>
         /// Total amount of calories in this side
@@ -73,7 +95,7 @@ namespace BuildYourBowl.Data
         /// </summary>
         public RefriedBeans() 
         {
-            Size = Size.Medium;
+            _size = Size.Medium;
             _defaultPrice = 3.75m;
         }
     }

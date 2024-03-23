@@ -15,10 +15,24 @@ namespace BuildYourBowl.DataTests
         /// <summary>
         /// Mock Menu item for testing
         /// </summary>
-        internal class MockMenuItem : IMenuItem
+        internal class MockMenuItem : IMenuItem, INotifyPropertyChanged
         {
-            public string Name { get; set; }
-            public string Description { get; set; }
+            /// <summary>
+            /// Implementation of Property changed event handler from interface
+            /// </summary>
+            public event PropertyChangedEventHandler? PropertyChanged;
+
+            /// <summary>
+            /// Handles if a property was changed for children classes
+            /// </summary>
+            /// <param name="propertyName">name of property changed</param>
+            protected void OnPropertyChanged(string propertyName)
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+
+            public string Name { get; set; } = "";
+            public string Description { get; set; } = "";
             public decimal Price { get; set; }
             public uint Calories { get; set; }
             public IEnumerable<string> PreparationInformation { get; set; }

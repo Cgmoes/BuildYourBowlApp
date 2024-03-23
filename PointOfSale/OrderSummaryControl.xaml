@@ -23,7 +23,16 @@
                             <TextBlock Text="{Binding Name}" DockPanel.Dock="Left"/>
                             <TextBlock Text="{Binding Price, StringFormat=' - {0:C}'}" TextAlignment="Right" DockPanel.Dock="Right"/>
                         </DockPanel>
-                        <Button Background="Red" Click="RemoveItem" Height="20" Width="60" HorizontalAlignment="Right">Remove</Button>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Button Background="ForestGreen" Foreground="White" Height="20" Width="60" Grid.Column="0" Click="HandleEditClick">Edit</Button>
+                            <Button Background="Red" Foreground="White" Click="RemoveItem" Height="20" Width="60" Grid.Column="1">Remove</Button>
+                        </Grid>
+                        <ListView ItemsSource="{Binding PreparationInformation}">
+                        </ListView>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

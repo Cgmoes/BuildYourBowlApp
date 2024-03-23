@@ -29,7 +29,7 @@ namespace BuildYourBowl.DataTests
         {
             Bowl b = new Bowl();
             Assert.IsAssignableFrom<IMenuItem>(b);
-            Assert.IsAssignableFrom<Entree>(b);
+            Assert.IsAssignableFrom<SpicySteakBowl>(b);
         }
     }
 }

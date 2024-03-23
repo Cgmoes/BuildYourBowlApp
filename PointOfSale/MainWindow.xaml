@@ -16,10 +16,18 @@
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
 
-        <local:MenuItemSelectionControl Grid.Row="0" Grid.Column="0"></local:MenuItemSelectionControl>
-        <local:OrderSummaryControl Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"></local:OrderSummaryControl>
+        <local:MenuItemSelectionControl x:Name="MenuItemSelection" Visibility="Visible" Grid.Row="0" Grid.Column="0"/>
+        <local:EntreeControl x:Name="EntreeEditDisplay" Visibility="Hidden" Grid.Row="0" Grid.Column="0"/>
+        <local:FryControl x:Name="FryEditDisplay" Visibility="Hidden" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" MaxWidth="300"/>
+        <local:RefriedBeansControl x:Name="RefriedBeansEditDisplay" Visibility="Hidden" Grid.Row="0" Grid.Column="0"/>
+        <local:StreetCornControl x:Name="StreetCornEditDisplay" Visibility="Hidden" Grid.Row="0" Grid.Column="0"/>
+        <local:AguaFrescaControl x:Name="AguaFrescaEditDisplay" Visibility="Hidden" Grid.Row="0" Grid.Column="0"/>
+        <local:HorchataControl x:Name="HorchataEditDisplay" Visibility="Hidden" Grid.Row="0" Grid.Column="0"/>
+        <local:MilkControl x:Name="MilkEditDisplay" Visibility="Hidden" Grid.Row="0" Grid.Column="0"/>
+        <local:KidsMealControl x:Name="KidsMealEditDisplay" Visibility="Hidden" Grid.Row="0" Grid.Column="0"/>
+        <local:OrderSummaryControl x:Name="OrderSummary" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"/>
 
-        
+
 
         <Grid Grid.Row="1" Grid.Column="0">
             <Grid.RowDefinitions>
@@ -32,10 +40,9 @@
             </Grid.ColumnDefinitions>
 
             <Button Grid.Row="0" Grid.Column="0" MaxHeight="75" Click="CancelOrder">Cancel Order</Button>
-            <Button Grid.Row="0" Grid.Column="1" MaxHeight="75">Back to Menu</Button>
+            <Button Grid.Row="0" Grid.Column="1" MaxHeight="75" Click="HandleBackToMenu">Back to Menu</Button>
             <Button Grid.Row="0" Grid.Column="2" MaxHeight="75" >Complete Order</Button>
         </Grid>
-        
         
         <Grid.Resources>
             <Style TargetType="TextBlock">

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,20 @@ namespace BuildYourBowl.Data
     /// </summary>
     public abstract class Entree : IMenuItem
     {
+        /// <summary>
+        /// Implementation of Property changed event handler from interface
+        /// </summary>
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        /// <summary>
+        /// Handles if a property was changed for children classes
+        /// </summary>
+        /// <param name="propertyName">name of property changed</param>
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         /// <summary>
         /// The name of this entree
         /// </summary>
@@ -70,10 +85,21 @@ namespace BuildYourBowl.Data
             }
         }
 
+        public Salsa _salsa;
         /// <summary>
         /// Property for the salsa type of this entree
         /// </summary>
-        public virtual Salsa SalsaType { get; set; }
+        public virtual Salsa SalsaType 
+        {
+            get => _salsa;
+            set 
+            {
+                _salsa = value;
+                OnPropertyChanged(nameof(SalsaType));
+                OnPropertyChanged(nameof(Calories));
+                OnPropertyChanged(nameof(PreparationInformation));
+            }
+        }
 
         /// <summary>
         /// Property for the salsa type of this entree
@@ -99,14 +125,15 @@ namespace BuildYourBowl.Data
                     {
                         instructions.Add($"Hold {i.Value.Name}");
                     }
-                    if (SalsaType == Salsa.None)
-                    {
-                        instructions.Add($"Hold Salsa");
-                    }
-                    else if (SalsaType != DefaultSalsa) 
-                    {
-                        instructions.Add($"Swap {SalsaType.ToString()} Salsa");
-                    }
+                }
+
+                if (SalsaType == Salsa.None)
+                {
+                    instructions.Add($"Hold Salsa");
+                }
+                else if (SalsaType != DefaultSalsa)
+                {
+                    instructions.Add($"Swap {SalsaType.ToString()} Salsa");
                 }
 
                 return instructions;

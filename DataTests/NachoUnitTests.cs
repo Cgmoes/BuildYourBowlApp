@@ -29,7 +29,7 @@ namespace BuildYourBowl.DataTests
         {
             Nacho n = new Nacho();
             Assert.IsAssignableFrom<IMenuItem>(n);
-            Assert.IsAssignableFrom<Entree>(n);
+            Assert.IsAssignableFrom<SpicySteakBowl>(n);
         }
     }
 }
