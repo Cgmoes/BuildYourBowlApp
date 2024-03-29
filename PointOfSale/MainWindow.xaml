@@ -25,6 +25,8 @@
         <local:HorchataControl x:Name="HorchataEditDisplay" Visibility="Hidden" Grid.Row="0" Grid.Column="0"/>
         <local:MilkControl x:Name="MilkEditDisplay" Visibility="Hidden" Grid.Row="0" Grid.Column="0"/>
         <local:KidsMealControl x:Name="KidsMealEditDisplay" Visibility="Hidden" Grid.Row="0" Grid.Column="0"/>
+        <local:PaymentControl x:Name="PaymentControlDisplay" Visibility="Hidden" Grid.Row="0" Grid.Column="0"/>
+
         <local:OrderSummaryControl x:Name="OrderSummary" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"/>
 
 
@@ -39,9 +41,9 @@
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Row="0" Grid.Column="0" MaxHeight="75" Click="CancelOrder">Cancel Order</Button>
+            <Button Grid.Row="0" Grid.Column="0" MaxHeight="75" Click="NewOrder">Cancel Order</Button>
             <Button Grid.Row="0" Grid.Column="1" MaxHeight="75" Click="HandleBackToMenu">Back to Menu</Button>
-            <Button Grid.Row="0" Grid.Column="2" MaxHeight="75" >Complete Order</Button>
+            <Button Grid.Row="0" Grid.Column="2" MaxHeight="75" Click="ShowPaymentControl">Complete Order</Button>
         </Grid>
         
         <Grid.Resources>

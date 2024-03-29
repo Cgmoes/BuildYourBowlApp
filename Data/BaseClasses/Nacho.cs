@@ -24,6 +24,7 @@ namespace BuildYourBowl.Data
         public Nacho()
         {
             BaseIngredient = new IngredientItem(Ingredient.Chips);
+            _salsa = Salsa.Medium;
         }
 
         /// <summary>

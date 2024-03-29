@@ -22,6 +22,7 @@ namespace PointOfSale
     public partial class OrderSummaryControl : UserControl
     {
         public event EventHandler<CustomMenuEventArgs>? EditItemClicked;
+        public event EventHandler<CustomMenuEventArgs>? RemoveItemClicked;
 
         public OrderSummaryControl()
         {
@@ -31,21 +32,22 @@ namespace PointOfSale
         /// <summary>
         /// Event handler to remove the item from the order
         /// </summary>
-        /// <param name="sender">the object</param>
+        /// <param name="sender">the object signaling the event</param>
         /// <param name="e">information about the event</param>
         private void RemoveItem(object sender, RoutedEventArgs e)
         {
-            if (DataContext is Order list && sender is Button b)
+            if (DataContext is Order order && sender is Button b)
             {
                 IMenuItem item = (IMenuItem)b.DataContext;
-                list.Remove(item);
+                RemoveItemClicked?.Invoke(this, new CustomMenuEventArgs(item));
+                order.Remove(item);
             }
         }
 
         /// <summary>
         /// Event handler to add the name of the item selected to the list view
         /// </summary>
-        /// <param name="sender">the object</param>
+        /// <param name="sender">the object signaling the event</param>
         /// <param name="e">information about the event</param>
         private void HandleEditClick(object sender, RoutedEventArgs e)
         {

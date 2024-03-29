@@ -28,6 +28,7 @@ namespace BuildYourBowl.Data
         public Bowl() 
         {
             BaseIngredient = new IngredientItem(Ingredient.Rice);
+            _salsa = Salsa.Medium;
         }
 
         /// <summary>

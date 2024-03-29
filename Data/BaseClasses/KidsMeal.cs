@@ -55,7 +55,7 @@ namespace BuildYourBowl.Data
         /// <summary>
         /// Backing field for drink choice
         /// </summary>
-        protected Drink _drinkBacking = new Milk();
+        protected Drink _drinkBacking;
 
         /// <summary>
         /// the choice of drink for the meal
@@ -65,6 +65,8 @@ namespace BuildYourBowl.Data
             get => _drinkBacking;
             set
             {
+
+                _drinkBacking.PropertyChanged -= HandleItemPropertyChanged;
                 _drinkBacking = value;
                 OnPropertyChanged(nameof(DrinkChoice));
                 OnPropertyChanged(nameof(PreparationInformation));
@@ -77,7 +79,7 @@ namespace BuildYourBowl.Data
         /// <summary>
         /// backing field for side choice property
         /// </summary>
-        protected Side _sideChoiceBacking = new Fries();
+        protected Side _sideChoiceBacking;
 
         /// <summary>
         /// Choice of side for the meal
@@ -87,6 +89,8 @@ namespace BuildYourBowl.Data
             get => _sideChoiceBacking;
             set
             {
+
+                _sideChoiceBacking.PropertyChanged -= HandleItemPropertyChanged;
                 _sideChoiceBacking = value;
                 OnPropertyChanged(nameof(SideChoice));
                 OnPropertyChanged(nameof(PreparationInformation));
@@ -98,6 +102,11 @@ namespace BuildYourBowl.Data
 
         /// <summary>
         /// backing field for count property
+        /// </summary>
+        protected uint _defaultKidsCount;
+
+        /// <summary>
+        /// minimum count for the meal
         /// </summary>
         protected uint _minCount;
 
@@ -111,12 +120,12 @@ namespace BuildYourBowl.Data
         /// </summary>
         public uint KidsCount
         {
-            get => _minCount;
+            get => _defaultKidsCount;
             set
             {
                 if (value >= _minCount && value <= _maxCount) 
                 {
-                    _minCount = value;
+                    _defaultKidsCount = value;
                     OnPropertyChanged(nameof(KidsCount));
                     OnPropertyChanged(nameof(PreparationInformation));
                     OnPropertyChanged(nameof(Calories));
@@ -137,13 +146,25 @@ namespace BuildYourBowl.Data
         /// <summary>
         /// Handles the property
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">object signaling the event</param>
+        /// <param name="e">information about the event</param>
         private void HandleItemPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             OnPropertyChanged(nameof(Price));
             OnPropertyChanged(nameof(Calories));
             OnPropertyChanged(nameof(PreparationInformation));
+        }
+
+        /// <summary>
+        /// Constructs a kid meal
+        /// </summary>
+        public KidsMeal() 
+        {
+            _sideChoiceBacking = new Fries() { _size = Size.Kids};
+            _drinkBacking = new Milk() { _size = Size.Kids};
+
+            _drinkBacking.PropertyChanged += HandleItemPropertyChanged;
+            _sideChoiceBacking.PropertyChanged += HandleItemPropertyChanged;
         }
     }
 }

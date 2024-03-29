@@ -63,12 +63,6 @@ namespace PointOfSale
                     list.Add(af);
                     MenuItemClicked?.Invoke(this, new CustomMenuEventArgs(af));
                 }
-                else if (b.Name == "ChickenNuggetsButton")
-                {
-                    ChickenNuggetsMeal cnm = new ChickenNuggetsMeal();
-                    list.Add(cnm);
-                    MenuItemClicked?.Invoke(this, new CustomMenuEventArgs(cnm));
-                }
                 else if (b.Name == "CarnitasButton")
                 {
                     CarnitasBowl cb = new CarnitasBowl();
@@ -93,12 +87,6 @@ namespace PointOfSale
                     list.Add(h);
                     MenuItemClicked?.Invoke(this, new CustomMenuEventArgs(h));
                 }
-                else if (b.Name == "CornDogBitesButton")
-                {
-                    CornDogBitesMeal cdb = new CornDogBitesMeal();
-                    list.Add(cdb);
-                    MenuItemClicked?.Invoke(this, new CustomMenuEventArgs(cdb));
-                }
                 else if (b.Name == "GreenChickenButton")
                 {
                     GreenChickenBowl gcb = new GreenChickenBowl();
@@ -122,6 +110,18 @@ namespace PointOfSale
                     Milk milk = new Milk();
                     list.Add(milk);
                     MenuItemClicked?.Invoke(this, new CustomMenuEventArgs(milk));
+                }
+                else if (b.Name == "ChickenNuggetsButton")
+                {
+                    ChickenNuggetsMeal cnm = new ChickenNuggetsMeal();
+                    list.Add(cnm);
+                    MenuItemClicked?.Invoke(this, new CustomMenuEventArgs(cnm));
+                }
+                else if (b.Name == "CornDogBitesButton")
+                {
+                    CornDogBitesMeal cdb = new CornDogBitesMeal();
+                    list.Add(cdb);
+                    MenuItemClicked?.Invoke(this, new CustomMenuEventArgs(cdb));
                 }
                 else if (b.Name == "SlidersButton")
                 {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,8 +10,13 @@ namespace BuildYourBowl.Data
     /// <summary>
     /// Class definition for ingredient items
     /// </summary>
-    public class IngredientItem
+    public class IngredientItem : INotifyPropertyChanged
     {
+        /// <summary>
+        /// Event handler for changing properties
+        /// </summary>
+        public event PropertyChangedEventHandler? PropertyChanged;
+
         /// <summary>
         /// The type of ingredient
         /// </summary>
@@ -79,10 +85,19 @@ namespace BuildYourBowl.Data
             }
         }
 
+        private bool _included = false;
         /// <summary>
         /// whether the ingredient is included in a containing menu item
         /// </summary>
-        public bool Included { get; set; } = false;
+        public bool Included 
+        {
+            get => _included;
+            set 
+            {
+                _included = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Included)));
+            }
+        }
 
         /// <summary>
         /// whether the ingredient is included in its containing menu item by default

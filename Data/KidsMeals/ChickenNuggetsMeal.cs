@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,10 @@ namespace BuildYourBowl.Data
                 if (_sideChoiceBacking.Size == Size.Small) totalPrice += 0.50m;
                 if (_sideChoiceBacking.Size == Size.Medium) totalPrice += 1.00m;
                 if (_sideChoiceBacking.Size == Size.Large) totalPrice += 1.50m;
+
+                if (_drinkBacking.Size == Size.Kids) totalPrice -= 1m;
+                if (_drinkBacking.Size == Size.Small) totalPrice -= 0.50m;
+                if (_drinkBacking.Size == Size.Large) totalPrice += 0.75m;
 
                 return totalPrice;
             }
@@ -73,16 +78,32 @@ namespace BuildYourBowl.Data
         }
 
         /// <summary>
+        /// Handles the property
+        /// </summary>
+        /// <param name="sender">object signaling the event</param>
+        /// <param name="e">information about the event</param>
+        private void HandleItemPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(Price));
+            OnPropertyChanged(nameof(Calories));
+            OnPropertyChanged(nameof(PreparationInformation));
+        }
+
+        /// <summary>
         /// Constructor for chicken nuggets meal
         /// </summary>
         public ChickenNuggetsMeal() 
         {
             Name = "Chicken Nuggets Kids Meal";
             Description = "Chicken nuggets with side and drink";
+            _defaultKidsCount = 5;
             _minCount = 5;
             _maxCount = 8;
             _sideChoiceBacking = new Fries() { Size = Size.Kids};
             _drinkBacking = new Milk() { Size = Size.Kids};
+
+            _drinkBacking.PropertyChanged += HandleItemPropertyChanged;
+            _sideChoiceBacking.PropertyChanged += HandleItemPropertyChanged;
         }
     }
 }

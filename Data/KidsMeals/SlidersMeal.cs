@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,10 +13,22 @@ namespace BuildYourBowl.Data
     /// </summary>
     public class SlidersMeal : KidsMeal, IMenuItem
     {
+
+        private bool _americanCheese = true;
         /// <summary>
         /// Whether the sliders contain cheese
         /// </summary>
-        public bool AmericanCheese { get; set; } = true;
+        public bool AmericanCheese 
+        {
+            get => _americanCheese;
+            set 
+            {
+                _americanCheese = value;
+                OnPropertyChanged(nameof(AmericanCheese));
+                OnPropertyChanged(nameof(Calories));
+                OnPropertyChanged(nameof(PreparationInformation));
+            }
+        }
 
         /// <summary>
         /// The total price for this meal
@@ -32,6 +46,10 @@ namespace BuildYourBowl.Data
                 if (_sideChoiceBacking.Size == Size.Small) totalPrice += 0.50m;
                 if (_sideChoiceBacking.Size == Size.Medium) totalPrice += 1.00m;
                 if (_sideChoiceBacking.Size == Size.Large) totalPrice += 1.50m;
+
+                if (_drinkBacking.Size == Size.Kids) totalPrice -= 1m;
+                if (_drinkBacking.Size == Size.Small) totalPrice -= 0.50m;
+                if (_drinkBacking.Size == Size.Large) totalPrice += 0.75m;
 
                 return totalPrice;
             }
@@ -83,16 +101,33 @@ namespace BuildYourBowl.Data
         }
 
         /// <summary>
+        /// Handles the property
+        /// </summary>
+        /// <param name="sender">object signaling the event</param>
+        /// <param name="e">information about the event</param>
+        private void HandleItemPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(Price));
+            OnPropertyChanged(nameof(Calories));
+            OnPropertyChanged(nameof(PreparationInformation));
+        }
+
+        /// <summary>
         /// constructor for sliders meal
         /// </summary>
         public SlidersMeal() 
         {
             Name = "Sliders Kids Meal";
             Description = "Sliders with side and drink";
+            _defaultKidsCount = 2;
             _minCount = 2;
             _maxCount = 4;
             _sideChoiceBacking = new Fries() { Size = Size.Kids };
             _drinkBacking = new Milk() { Size = Size.Kids };
+
+
+            _drinkBacking.PropertyChanged += HandleItemPropertyChanged;
+            _sideChoiceBacking.PropertyChanged += HandleItemPropertyChanged;
         }
     }
 }

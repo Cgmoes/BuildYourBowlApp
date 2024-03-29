@@ -14,7 +14,7 @@ namespace BuildYourBowl.Data
     /// </summary>
     public class Order : ICollection<IMenuItem>, INotifyCollectionChanged, INotifyPropertyChanged
     {
-        private readonly List<IMenuItem> _items = new List<IMenuItem>();
+        public readonly List<IMenuItem> _items = new List<IMenuItem>();
 
         public event NotifyCollectionChangedEventHandler? CollectionChanged;
 

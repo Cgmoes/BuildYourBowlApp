@@ -25,8 +25,6 @@ namespace PointOfSale
         {
             InitializeComponent();
 
-            FryEditDisplay.DataContext = new Fries() { _size = BuildYourBowl.Data.Size.Kids};
-            MilkEditDisplay.DataContext = new Milk() { _size = BuildYourBowl.Data.Size.Kids};
         }
 
         /// <summary>
@@ -34,35 +32,35 @@ namespace PointOfSale
         /// </summary>
         /// <param name="sender">the object signaling the event</param>
         /// <param name="e">information about the event</param>
-        private void SideRadioButtonCheck(object sender, RoutedEventArgs e)
+        private void KidsSideChoice(object sender, RoutedEventArgs e)
         {
             if (sender is RadioButton b && b.IsChecked == true && DataContext is KidsMeal k) 
             {
-                if (b.Name == "Fries") 
+                if (b.Name == "FriesButton") 
                 {
+                    if(k.SideChoice is not Fries) k.SideChoice = new Fries() { _size = BuildYourBowl.Data.Size.Kids };
+
                     FryEditDisplay.Visibility = Visibility.Visible;
                     RefriedBeansEditDisplay.Visibility = Visibility.Hidden;
                     StreetCornEditDisplay.Visibility = Visibility.Hidden;
-
-                    k.SideChoice = new Fries();
                     FryEditDisplay.DataContext = k.SideChoice;
                 }
-                else if (b.Name == "RefriedBeans")
+                if (b.Name == "RefriedBeansButton") 
                 {
+                    if(k.SideChoice is not RefriedBeans) k.SideChoice = new RefriedBeans() { _size = BuildYourBowl.Data.Size.Kids };
+
                     FryEditDisplay.Visibility = Visibility.Hidden;
                     RefriedBeansEditDisplay.Visibility = Visibility.Visible;
                     StreetCornEditDisplay.Visibility = Visibility.Hidden;
-
-                    k.SideChoice = new RefriedBeans();
                     RefriedBeansEditDisplay.DataContext = k.SideChoice;
                 }
-                else if (b.Name == "StreetCorn")
+                if(b.Name == "StreetCornButton") 
                 {
+                    if(k.SideChoice is not StreetCorn) k.SideChoice = new StreetCorn() { _size = BuildYourBowl.Data.Size.Kids };
+
                     FryEditDisplay.Visibility = Visibility.Hidden;
                     RefriedBeansEditDisplay.Visibility = Visibility.Hidden;
                     StreetCornEditDisplay.Visibility = Visibility.Visible;
-
-                    k.SideChoice = new StreetCorn();
                     StreetCornEditDisplay.DataContext = k.SideChoice;
                 }
             }
@@ -73,35 +71,35 @@ namespace PointOfSale
         /// </summary>
         /// <param name="sender">the object signaling the event</param>
         /// <param name="e">information about the event</param>
-        private void DrinkRadioButtonCheck(object sender, RoutedEventArgs e)
+        private void KidsDrinkChoice(object sender, RoutedEventArgs e)
         {
             if (sender is RadioButton b && b.IsChecked == true && DataContext is KidsMeal k)
             {
-                if (b.Name == "Milk")
+                if (b.Name == "MilkButton")
                 {
+                    if (k.DrinkChoice is not Milk) k.DrinkChoice = new Milk() { _size = BuildYourBowl.Data.Size.Kids };
+
                     MilkEditDisplay.Visibility = Visibility.Visible;
                     HorchataEditDisplay.Visibility = Visibility.Hidden;
                     AguaFrescaEditDisplay.Visibility = Visibility.Hidden;
-
-                    k.DrinkChoice = new Milk();
                     MilkEditDisplay.DataContext = k.DrinkChoice;
                 }
-                else if (b.Name == "Horchata")
+                else if (b.Name == "HorchataButton")
                 {
+                    if (k.DrinkChoice is not Horchata) k.DrinkChoice = new Horchata() { _size = BuildYourBowl.Data.Size.Kids };
+
                     MilkEditDisplay.Visibility = Visibility.Hidden;
                     HorchataEditDisplay.Visibility = Visibility.Visible;
                     AguaFrescaEditDisplay.Visibility = Visibility.Hidden;
-
-                    k.DrinkChoice = new Horchata();
                     HorchataEditDisplay.DataContext = k.DrinkChoice;
                 }
-                else if (b.Name == "AguaFresca")
+                else if (b.Name == "AguaFrescaButton")
                 {
+                    if (k.DrinkChoice is not AguaFresca) k.DrinkChoice = new AguaFresca() { _size = BuildYourBowl.Data.Size.Kids };
+
                     MilkEditDisplay.Visibility = Visibility.Hidden;
                     HorchataEditDisplay.Visibility = Visibility.Hidden;
                     AguaFrescaEditDisplay.Visibility = Visibility.Visible;
-
-                    k.DrinkChoice = new AguaFresca();
                     AguaFrescaEditDisplay.DataContext = k.DrinkChoice;
                 }
             }

@@ -7,11 +7,28 @@
              mc:Ignorable="d"
              d:DesignHeight="720" d:DesignWidth="1080">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        
         <StackPanel Grid.Column="0">
             <TextBlock Text="{Binding Name}" Margin="10"/>
             <TextBlock Text="{Binding Description}" FontSize="18" Margin="10"/>
             <ComboBox ItemsSource="{Binding Source={StaticResource salsas}}" SelectedItem="{Binding Path=SalsaType}" Margin="10" MinWidth="150" MaxWidth="150" HorizontalAlignment="Left"/>
             <TextBlock Text="{Binding Calories, StringFormat= 'Calories: {0}'}" FontSize="18" Margin="10"/>
         </StackPanel>
+        
+        <TextBlock Text="Choose Toppings:" Grid.Column="1" Margin="0 40 0 0"/>
+        <ListView ItemsSource="{Binding Path=PossibleToppingsList}" Grid.Column="1" MaxHeight="400">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox IsChecked="{Binding Path=Included}"/>
+                        <TextBlock Text="{Binding Path=Name}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </UserControl>

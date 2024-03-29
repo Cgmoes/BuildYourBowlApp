@@ -25,16 +25,17 @@
                 <TextBlock Grid.Column="1" FontSize="18" Margin="5 12 0 0">Count</TextBlock>
             </Grid>
             <TextBlock Text="{Binding Path=Calories, StringFormat= 'Total Calories: {0}'}" Margin="10"/>
-
+            <CheckBox Name="SlidersCheeseCheckBox" IsChecked="{Binding Path=AmericanCheese}" Visibility="Hidden" Margin="10">American Cheese</CheckBox>
+            
             <TextBlock Margin="10">Side Choice:</TextBlock>
-            <RadioButton GroupName="Sides" Margin="10 0 0 0" Name="Fries"  IsChecked="True" Checked="SideRadioButtonCheck">Fries</RadioButton>
-            <RadioButton GroupName="Sides" Margin="10 0 0 0" Name="RefriedBeans" Checked="SideRadioButtonCheck">Refried Beans</RadioButton>
-            <RadioButton GroupName="Sides" Margin="10 0 0 0" Name="StreetCorn" Checked="SideRadioButtonCheck">Street Corn</RadioButton>
+            <RadioButton GroupName="Sides" Margin="10 0 0 0" Name="FriesButton" Checked="KidsSideChoice">Fries</RadioButton>
+            <RadioButton GroupName="Sides" Margin="10 0 0 0" Name="RefriedBeansButton" Checked="KidsSideChoice">Refried Beans</RadioButton>
+            <RadioButton GroupName="Sides" Margin="10 0 0 0" Name="StreetCornButton" Checked="KidsSideChoice">Street Corn</RadioButton>
 
-            <TextBlock Margin="10 20 10 10">Side Choice:</TextBlock>
-            <RadioButton GroupName="Drinks" Margin="10 0 0 0" Name="Milk" IsChecked="True" Checked="DrinkRadioButtonCheck">Milk</RadioButton>
-            <RadioButton GroupName="Drinks" Margin="10 0 0 0" Name="Horchata" Checked="DrinkRadioButtonCheck">Horchata</RadioButton>
-            <RadioButton GroupName="Drinks" Margin="10 0 0 0" Name="AguaFresca" Checked="DrinkRadioButtonCheck">Agua Fresca</RadioButton>
+            <TextBlock Margin="10 20 10 10">Drink Choice:</TextBlock>
+            <RadioButton GroupName="Drinks" Margin="10 0 0 0" Name="MilkButton" Checked="KidsDrinkChoice">Milk</RadioButton>
+            <RadioButton GroupName="Drinks" Margin="10 0 0 0" Name="HorchataButton" Checked="KidsDrinkChoice">Horchata</RadioButton>
+            <RadioButton GroupName="Drinks" Margin="10 0 0 0" Name="AguaFrescaButton" Checked="KidsDrinkChoice">Agua Fresca</RadioButton>
         </StackPanel>
         
         <GridSplitter Grid.Column="0" Width="2" VerticalAlignment="Stretch"/>

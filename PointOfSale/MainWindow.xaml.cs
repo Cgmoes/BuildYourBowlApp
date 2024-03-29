@@ -26,29 +26,29 @@ namespace PointOfSale
         {
             InitializeComponent();
             DataContext = new Order();
+            
             MenuItemSelection.MenuItemClicked += HandleMenuItemClick!;
             OrderSummary.EditItemClicked += HandleMenuItemClick!;
+            OrderSummary.RemoveItemClicked += HandleBackToMenu!;
+            PaymentControlDisplay.ReceiptPrintedEvent += NewOrder!;
         }
 
         /// <summary>
         /// Event handler to cancel the order and create a new one
         /// </summary>
-        /// <param name="sender">the object</param>
+        /// <param name="sender">the object signaling the event</param>
         /// <param name="e">information about the event</param>
-        private void CancelOrder(object sender, RoutedEventArgs e)
+        private void NewOrder(object sender, RoutedEventArgs e)
         {
-            if (DataContext is Order list && sender is Button b)
-            {
                 DataContext = new Order();
                 HideViews();
                 MenuItemSelection.Visibility = Visibility.Visible;
-            }
         }
 
         /// <summary>
         /// Event handler to handle if back to menu was clicked
         /// </summary>
-        /// <param name="sender">the object</param>
+        /// <param name="sender">the object signaling the event</param>
         /// <param name="e">information about the event</param>
         private void HandleBackToMenu(object sender, RoutedEventArgs e)
         {
@@ -56,6 +56,11 @@ namespace PointOfSale
             MenuItemSelection.Visibility = Visibility.Visible;
         }
 
+        /// <summary>
+        /// Handles when a menu item is clicked
+        /// </summary>
+        /// <param name="sender">object signaling the event</param>
+        /// <param name="e">information about the event</param>
         private void HandleMenuItemClick(object sender, CustomMenuEventArgs e)
         {
             if (e.MenuItem is Entree)
@@ -100,11 +105,24 @@ namespace PointOfSale
                 MilkEditDisplay.Visibility = Visibility.Visible;
                 MilkEditDisplay.DataContext = e.MenuItem;
             }
-            else if (e.MenuItem is KidsMeal)
+            else if (e.MenuItem is KidsMeal k)
             {
                 HideViews();
                 KidsMealEditDisplay.Visibility = Visibility.Visible;
                 KidsMealEditDisplay.DataContext = e.MenuItem;
+                KidsMealEditDisplay.FryEditDisplay.DataContext = k.SideChoice;
+                KidsMealEditDisplay.MilkEditDisplay.DataContext = k.DrinkChoice;
+
+                if (k is SlidersMeal) KidsMealEditDisplay.SlidersCheeseCheckBox.Visibility = Visibility.Visible;
+                else if (k is not SlidersMeal) KidsMealEditDisplay.SlidersCheeseCheckBox.Visibility = Visibility.Hidden;
+
+                if (k.SideChoice is Fries) KidsMealEditDisplay.FriesButton.IsChecked = true;
+                else if (k.SideChoice is RefriedBeans) KidsMealEditDisplay.RefriedBeansButton.IsChecked = true; 
+                else if(k.SideChoice is StreetCorn) KidsMealEditDisplay.StreetCornButton.IsChecked = true;
+
+                if(k.DrinkChoice is Milk) KidsMealEditDisplay.MilkButton.IsChecked = true;
+                else if(k.DrinkChoice is Horchata) KidsMealEditDisplay.HorchataButton.IsChecked = true;
+                else if(k.DrinkChoice is AguaFresca) KidsMealEditDisplay.AguaFrescaButton.IsChecked = true;
             }
         }
 
@@ -122,6 +140,20 @@ namespace PointOfSale
             HorchataEditDisplay.Visibility = Visibility.Hidden;
             MilkEditDisplay.Visibility = Visibility.Hidden;
             KidsMealEditDisplay.Visibility = Visibility.Hidden;
+            PaymentControlDisplay.Visibility = Visibility.Hidden;
+        }
+
+        /// <summary>
+        /// shows the payment screen
+        /// </summary>
+        /// <param name="sender">object signaling the event</param>
+        /// <param name="e">information about the event</param>
+        private void ShowPaymentControl(object sender, RoutedEventArgs e)
+        {
+            HideViews();
+            PaymentControlDisplay.Visibility = Visibility.Visible;
+            Order order = (Order)DataContext;
+            PaymentControlDisplay.DataContext = new PaymentViewModel(order);
         }
     }
 }

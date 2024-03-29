@@ -18,15 +18,6 @@ namespace BuildYourBowl.Data
         public event PropertyChangedEventHandler? PropertyChanged;
 
         /// <summary>
-        /// Handles if a property was changed for children classes
-        /// </summary>
-        /// <param name="propertyName">name of property changed</param>
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        /// <summary>
         /// The name of this entree
         /// </summary>
         public abstract string Name { get; }
@@ -95,9 +86,9 @@ namespace BuildYourBowl.Data
             set 
             {
                 _salsa = value;
-                OnPropertyChanged(nameof(SalsaType));
-                OnPropertyChanged(nameof(Calories));
-                OnPropertyChanged(nameof(PreparationInformation));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SalsaType)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Calories)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PreparationInformation)));
             }
         }
 
@@ -125,6 +116,7 @@ namespace BuildYourBowl.Data
                     {
                         instructions.Add($"Hold {i.Value.Name}");
                     }
+                    i.Value.PropertyChanged += OnToppingsChanged;
                 }
 
                 if (SalsaType == Salsa.None)
@@ -146,6 +138,11 @@ namespace BuildYourBowl.Data
         public Dictionary<Ingredient, IngredientItem> PossibleToppings { get; } = new Dictionary<Ingredient, IngredientItem>();
 
         /// <summary>
+        /// Property to convert the dictionary to list
+        /// </summary>
+        public List<IngredientItem> PossibleToppingsList => PossibleToppings.Values.ToList();
+
+        /// <summary>
         /// Constructor for entree object
         /// </summary>
         public Entree() 
@@ -154,7 +151,20 @@ namespace BuildYourBowl.Data
             {
                 IngredientItem ingredient = new IngredientItem(i);
                 PossibleToppings.Add(ingredient.IngredientType, new IngredientItem(i));
+                ingredient.PropertyChanged += OnToppingsChanged;
             }
+        }
+
+        /// <summary>
+        /// Invokes the properties changed for an item when toppings are changed
+        /// </summary>
+        /// <param name="sender">object signaling the event</param>
+        /// <param name="e">information about the event</param>
+        public void OnToppingsChanged(object? sender, PropertyChangedEventArgs e) 
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Calories)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PreparationInformation)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Price)));
         }
     }
 }
