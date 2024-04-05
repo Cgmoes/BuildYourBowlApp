@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,38 @@ namespace BuildYourBowl.DataTests
     /// </summary>
     public class SlidersMealUnitTests
     {
+        /// <summary>
+        /// Mock side item class for testing
+        /// </summary>
+        internal class MockSide : Side
+        {
+            public event PropertyChangedEventHandler? PropertyChanged;
+
+            public override string Name { get; }
+            public override string Description { get; }
+
+            public override Size Size { get; set; }
+            public override decimal Price { get; }
+            public override uint Calories { get; }
+            public override IEnumerable<string> PreparationInformation { get; }
+        }
+
+        /// <summary>
+        /// Mock side item class for testing
+        /// </summary>
+        internal class MockDrink : Drink
+        {
+            public event PropertyChangedEventHandler? PropertyChanged;
+
+            public override string Name { get; }
+            public override string Description { get; }
+
+            public override Size Size { get; set; }
+            public override decimal Price { get; }
+            public override uint Calories { get; }
+            public override IEnumerable<string> PreparationInformation { get; }
+        }
+
         /// <summary>
         /// Unit tests for all default values
         /// </summary>
@@ -157,6 +190,62 @@ namespace BuildYourBowl.DataTests
         {
             SlidersMeal s = new SlidersMeal();
             Assert.Equal(s.Name, s.ToString());
+        }
+
+        /// <summary>
+        /// Unit test to ensure that changes count changes the properties
+        /// </summary>
+        /// <param name="count">the count of the meal</param>
+        /// <param name="propertyName">the property that should be changed</param>
+        [Theory]
+        [InlineData(2, "KidsCount")]
+        [InlineData(3, "Price")]
+        [InlineData(4, "Calories")]
+        [InlineData(2, "PreparationInformation")]
+        [InlineData(3, "PreparationInformation")]
+        [InlineData(4, "KidsCount")]
+        [InlineData(2, "Price")]
+        [InlineData(3, "Calories")]
+        public void ChangingCountShouldNotifyOfPropertyChangesTest(uint count, string propertyName)
+        {
+            SlidersMeal s = new SlidersMeal();
+            Assert.PropertyChanged(s, propertyName, () => {
+                s.KidsCount = count;
+            });
+        }
+
+        /// <summary>
+        /// Test to make sure changing the side notifies the properties
+        /// </summary>
+        [Fact]
+        public void ChangingSideShouldNotifyOfPropertyChangesTest()
+        {
+            SlidersMeal slider = new SlidersMeal();
+            List<string> propertyNames = new List<string> { "SideChoice", "Price", "Calories", "PreparationInformation" };
+
+            foreach (string s in propertyNames)
+            {
+                Assert.PropertyChanged(slider, s, () => {
+                    slider.SideChoice = new MockSide();
+                });
+            }
+        }
+
+        /// <summary>
+        /// Test to make sure changing the drink notifies the properties
+        /// </summary>
+        [Fact]
+        public void ChangingDrinkShouldNotifyOfPropertyChangesTest()
+        {
+            SlidersMeal slider = new SlidersMeal();
+            List<string> propertyNames = new List<string> { "DrinkChoice", "Price", "Calories", "PreparationInformation" };
+
+            foreach (string s in propertyNames)
+            {
+                Assert.PropertyChanged(slider, s, () => {
+                    slider.DrinkChoice = new MockDrink();
+                });
+            }
         }
     }
 }

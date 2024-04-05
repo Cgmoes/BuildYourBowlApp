@@ -29,9 +29,9 @@ namespace BuildYourBowl.Data
                 if (_sideChoiceBacking.Size == Size.Medium) totalPrice += 1.00m;
                 if (_sideChoiceBacking.Size == Size.Large) totalPrice += 1.50m;
 
-                if (_drinkBacking.Size == Size.Kids) totalPrice -= 1m;
-                if (_drinkBacking.Size == Size.Small) totalPrice -= 0.50m;
-                if (_drinkBacking.Size == Size.Large) totalPrice += 0.75m;
+                if (_drinkBacking.Size == Size.Small) totalPrice += 0.50m;
+                if (_drinkBacking.Size == Size.Medium) totalPrice += 1.00m;
+                if (_drinkBacking.Size == Size.Large) totalPrice += 1.50m;
 
                 return totalPrice;
             }

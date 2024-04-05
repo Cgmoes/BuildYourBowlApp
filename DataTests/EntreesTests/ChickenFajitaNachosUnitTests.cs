@@ -204,5 +204,50 @@ namespace BuildYourBowl.DataTests
             ChickenFajitaNachos c = new ChickenFajitaNachos();
             Assert.Equal(c.Name, c.ToString());
         }
+
+        /// <summary>
+        /// Unit test to ensure changing the salsa type changes the properties
+        /// </summary>
+        /// <param name="salsaType">the type of salsa</param>
+        /// <param name="propertyName">the name of the property that should be changed</param>
+        [Theory]
+        [InlineData(Salsa.Medium, "SalsaType")]
+        [InlineData(Salsa.None, "Calories")]
+        [InlineData(Salsa.Green, "PreparationInformation")]
+        [InlineData(Salsa.Hot, "SalsaType")]
+        [InlineData(Salsa.Mild, "Calories")]
+        [InlineData(Salsa.Mild, "PreparationInformation")]
+        [InlineData(Salsa.None, "SalsaType")]
+        [InlineData(Salsa.Green, "Calories")]
+        public void SalsaTypeNotifiesOfPropertyChangedTest(Salsa salsaType, string propertyName)
+        {
+            ChickenFajitaNachos c = new ChickenFajitaNachos();
+            Assert.PropertyChanged(c, propertyName, () => {
+                c.SalsaType = salsaType;
+            });
+        }
+
+        /// <summary>
+        /// Tests if ingredients update properties
+        /// </summary>
+        /// <param name="ingredient">ingredient to test</param>
+        /// <param name="included">whether or not the ingredient is included</param>
+        /// <param name="propertyName">the name of the property that should be updated</param>
+        [Theory]
+        [InlineData(Ingredient.Chicken, false, "PreparationInformation")]
+        [InlineData(Ingredient.Queso, true, "Calories")]
+        [InlineData(Ingredient.SourCream, true, "Calories")]
+        [InlineData(Ingredient.Guacamole, false, "PreparationInformation")]
+        [InlineData(Ingredient.SourCream, true, "Price")]
+        [InlineData(Ingredient.Veggies, true, "Price")]
+        [InlineData(Ingredient.Chicken, true, "Calories")]
+        [InlineData(Ingredient.Queso, true, "PreparationInformation")]
+        public void ToppingsNotifiesOfPropertyChangedTest(Ingredient ingredient, bool included, string propertyName)
+        {
+            ChickenFajitaNachos c = new ChickenFajitaNachos();
+            Assert.PropertyChanged(c, propertyName, () => {
+                c.PossibleToppings[ingredient].Included = included;
+            });
+        }
     }
 }

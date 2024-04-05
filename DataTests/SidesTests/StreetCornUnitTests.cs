@@ -133,5 +133,75 @@ namespace BuildYourBowl.DataTests
             StreetCorn s = new StreetCorn();
             Assert.Equal(s.Name, s.ToString());
         }
+
+        /// <summary>
+        /// Unit test to ensure changing the size notifies the property changed
+        /// </summary>
+        /// <param name="size">size of the side</param>
+        /// <param name="propertyName">the property that should be affected</param>
+        [Theory]
+        [InlineData(Size.Kids, "Size")]
+        [InlineData(Size.Small, "Size")]
+        [InlineData(Size.Medium, "Size")]
+        [InlineData(Size.Large, "Size")]
+        [InlineData(Size.Kids, "Price")]
+        [InlineData(Size.Small, "Price")]
+        [InlineData(Size.Medium, "Price")]
+        [InlineData(Size.Large, "Price")]
+        [InlineData(Size.Kids, "Calories")]
+        [InlineData(Size.Small, "Calories")]
+        [InlineData(Size.Medium, "Calories")]
+        [InlineData(Size.Large, "Calories")]
+        [InlineData(Size.Kids, "PreparationInformation")]
+        [InlineData(Size.Small, "PreparationInformation")]
+        [InlineData(Size.Medium, "PreparationInformation")]
+        [InlineData(Size.Large, "PreparationInformation")]
+        public void ChangingSizeShouldNotifyOfPropertyChanges(Size size, string propertyName)
+        {
+            StreetCorn s = new StreetCorn();
+            Assert.PropertyChanged(s, propertyName, () => {
+                s.Size = size;
+            });
+        }
+
+        /// <summary>
+        /// Unit test to ensure changing the cilantro property affects others
+        /// </summary>
+        /// <param name="hasCilantro">whether or not the it has cilantro</param>
+        /// <param name="propertyName">The property that should be affected</param>
+        [Theory]
+        [InlineData(true, "Cilantro")]
+        [InlineData(false, "Cilantro")]
+        [InlineData(true, "Calories")]
+        [InlineData(false, "Calories")]
+        [InlineData(true, "PreparationInformation")]
+        [InlineData(false, "PreparationInformation")]
+        public void ChangingCilantroShouldNotifyOfPropertyChanges(bool hasCilantro, string propertyName)
+        {
+            StreetCorn s = new StreetCorn();
+            Assert.PropertyChanged(s, propertyName, () => {
+                s.Cilantro = hasCilantro;
+            });
+        }
+
+        /// <summary>
+        /// Unit test to ensure changing the cheese property affects others
+        /// </summary>
+        /// <param name="hasCheese">whether or not it has cheese</param>
+        /// <param name="propertyName">The property that should be affected</param>
+        [Theory]
+        [InlineData(true, "CotijaCheese")]
+        [InlineData(false, "CotijaCheese")]
+        [InlineData(true, "Calories")]
+        [InlineData(false, "Calories")]
+        [InlineData(true, "PreparationInformation")]
+        [InlineData(false, "PreparationInformation")]
+        public void ChangingCotijaCheeseShouldNotifyOfPropertyChanges(bool hasCheese, string propertyName)
+        {
+            StreetCorn s = new StreetCorn();
+            Assert.PropertyChanged(s, propertyName, () => {
+                s.CotijaCheese = hasCheese;
+            });
+        }
     }
 }

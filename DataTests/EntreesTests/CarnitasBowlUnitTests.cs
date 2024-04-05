@@ -222,5 +222,50 @@ namespace BuildYourBowl.DataTests
             CarnitasBowl cb = new CarnitasBowl();
             Assert.Equal(cb.Name, cb.ToString());
         }
+
+        /// <summary>
+        /// Unit test to ensure changing the salsa type changes the properties
+        /// </summary>
+        /// <param name="salsaType">the type of salsa</param>
+        /// <param name="propertyName">the name of the property that should be changed</param>
+        [Theory]
+        [InlineData(Salsa.Medium, "SalsaType")]
+        [InlineData(Salsa.None, "Calories")]
+        [InlineData(Salsa.Green, "PreparationInformation")]
+        [InlineData(Salsa.Hot, "SalsaType")]
+        [InlineData(Salsa.Mild, "Calories")]
+        [InlineData(Salsa.Mild, "PreparationInformation")]
+        [InlineData(Salsa.None, "SalsaType")]
+        [InlineData(Salsa.Green, "Calories")]
+        public void SalsaTypeNotifiesOfPropertyChangedTest(Salsa salsaType, string propertyName) 
+        {
+            CarnitasBowl cb = new CarnitasBowl();
+            Assert.PropertyChanged(cb, propertyName, () => {
+                cb.SalsaType = salsaType;
+            });
+        }
+
+        /// <summary>
+        /// Tests if ingredients update properties
+        /// </summary>
+        /// <param name="ingredient">ingredient to test</param>
+        /// <param name="included">whether or not the ingredient is included</param>
+        /// <param name="propertyName">the name of the property that should be updated</param>
+        [Theory]
+        [InlineData(Ingredient.Carnitas, false, "PreparationInformation")]
+        [InlineData(Ingredient.Queso, true, "Calories")]
+        [InlineData(Ingredient.PintoBeans, true, "Calories")]
+        [InlineData(Ingredient.Guacamole, false, "PreparationInformation")]
+        [InlineData(Ingredient.SourCream, true, "Price")]
+        [InlineData(Ingredient.Veggies, true, "Price")]
+        [InlineData(Ingredient.Carnitas, true, "Calories")]
+        [InlineData(Ingredient.Queso, true, "PreparationInformation")]
+        public void ToppingsNotifiesOfPropertyChangedTest(Ingredient ingredient, bool included, string propertyName) 
+        {
+            CarnitasBowl cb = new CarnitasBowl();
+            Assert.PropertyChanged(cb, propertyName, () => {
+                cb.PossibleToppings[ingredient].Included = included;
+            });
+        }
     }
 }

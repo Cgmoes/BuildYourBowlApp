@@ -46,6 +46,11 @@
             //Pick Salsa Choice
             SalsaType = Salsa.Green;
             DefaultSalsa = Salsa.Green;
+
+            foreach (IngredientItem ingredient in PossibleToppings.Values)
+            {
+                ingredient.PropertyChanged += OnToppingsChanged;
+            }
         }
     }
 }

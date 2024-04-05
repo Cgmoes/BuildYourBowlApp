@@ -135,7 +135,7 @@ namespace BuildYourBowl.Data
         {
             get
             {
-                return _items.Sum(item => item.Price);
+                return Math.Round(_items.Sum(item => item.Price), 2);
             }
             set
             {
@@ -169,7 +169,7 @@ namespace BuildYourBowl.Data
         {
             get
             {
-                return Subtotal * TaxRate;
+                return Math.Round(Subtotal * TaxRate, 2);
             }
         }
 
@@ -180,7 +180,7 @@ namespace BuildYourBowl.Data
         {
             get
             {
-                return Subtotal + Tax;
+                return Math.Round(Subtotal + Tax, 2);
             }
         }
 

@@ -117,5 +117,53 @@ namespace BuildYourBowl.DataTests
             Fries f = new Fries();
             Assert.Equal(f.Name, f.ToString());
         }
+
+        /// <summary>
+        /// Unit test to ensure changing the size notifies the property changed
+        /// </summary>
+        /// <param name="size">size of the side</param>
+        /// <param name="propertyName">the property that should be affected</param>
+        [Theory]
+        [InlineData(Size.Kids, "Size")]
+        [InlineData(Size.Small, "Size")]
+        [InlineData(Size.Medium, "Size")]
+        [InlineData(Size.Large, "Size")]
+        [InlineData(Size.Kids, "Price")]
+        [InlineData(Size.Small, "Price")]
+        [InlineData(Size.Medium, "Price")]
+        [InlineData(Size.Large, "Price")]
+        [InlineData(Size.Kids, "Calories")]
+        [InlineData(Size.Small, "Calories")]
+        [InlineData(Size.Medium, "Calories")]
+        [InlineData(Size.Large, "Calories")]
+        [InlineData(Size.Kids, "PreparationInformation")]
+        [InlineData(Size.Small, "PreparationInformation")]
+        [InlineData(Size.Medium, "PreparationInformation")]
+        [InlineData(Size.Large, "PreparationInformation")]
+        public void ChangingSizeShouldNotifyOfPropertyChanges(Size size, string propertyName)
+        {
+            Fries f = new();
+            Assert.PropertyChanged(f, propertyName, () => {
+                f.Size = size;
+            });
+        }
+
+        /// <summary>
+        /// Unit test to ensure changing the curly property affects others
+        /// </summary>
+        /// <param name="isCurly">whether or not the fry is curly</param>
+        /// <param name="propertyName">The property that should be affected</param>
+        [Theory]
+        [InlineData(true, "Curly")]
+        [InlineData(false, "Curly")]
+        [InlineData(true, "PreparationInformation")]
+        [InlineData(false, "PreparationInformation")]
+        public void ChangingCurlyShouldNotifyOfPropertyChanges(bool isCurly, string propertyName) 
+        {
+            Fries f = new Fries();
+            Assert.PropertyChanged(f, propertyName, () => {
+                f.Curly = isCurly;
+            });
+        }
     }
 }

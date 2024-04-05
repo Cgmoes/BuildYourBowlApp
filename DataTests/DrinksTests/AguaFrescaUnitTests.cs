@@ -149,5 +149,77 @@ namespace BuildYourBowl.DataTests
             AguaFresca af = new AguaFresca();
             Assert.Equal(af.Name, af.ToString());
         }
+
+        /// <summary>
+        /// Unit test to ensure INotifyChanged is properly implemented for changing the size
+        /// </summary>
+        /// <param name="size">The size to test</param>
+        /// <param name="propertyName">the property that should be changed</param>
+        [Theory]
+        [InlineData(Size.Kids, "Size")]
+        [InlineData(Size.Small, "Size")]
+        [InlineData(Size.Medium, "Size")]
+        [InlineData(Size.Large, "Size")]
+        [InlineData(Size.Kids, "Price")]
+        [InlineData(Size.Small, "Price")]
+        [InlineData(Size.Medium, "Price")]
+        [InlineData(Size.Large, "Price")]
+        [InlineData(Size.Kids, "Calories")]
+        [InlineData(Size.Small, "Calories")]
+        [InlineData(Size.Medium, "Calories")]
+        [InlineData(Size.Large, "Calories")]
+        [InlineData(Size.Kids, "PreparationInformation")]
+        [InlineData(Size.Small, "PreparationInformation")]
+        [InlineData(Size.Medium, "PreparationInformation")]
+        [InlineData(Size.Large, "PreparationInformation")]
+        public void ChangingSizeShouldNotifyOfPropertyChangesTest(Size size, string propertyName)
+        {
+            AguaFresca af = new AguaFresca();
+            Assert.PropertyChanged(af, propertyName, () => {
+                af.Size = size;
+            });
+        }
+
+        /// <summary>
+        /// Unit test to ensure that changing the ice property affects the correct properties
+        /// </summary>
+        /// <param name="ice">whether or not the drink has ice</param>
+        /// <param name="propertyName">the property that should be affected</param>
+        [Theory]
+        [InlineData(true, "Ice")]
+        [InlineData(true, "Calories")]
+        [InlineData(true, "PreparationInformation")]
+        [InlineData(false, "Ice")]
+        [InlineData(false, "Calories")]
+        [InlineData(false, "PreparationInformation")]
+        public void ChangingIceShouldNotifyOfPropertyChangesTest(bool ice, string propertyName) 
+        {
+            AguaFresca af = new AguaFresca();
+            Assert.PropertyChanged(af, propertyName, () => {
+                af.Ice = ice;
+            });
+        }
+
+        /// <summary>
+        /// Unit test to make sure that changing the flavor changes the properties
+        /// </summary>
+        /// <param name="flavor">the flavor of the drink</param>
+        /// <param name="propertyName">the property that should be changed</param>
+        [Theory]
+        [InlineData(Flavor.Lime, "DrinkFlavor")]
+        [InlineData(Flavor.Limonada, "Price")]
+        [InlineData(Flavor.Strawberry, "Calories")]
+        [InlineData(Flavor.Tamarind, "PreparationInformation")]
+        [InlineData(Flavor.Cucumber, "DrinkFlavor")]
+        [InlineData(Flavor.Tamarind, "Calories")]
+        [InlineData(Flavor.Limonada, "PreparationInformation")]
+        [InlineData(Flavor.Strawberry, "Price")]
+        public void ChangingFlavorShouldNotifyOfPropertyChangesTest(Flavor flavor, string propertyName) 
+        {
+            AguaFresca af = new AguaFresca();
+            Assert.PropertyChanged(af, propertyName, () => {
+                af.DrinkFlavor = flavor;
+            });
+        }
     }
 }

@@ -58,6 +58,11 @@ namespace BuildYourBowl.Data
             //Pick Salsa Choice
             SalsaType = Salsa.Medium;
             DefaultSalsa = Salsa.Medium;
+
+            foreach (IngredientItem ingredient in PossibleToppings.Values)
+            {
+                ingredient.PropertyChanged += OnToppingsChanged;
+            }
         }
     }
 }

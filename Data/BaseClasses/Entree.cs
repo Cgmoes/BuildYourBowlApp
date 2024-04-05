@@ -135,7 +135,7 @@ namespace BuildYourBowl.Data
         /// <summary>
         /// Additional ingredients in the menu item
         /// </summary>
-        public Dictionary<Ingredient, IngredientItem> PossibleToppings { get; } = new Dictionary<Ingredient, IngredientItem>();
+        public Dictionary<Ingredient, IngredientItem> PossibleToppings { get; set; } = new Dictionary<Ingredient, IngredientItem>();
 
         /// <summary>
         /// Property to convert the dictionary to list
@@ -147,10 +147,8 @@ namespace BuildYourBowl.Data
         /// </summary>
         public Entree() 
         {
-            foreach (Ingredient i in Enum.GetValues(typeof(Ingredient))) 
+            foreach (IngredientItem ingredient in PossibleToppings.Values) 
             {
-                IngredientItem ingredient = new IngredientItem(i);
-                PossibleToppings.Add(ingredient.IngredientType, new IngredientItem(i));
                 ingredient.PropertyChanged += OnToppingsChanged;
             }
         }

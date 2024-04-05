@@ -74,6 +74,9 @@ namespace BuildYourBowl.DataTests
             Assert.False(cn.PossibleToppings[Ingredient.SourCream].Included);
         }
 
+        /// <summary>
+        /// Ensures the default price and calories are correct
+        /// </summary>
         [Fact]
         public void DefaultPriceAndCaloriesAreCorrectTest() 
         {
@@ -206,6 +209,51 @@ namespace BuildYourBowl.DataTests
         {
             ClassicNachos c = new ClassicNachos();
             Assert.Equal(c.Name, c.ToString());
+        }
+
+        /// <summary>
+        /// Unit test to ensure changing the salsa type changes the properties
+        /// </summary>
+        /// <param name="salsaType">the type of salsa</param>
+        /// <param name="propertyName">the name of the property that should be changed</param>
+        [Theory]
+        [InlineData(Salsa.Medium, "SalsaType")]
+        [InlineData(Salsa.None, "Calories")]
+        [InlineData(Salsa.Green, "PreparationInformation")]
+        [InlineData(Salsa.Hot, "SalsaType")]
+        [InlineData(Salsa.Mild, "Calories")]
+        [InlineData(Salsa.Mild, "PreparationInformation")]
+        [InlineData(Salsa.None, "SalsaType")]
+        [InlineData(Salsa.Green, "Calories")]
+        public void SalsaTypeNotifiesOfPropertyChangedTest(Salsa salsaType, string propertyName)
+        {
+            ClassicNachos cn = new ClassicNachos();
+            Assert.PropertyChanged(cn, propertyName, () => {
+                cn.SalsaType = salsaType;
+            });
+        }
+
+        /// <summary>
+        /// Tests if ingredients update properties
+        /// </summary>
+        /// <param name="ingredient">ingredient to test</param>
+        /// <param name="included">whether or not the ingredient is included</param>
+        /// <param name="propertyName">the name of the property that should be updated</param>
+        [Theory]
+        [InlineData(Ingredient.Chicken, false, "PreparationInformation")]
+        [InlineData(Ingredient.Queso, true, "Calories")]
+        [InlineData(Ingredient.Steak, true, "Calories")]
+        [InlineData(Ingredient.Guacamole, false, "PreparationInformation")]
+        [InlineData(Ingredient.SourCream, true, "Price")]
+        [InlineData(Ingredient.Guacamole, true, "Price")]
+        [InlineData(Ingredient.Chicken, true, "Calories")]
+        [InlineData(Ingredient.Queso, true, "PreparationInformation")]
+        public void ToppingsNotifiesOfPropertyChangedTest(Ingredient ingredient, bool included, string propertyName)
+        {
+            ClassicNachos cn = new ClassicNachos();
+            Assert.PropertyChanged(cn, propertyName, () => {
+                cn.PossibleToppings[ingredient].Included = included;
+            });
         }
     }
 }

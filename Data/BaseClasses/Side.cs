@@ -38,7 +38,7 @@ namespace BuildYourBowl.Data
         /// <summary>
         /// The price for this side
         /// </summary>
-        public decimal Price
+        public virtual decimal Price
         {
             get
             {

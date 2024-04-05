@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,38 @@ namespace BuildYourBowl.DataTests
     /// </summary>
     public class CornDogBitesMealUnitTests
     {
+        /// <summary>
+        /// Mock side item class for testing
+        /// </summary>
+        internal class MockSide : Side
+        {
+            public event PropertyChangedEventHandler? PropertyChanged;
+
+            public override string Name { get; }
+            public override string Description { get; }
+
+            public override Size Size { get; set; }
+            public override decimal Price { get; }
+            public override uint Calories { get; }
+            public override IEnumerable<string> PreparationInformation { get; }
+        }
+
+        /// <summary>
+        /// Mock side item class for testing
+        /// </summary>
+        internal class MockDrink : Drink
+        {
+            public event PropertyChangedEventHandler? PropertyChanged;
+
+            public override string Name { get; }
+            public override string Description { get; }
+
+            public override Size Size { get; set; }
+            public override decimal Price { get; }
+            public override uint Calories { get; }
+            public override IEnumerable<string> PreparationInformation { get; }
+        }
+
         /// <summary>
         /// Tests to ensure default values are correct
         /// </summary>
@@ -142,6 +175,62 @@ namespace BuildYourBowl.DataTests
         {
             CornDogBitesMeal c = new CornDogBitesMeal();
             Assert.Equal(c.Name, c.ToString());
+        }
+
+        /// <summary>
+        /// Unit test to ensure that changes count changes the properties
+        /// </summary>
+        /// <param name="count">the count of the meal</param>
+        /// <param name="propertyName">the property that should be changed</param>
+        [Theory]
+        [InlineData(5, "KidsCount")]
+        [InlineData(6, "Price")]
+        [InlineData(7, "Calories")]
+        [InlineData(8, "PreparationInformation")]
+        [InlineData(5, "PreparationInformation")]
+        [InlineData(6, "Calories")]
+        [InlineData(7, "Price")]
+        [InlineData(8, "KidsCount")]
+        public void ChangingCountShouldNotifyOfPropertyChangesTest(uint count, string propertyName)
+        {
+            CornDogBitesMeal c = new CornDogBitesMeal();
+            Assert.PropertyChanged(c, propertyName, () => {
+                c.KidsCount = count;
+            });
+        }
+
+        /// <summary>
+        /// Test to make sure changing the side notifies the properties
+        /// </summary>
+        [Fact]
+        public void ChangingSideShouldNotifyOfPropertyChangesTest()
+        {
+            CornDogBitesMeal c = new CornDogBitesMeal();
+            List<string> propertyNames = new List<string> { "SideChoice", "Price", "Calories", "PreparationInformation" };
+
+            foreach (string s in propertyNames)
+            {
+                Assert.PropertyChanged(c, s, () => {
+                    c.SideChoice = new MockSide();
+                });
+            }
+        }
+
+        /// <summary>
+        /// Test to make sure changing the drink notifies the properties
+        /// </summary>
+        [Fact]
+        public void ChangingDrinkShouldNotifyOfPropertyChangesTest()
+        {
+            CornDogBitesMeal c = new CornDogBitesMeal();
+            List<string> propertyNames = new List<string> { "DrinkChoice", "Price", "Calories", "PreparationInformation" };
+
+            foreach (string s in propertyNames)
+            {
+                Assert.PropertyChanged(c, s, () => {
+                    c.DrinkChoice = new MockDrink();
+                });
+            }
         }
     }
 }

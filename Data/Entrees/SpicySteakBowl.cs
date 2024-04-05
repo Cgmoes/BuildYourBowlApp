@@ -56,6 +56,11 @@ namespace BuildYourBowl.Data
             //Pick Salsa Choice
             SalsaType = Salsa.Hot;
             DefaultSalsa = Salsa.Hot;
+
+            foreach (IngredientItem ingredient in PossibleToppings.Values)
+            {
+                ingredient.PropertyChanged += OnToppingsChanged;
+            }
         }
     }
 }
