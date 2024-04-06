@@ -11,11 +11,11 @@
         <TextBlock DockPanel.Dock="Top" Margin="10" FontSize="20" Text="{Binding Number, StringFormat='Order Number: {0}'}"/>
         <TextBlock DockPanel.Dock="Top" Margin="10" FontSize="20" Text="{Binding PlacedAt, StringFormat='Date: {0:d}'}"/>
 
-        <TextBlock DockPanel.Dock="Bottom" Name="TotalGUI" Margin="10" FontSize="20" Text="{Binding Total, StringFormat='Total: {0:C}'}"/>
-        <TextBlock DockPanel.Dock="Bottom" Name="TaxGUI" Margin="10" FontSize="20" Text="{Binding Tax, StringFormat='Tax: {0:C}'}"/>
-        <TextBlock DockPanel.Dock="Bottom" Name="SubtotalGUI" Margin="10" FontSize="20" Text="{Binding Subtotal, StringFormat='Subtotal: {0:C}'}"/>
+        <TextBlock DockPanel.Dock="Bottom" Margin="10" FontSize="20" Text="{Binding Total, StringFormat='Total: {0:C}'}"/>
+        <TextBlock DockPanel.Dock="Bottom" Margin="10" FontSize="20" Text="{Binding Tax, StringFormat='Tax: {0:C}'}"/>
+        <TextBlock DockPanel.Dock="Bottom" Margin="10" FontSize="20" Text="{Binding Subtotal, StringFormat='Subtotal: {0:C}'}"/>
 
-        <ListView Name="ListViewGUI" ItemsSource="{Binding}" HorizontalContentAlignment="Stretch">
+        <ListView ItemsSource="{Binding}" HorizontalContentAlignment="Stretch">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
