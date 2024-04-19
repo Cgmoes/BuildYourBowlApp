@@ -30,3 +30,37 @@ body {
     text-align: center;
     font-size: 2rem;
 }
+
+.menuItemTable {
+    border: 2px solid darkgrey;
+    border-radius: 5px;
+    margin: 10px auto;
+    display: inline-block;
+    width: calc(25% - 20px);
+    box-sizing: border-box;
+    vertical-align: top;
+}
+
+.menuItemHeaders {
+    text-align: left;
+    color: #451400;
+    font-size: 1.5rem;
+    margin-top: 20px;
+}
+
+.ingredientsTable {
+    border: 2px solid darkgrey;
+    border-collapse: collapse;
+    border-radius: 5px;
+    margin: 10px auto;
+    display: inline-block;
+    width: calc(25%-20px);
+    box-sizing: border-box;
+    vertical-align: top;
+}
+
+.ingredientsTable th, .ingredientsTable td{
+    border: 2px solid darkgrey;
+    border-collapse: collapse;
+    margin: 10px auto;
+}

@@ -118,5 +118,21 @@ namespace BuildYourBowl.Data
         {
             _size = Size.Medium;
         }
+
+        /// <summary>
+        /// Override the equals method to compare properties
+        /// </summary>
+        /// <param name="o">The object to compare</param>
+        /// <returns>if the objects are equal</returns>
+        public override bool Equals(object? o)
+        {
+            AguaFresca? a = o as AguaFresca;
+            if (a == null) return false;
+            else if (a.Size.Equals(this.Size) && a.DrinkFlavor.Equals(this.DrinkFlavor) && a.Ice.Equals(this.Ice))
+            {
+                return true;
+            }
+            else return false;
+        }
     }
 }

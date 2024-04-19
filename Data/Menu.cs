@@ -36,48 +36,21 @@ namespace BuildYourBowl.Data
         {
             get 
             {
-                yield return new Fries() { Curly = false, Size = Size.Kids};
-                yield return new Fries() { Curly = true, Size = Size.Kids };
-                yield return new Fries() { Curly = false, Size = Size.Small };
-                yield return new Fries() { Curly = true, Size = Size.Small };
-                yield return new Fries() { Curly = false, Size = Size.Medium };
-                yield return new Fries() { Curly = true, Size = Size.Medium };
-                yield return new Fries() { Curly = false, Size = Size.Large };
-                yield return new Fries() { Curly = true, Size = Size.Large };
+                foreach (Size size in Enum.GetValues(typeof(Size))) 
+                {
+                    yield return new Fries() { Curly = false, Size = size };
+                    yield return new Fries() { Curly = true, Size = size };
 
-                yield return new RefriedBeans() { CheddarCheese = false, Onions = false, Size = Size.Kids};
-                yield return new RefriedBeans() { CheddarCheese = false, Onions = false, Size = Size.Small };
-                yield return new RefriedBeans() { CheddarCheese = false, Onions = false, Size = Size.Medium };
-                yield return new RefriedBeans() { CheddarCheese = false, Onions = false, Size = Size.Large };
-                yield return new RefriedBeans() { CheddarCheese = false, Onions = true, Size = Size.Kids };
-                yield return new RefriedBeans() { CheddarCheese = false, Onions = true, Size = Size.Small };
-                yield return new RefriedBeans() { CheddarCheese = false, Onions = true, Size = Size.Medium };
-                yield return new RefriedBeans() { CheddarCheese = false, Onions = true, Size = Size.Large };
-                yield return new RefriedBeans() { CheddarCheese = true, Onions = false, Size = Size.Kids };
-                yield return new RefriedBeans() { CheddarCheese = true, Onions = false, Size = Size.Small };
-                yield return new RefriedBeans() { CheddarCheese = true, Onions = false, Size = Size.Medium };
-                yield return new RefriedBeans() { CheddarCheese = true, Onions = false, Size = Size.Large };
-                yield return new RefriedBeans() { CheddarCheese = true, Onions = true, Size = Size.Kids };
-                yield return new RefriedBeans() { CheddarCheese = true, Onions = true, Size = Size.Small };
-                yield return new RefriedBeans() { CheddarCheese = true, Onions = true, Size = Size.Medium };
-                yield return new RefriedBeans() { CheddarCheese = true, Onions = true, Size = Size.Large };
+                    yield return new RefriedBeans() { CheddarCheese = false, Onions = false, Size = size };
+                    yield return new RefriedBeans() { CheddarCheese = true, Onions = false, Size = size };
+                    yield return new RefriedBeans() { CheddarCheese = false, Onions = true, Size = size };
+                    yield return new RefriedBeans() { CheddarCheese = true, Onions = true, Size = size };
 
-                yield return new StreetCorn() { CotijaCheese = false, Cilantro = false, Size = Size.Kids};
-                yield return new StreetCorn() { CotijaCheese = false, Cilantro = false, Size = Size.Small };
-                yield return new StreetCorn() { CotijaCheese = false, Cilantro = false, Size = Size.Medium };
-                yield return new StreetCorn() { CotijaCheese = false, Cilantro = false, Size = Size.Large };
-                yield return new StreetCorn() { CotijaCheese = false, Cilantro = true, Size = Size.Kids };
-                yield return new StreetCorn() { CotijaCheese = false, Cilantro = true, Size = Size.Small };
-                yield return new StreetCorn() { CotijaCheese = false, Cilantro = true, Size = Size.Medium };
-                yield return new StreetCorn() { CotijaCheese = false, Cilantro = true, Size = Size.Large };
-                yield return new StreetCorn() { CotijaCheese = true, Cilantro = false, Size = Size.Kids };
-                yield return new StreetCorn() { CotijaCheese = true, Cilantro = false, Size = Size.Small };
-                yield return new StreetCorn() { CotijaCheese = true, Cilantro = false, Size = Size.Medium };
-                yield return new StreetCorn() { CotijaCheese = true, Cilantro = false, Size = Size.Large };
-                yield return new StreetCorn() { CotijaCheese = true, Cilantro = true, Size = Size.Kids };
-                yield return new StreetCorn() { CotijaCheese = true, Cilantro = true, Size = Size.Small };
-                yield return new StreetCorn() { CotijaCheese = true, Cilantro = true, Size = Size.Medium };
-                yield return new StreetCorn() { CotijaCheese = true, Cilantro = true, Size = Size.Large };
+                    yield return new StreetCorn() { CotijaCheese = false, Cilantro = false, Size = size };
+                    yield return new StreetCorn() { CotijaCheese = true, Cilantro = false, Size = size };
+                    yield return new StreetCorn() { CotijaCheese = false, Cilantro = true, Size = size };
+                    yield return new StreetCorn() { CotijaCheese = true, Cilantro = true, Size = size };
+                }
             }
         }
 
@@ -88,48 +61,18 @@ namespace BuildYourBowl.Data
         {
             get 
             {
-                yield return new Milk() { Chocolate = false, Size = Size.Kids};
-                yield return new Milk() { Chocolate = true, Size = Size.Kids };
-                yield return new Milk() { Chocolate = false, Size = Size.Kids };
-                yield return new Milk() { Chocolate = true, Size = Size.Kids };
-                yield return new Milk() { Chocolate = false, Size = Size.Small };
-                yield return new Milk() { Chocolate = true, Size = Size.Small };
-                yield return new Milk() { Chocolate = false, Size = Size.Small };
-                yield return new Milk() { Chocolate = true, Size = Size.Small };
-                yield return new Milk() { Chocolate = false, Size = Size.Medium };
-                yield return new Milk() { Chocolate = true, Size = Size.Medium };
-                yield return new Milk() { Chocolate = false, Size = Size.Medium };
-                yield return new Milk() { Chocolate = true, Size = Size.Medium };
-                yield return new Milk() { Chocolate = false, Size = Size.Large };
-                yield return new Milk() { Chocolate = true, Size = Size.Large };
-                yield return new Milk() { Chocolate = false, Size = Size.Large };
-                yield return new Milk() { Chocolate = true, Size = Size.Large };
+                foreach (Size size in Enum.GetValues(typeof(Size))) 
+                {
+                    yield return new Milk() { Chocolate = false, Size = size };
+                    yield return new Milk() { Chocolate = true, Size = size };
 
-                yield return new Horchata() { Size = Size.Kids };
-                yield return new Horchata() { Size = Size.Small };
-                yield return new Horchata() { Size = Size.Medium };
-                yield return new Horchata() { Size = Size.Large };
+                    yield return new Horchata() { Size = size };
 
-                yield return new AguaFresca() { DrinkFlavor = Flavor.Limonada, Size = Size.Kids };
-                yield return new AguaFresca() { DrinkFlavor = Flavor.Tamarind, Size = Size.Kids };
-                yield return new AguaFresca() { DrinkFlavor = Flavor.Cucumber, Size = Size.Kids };
-                yield return new AguaFresca() { DrinkFlavor = Flavor.Lime, Size = Size.Kids };
-                yield return new AguaFresca() { DrinkFlavor = Flavor.Strawberry, Size = Size.Kids };
-                yield return new AguaFresca() { DrinkFlavor = Flavor.Limonada, Size = Size.Small };
-                yield return new AguaFresca() { DrinkFlavor = Flavor.Tamarind, Size = Size.Small };
-                yield return new AguaFresca() { DrinkFlavor = Flavor.Cucumber, Size = Size.Small };
-                yield return new AguaFresca() { DrinkFlavor = Flavor.Lime, Size = Size.Small };
-                yield return new AguaFresca() { DrinkFlavor = Flavor.Strawberry, Size = Size.Small };
-                yield return new AguaFresca() { DrinkFlavor = Flavor.Limonada, Size = Size.Medium };
-                yield return new AguaFresca() { DrinkFlavor = Flavor.Tamarind, Size = Size.Medium };
-                yield return new AguaFresca() { DrinkFlavor = Flavor.Cucumber, Size = Size.Medium };
-                yield return new AguaFresca() { DrinkFlavor = Flavor.Lime, Size = Size.Medium };
-                yield return new AguaFresca() { DrinkFlavor = Flavor.Strawberry, Size = Size.Medium };
-                yield return new AguaFresca() { DrinkFlavor = Flavor.Limonada, Size = Size.Large };
-                yield return new AguaFresca() { DrinkFlavor = Flavor.Tamarind, Size = Size.Large };
-                yield return new AguaFresca() { DrinkFlavor = Flavor.Cucumber, Size = Size.Large };
-                yield return new AguaFresca() { DrinkFlavor = Flavor.Lime, Size = Size.Large };
-                yield return new AguaFresca() { DrinkFlavor = Flavor.Strawberry, Size = Size.Large };
+                    foreach (Flavor flavor in Enum.GetValues(typeof(Flavor)))
+                    {
+                        yield return new AguaFresca() { DrinkFlavor = flavor, Size = size };
+                    }
+                }
             }
         }
 
@@ -140,44 +83,21 @@ namespace BuildYourBowl.Data
         {
             get
             {
-                yield return new ChickenNuggetsMeal() { SideChoice = new Fries(), DrinkChoice = new Milk() };
-                yield return new ChickenNuggetsMeal() { SideChoice = new Fries(), DrinkChoice = new Horchata() };
-                yield return new ChickenNuggetsMeal() { SideChoice = new Fries(), DrinkChoice = new AguaFresca() };
-                yield return new ChickenNuggetsMeal() { SideChoice = new RefriedBeans(), DrinkChoice = new Milk() };
-                yield return new ChickenNuggetsMeal() { SideChoice = new RefriedBeans(), DrinkChoice = new Horchata() };
-                yield return new ChickenNuggetsMeal() { SideChoice = new RefriedBeans(), DrinkChoice = new AguaFresca() };
-                yield return new ChickenNuggetsMeal() { SideChoice = new StreetCorn(), DrinkChoice = new Milk() };
-                yield return new ChickenNuggetsMeal() { SideChoice = new StreetCorn(), DrinkChoice = new Horchata() };
-                yield return new ChickenNuggetsMeal() { SideChoice = new StreetCorn(), DrinkChoice = new AguaFresca() };
+                List<Side> sides = new List<Side> { new Fries(), new RefriedBeans(), new StreetCorn() };
+                List<Drink> drinks = new List<Drink> { new Milk(), new Horchata(), new AguaFresca() };
 
-                yield return new CornDogBitesMeal() { SideChoice = new Fries(), DrinkChoice = new Milk() };
-                yield return new CornDogBitesMeal() { SideChoice = new Fries(), DrinkChoice = new Horchata() };
-                yield return new CornDogBitesMeal() { SideChoice = new Fries(), DrinkChoice = new AguaFresca() };
-                yield return new CornDogBitesMeal() { SideChoice = new RefriedBeans(), DrinkChoice = new Milk() };
-                yield return new CornDogBitesMeal() { SideChoice = new RefriedBeans(), DrinkChoice = new Horchata() };
-                yield return new CornDogBitesMeal() { SideChoice = new RefriedBeans(), DrinkChoice = new AguaFresca() };
-                yield return new CornDogBitesMeal() { SideChoice = new StreetCorn(), DrinkChoice = new Milk() };
-                yield return new CornDogBitesMeal() { SideChoice = new StreetCorn(), DrinkChoice = new Horchata() };
-                yield return new CornDogBitesMeal() { SideChoice = new StreetCorn(), DrinkChoice = new AguaFresca() };
+                foreach (Side side in sides) 
+                {
+                    foreach (Drink drink in drinks)
+                    {
+                        yield return new ChickenNuggetsMeal() { SideChoice = side, DrinkChoice = drink };
 
-                yield return new SlidersMeal() { AmericanCheese = false, SideChoice = new Fries(), DrinkChoice = new Milk() };
-                yield return new SlidersMeal() { AmericanCheese = false, SideChoice = new Fries(), DrinkChoice = new Horchata() };
-                yield return new SlidersMeal() { AmericanCheese = false, SideChoice = new Fries(), DrinkChoice = new AguaFresca() };
-                yield return new SlidersMeal() { AmericanCheese = false, SideChoice = new RefriedBeans(), DrinkChoice = new Milk() };
-                yield return new SlidersMeal() { AmericanCheese = false, SideChoice = new RefriedBeans(), DrinkChoice = new Horchata() };
-                yield return new SlidersMeal() { AmericanCheese = false, SideChoice = new RefriedBeans(), DrinkChoice = new AguaFresca() };
-                yield return new SlidersMeal() { AmericanCheese = false, SideChoice = new StreetCorn(), DrinkChoice = new Milk() };
-                yield return new SlidersMeal() { AmericanCheese = false, SideChoice = new StreetCorn(), DrinkChoice = new Horchata() };
-                yield return new SlidersMeal() { AmericanCheese = false, SideChoice = new StreetCorn(), DrinkChoice = new AguaFresca() };
-                yield return new SlidersMeal() { AmericanCheese = true, SideChoice = new Fries(), DrinkChoice = new Milk() };
-                yield return new SlidersMeal() { AmericanCheese = true, SideChoice = new Fries(), DrinkChoice = new Horchata() };
-                yield return new SlidersMeal() { AmericanCheese = true, SideChoice = new Fries(), DrinkChoice = new AguaFresca() };
-                yield return new SlidersMeal() { AmericanCheese = true, SideChoice = new RefriedBeans(), DrinkChoice = new Milk() };
-                yield return new SlidersMeal() { AmericanCheese = true, SideChoice = new RefriedBeans(), DrinkChoice = new Horchata() };
-                yield return new SlidersMeal() { AmericanCheese = true, SideChoice = new RefriedBeans(), DrinkChoice = new AguaFresca() };
-                yield return new SlidersMeal() { AmericanCheese = true, SideChoice = new StreetCorn(), DrinkChoice = new Milk() };
-                yield return new SlidersMeal() { AmericanCheese = true, SideChoice = new StreetCorn(), DrinkChoice = new Horchata() };
-                yield return new SlidersMeal() { AmericanCheese = true, SideChoice = new StreetCorn(), DrinkChoice = new AguaFresca() };
+                        yield return new CornDogBitesMeal() { SideChoice = side, DrinkChoice = drink };
+
+                        yield return new SlidersMeal() { AmericanCheese = false, SideChoice = side, DrinkChoice = drink };
+                        yield return new SlidersMeal() { AmericanCheese = true, SideChoice = side, DrinkChoice = drink };
+                    }
+                }
             }
         }
 

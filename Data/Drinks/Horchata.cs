@@ -81,5 +81,21 @@ namespace BuildYourBowl.Data
             _size = Size.Medium;
             _defaultPrice = 3.50m;
         }
+
+        /// <summary>
+        /// Override the equals method to compare properties
+        /// </summary>
+        /// <param name="o">The object to compare</param>
+        /// <returns>if the objects are equal</returns>
+        public override bool Equals(object? o)
+        {
+            Horchata? h = o as Horchata;
+            if (h == null) return false;
+            else if (h.Size.Equals(this.Size)  && h.Ice.Equals(this.Ice))
+            {
+                return true;
+            }
+            else return false;
+        }
     }
 }

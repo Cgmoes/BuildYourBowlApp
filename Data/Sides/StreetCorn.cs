@@ -98,5 +98,21 @@ namespace BuildYourBowl.Data
             _size = Size.Medium;
             _defaultPrice = 4.50m;
         }
+
+        /// <summary>
+        /// Override the equals method to compare properties
+        /// </summary>
+        /// <param name="o">The object to compare</param>
+        /// <returns>if the objects are equal</returns>
+        public override bool Equals(object? o)
+        {
+            StreetCorn? s = o as StreetCorn;
+            if (s == null) return false;
+            else if (s.Size.Equals(this.Size) && s.CotijaCheese.Equals(this.CotijaCheese) && s.Cilantro.Equals(this.Cilantro))
+            {
+                return true;
+            }
+            else return false;
+        }
     }
 }
