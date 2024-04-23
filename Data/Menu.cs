@@ -140,5 +140,45 @@ namespace BuildYourBowl.Data
                 foreach (Salsa s in Enum.GetValues(typeof(Salsa))) yield return s;
             }
         }
+
+        /// <summary>
+        /// Filters the menu items to only show those within a given price range
+        /// </summary>
+        /// <param name="menuItems">the menu items to filter</param>
+        /// <param name="min">minimum price of filter</param>
+        /// <param name="max">maximum price of filter</param>
+        /// <returns>The IEnumerable of filtered items</returns>
+        public static IEnumerable<IMenuItem> FilterByPrice(IEnumerable<IMenuItem> menuItems, decimal? min, decimal? max) 
+        {
+            if (min == 0 && max == 0) return menuItems;
+
+            return menuItems.Where(item => (min == null || item.Price >= min) &&
+                (max == null || item.Price <= max)).OrderBy(item => item.Price);
+        }
+
+        /// <summary>
+        /// Filters the menu items to only show those within a given calorie range
+        /// </summary>
+        /// <param name="menuItems">the menu items to filter</param>
+        /// <param name="min">minimum calories of filter</param>
+        /// <param name="max">maximum calories of filter</param>
+        /// <returns>The IEnumerable of filtered items</returns>
+        public static IEnumerable<IMenuItem> FilterByCalories(IEnumerable<IMenuItem> menuItems, decimal? min, decimal? max)
+        {
+            if (min == 0 && max == 0) return menuItems;
+
+            return menuItems.Where(item => (min == null || item.Calories >= min) &&
+                (max == null || item.Calories <= max)).OrderBy(item => item.Calories);
+        }
+
+        /// <summary>
+        /// Filters the menu items to only show those with the given terms
+        /// </summary>
+        /// <param name="terms">the terms to filter by</param>
+        /// <returns>the IEnumerable of filtered items</returns>
+        public static IEnumerable<IMenuItem> Search(string terms) 
+        {
+            if (terms == null) return FullMenu;
+        }
     }
 }

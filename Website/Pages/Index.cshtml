@@ -7,6 +7,31 @@
 <h1 class="pageHeader">Welcome To Build Your Bowl!</h1>
 <p class="pageDescription">This is NOT Chipotle. Guacamole IS NOT an extra $2 here.</p>
 
+<form id="menu-database">
+    <div id="search">
+        <input type="text" name="SearchTerms" value="@Model.SearchTerms"/>
+        <input type="submit" value="Search">
+    </div>
+
+    <div id="filters">
+        <h4>Price</h4>
+        <div>
+            Between
+            <input name="PriceMin" type="number" min="0" max="100" step=".1" placeholder="min" value="@Model.PriceMin"/>
+            and
+            <input name="PriceMax" type="number" min="0" max="100" step=".1" placeholder="max" value="@Model.PriceMax"/>
+        </div>
+
+        <h4>Calories</h4>
+        <div>
+            Between
+            <input name="CaloriesMin" type="number" min="0" max="1000" step="1" placeholder="min" value="@Model.CaloriesMin"/>
+            and
+            <input name="CaloriesMax" type="number" min="0" max="1000" step="1" placeholder="max" value="@Model.CaloriesMax"/>
+        </div>
+    </div>
+</form>
+
 <h3 class="menuItemHeaders">Entrees</h3>
 @foreach (BuildYourBowl.Data.Entree entree in Model.Entrees)
 {
