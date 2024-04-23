@@ -18,19 +18,18 @@ namespace Website.Pages
             KidsMeals = Menu.KidsMeals;
             Ingredients = Menu.Ingredients;
             Salsas = Menu.Salsas;
+            FullMenu = Menu.FullMenu;
         }
 
         public void OnGet()
         {
-            Entrees = Menu.FilterByPrice(Entrees, PriceMin, PriceMax);
-            Sides = Menu.FilterByPrice(Sides, PriceMin, PriceMax);
-            Drinks = Menu.FilterByPrice(Drinks, PriceMin, PriceMax);
-            KidsMeals = Menu.FilterByPrice(KidsMeals, PriceMin, PriceMax);
+            FullMenu = Menu.FilterByPrice(FullMenu, PriceMin, PriceMax);
+            FullMenu = Menu.FilterByCalories(FullMenu, CaloriesMin, CaloriesMax);
 
-            Entrees = Menu.FilterByCalories(Entrees, CaloriesMin, CaloriesMax);
-            Sides = Menu.FilterByCalories(Sides, CaloriesMin, CaloriesMax);
-            Drinks = Menu.FilterByCalories(Drinks, CaloriesMin, CaloriesMax);
-            KidsMeals = Menu.FilterByCalories(KidsMeals, CaloriesMin, CaloriesMax);
+            Entrees = FullMenu.Where(item => item is Entree);
+            Sides = FullMenu.Where(item => item is Side);
+            Drinks = FullMenu.Where(item => item is Drink);
+            KidsMeals = FullMenu.Where(item => item is KidsMeal);
         }
 
         [BindProperty(SupportsGet = true)]
@@ -48,6 +47,7 @@ namespace Website.Pages
         [BindProperty(SupportsGet = true)]
         public uint CaloriesMax { get; set; }
 
+        public IEnumerable<IMenuItem> FullMenu { get; private set; }
         public IEnumerable<IMenuItem> Entrees { get; private set; }
         public IEnumerable<IMenuItem> Sides { get; private set; }
         public IEnumerable<IMenuItem> Drinks { get; private set; }

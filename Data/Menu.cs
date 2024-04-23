@@ -101,7 +101,7 @@ namespace BuildYourBowl.Data
             }
         }
 
-        private static List<IMenuItem> fullMenu;
+        private static List<IMenuItem> fullMenu = new List<IMenuItem>();
 
         /// <summary>
         /// Returns all the items in the whole menu
@@ -179,6 +179,9 @@ namespace BuildYourBowl.Data
         public static IEnumerable<IMenuItem> Search(string terms) 
         {
             if (terms == null) return FullMenu;
+
+            string[] splitTerms = terms.Split(' ');
+            return FullMenu;
         }
     }
 }
