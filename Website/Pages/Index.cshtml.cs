@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using BuildYourBowl.Data;
+using System.Security.Cryptography;
 
 namespace Website.Pages
 {
@@ -12,24 +13,13 @@ namespace Website.Pages
         public IndexModel(ILogger<IndexModel> logger)
         {
             _logger = logger;
-            Entrees = Menu.Entrees;
-            Sides = Menu.Sides;
-            Drinks = Menu.Drinks;
-            KidsMeals = Menu.KidsMeals;
-            Ingredients = Menu.Ingredients;
-            Salsas = Menu.Salsas;
-            FullMenu = Menu.FullMenu;
         }
 
         public void OnGet()
         {
-            FullMenu = Menu.FilterByPrice(FullMenu, PriceMin, PriceMax);
-            FullMenu = Menu.FilterByCalories(FullMenu, CaloriesMin, CaloriesMax);
-
-            Entrees = FullMenu.Where(item => item is Entree);
-            Sides = FullMenu.Where(item => item is Side);
-            Drinks = FullMenu.Where(item => item is Drink);
-            KidsMeals = FullMenu.Where(item => item is KidsMeal);
+            FilteredMenu = Menu.Search(FullMenu, SearchTerms);
+            FilteredMenu = Menu.FilterByPrice(FilteredMenu, PriceMin, PriceMax);
+            FilteredMenu = Menu.FilterByCalories(FilteredMenu, CaloriesMin, CaloriesMax);
         }
 
         [BindProperty(SupportsGet = true)]
@@ -42,17 +32,24 @@ namespace Website.Pages
         public decimal PriceMax { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public uint CaloriesMin { get; set; }
+        public int CaloriesMin { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public uint CaloriesMax { get; set; }
+        public int CaloriesMax { get; set; }
 
-        public IEnumerable<IMenuItem> FullMenu { get; private set; }
-        public IEnumerable<IMenuItem> Entrees { get; private set; }
-        public IEnumerable<IMenuItem> Sides { get; private set; }
-        public IEnumerable<IMenuItem> Drinks { get; private set; }
-        public IEnumerable<IMenuItem> KidsMeals { get; private set; }
-        public IEnumerable<Ingredient> Ingredients { get; private set; }
-        public IEnumerable<Salsa> Salsas { get; private set; }
+        public IEnumerable<IMenuItem> FullMenu => Menu.FullMenu;
+        public IEnumerable<IMenuItem> FilteredMenu { get; set; } = Menu.FullMenu;
+        public IEnumerable<IMenuItem> Entrees => Menu.Entrees;
+        public IEnumerable<IMenuItem> Sides => Menu.Sides;
+        public IEnumerable<IMenuItem> Drinks => Menu.Drinks;
+        public IEnumerable<IMenuItem> KidsMeals => Menu.KidsMeals;
+        public IEnumerable<Ingredient> Ingredients => Menu.Ingredients;
+        public IEnumerable<Salsa> Salsas => Menu.Salsas;
+
+
+        public IEnumerable<IMenuItem> entreesList => FilteredMenu.OfType<Entree>();
+        public IEnumerable<IMenuItem> sidesList => FilteredMenu.OfType<Side>();
+        public IEnumerable<IMenuItem> drinksList => FilteredMenu.OfType<Drink>();
+        public IEnumerable<IMenuItem> kidsMealsList => FilteredMenu.OfType<KidsMeal>();
     }
 }

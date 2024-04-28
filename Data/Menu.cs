@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -151,9 +152,9 @@ namespace BuildYourBowl.Data
         public static IEnumerable<IMenuItem> FilterByPrice(IEnumerable<IMenuItem> menuItems, decimal? min, decimal? max) 
         {
             if (min == 0 && max == 0) return menuItems;
-
-            return menuItems.Where(item => (min == null || item.Price >= min) &&
-                (max == null || item.Price <= max)).OrderBy(item => item.Price);
+            else if (min == null) return menuItems.Where(item => item.Price <= max);
+            else if (max == null) return menuItems.Where(item => item.Price >= min);
+            else return menuItems.Where(item => item.Price >= min && item.Price <= max);
         }
 
         /// <summary>
@@ -163,12 +164,12 @@ namespace BuildYourBowl.Data
         /// <param name="min">minimum calories of filter</param>
         /// <param name="max">maximum calories of filter</param>
         /// <returns>The IEnumerable of filtered items</returns>
-        public static IEnumerable<IMenuItem> FilterByCalories(IEnumerable<IMenuItem> menuItems, decimal? min, decimal? max)
+        public static IEnumerable<IMenuItem> FilterByCalories(IEnumerable<IMenuItem> menuItems, int? min, int? max)
         {
             if (min == 0 && max == 0) return menuItems;
-
-            return menuItems.Where(item => (min == null || item.Calories >= min) &&
-                (max == null || item.Calories <= max)).OrderBy(item => item.Calories);
+            else if (min == null) return menuItems.Where(item => item.Calories <= max);
+            else if (max == null) return menuItems.Where(item => item.Calories >= min);
+            else return menuItems.Where(item => item.Calories >= min && item.Calories <= max);
         }
 
         /// <summary>
@@ -176,12 +177,35 @@ namespace BuildYourBowl.Data
         /// </summary>
         /// <param name="terms">the terms to filter by</param>
         /// <returns>the IEnumerable of filtered items</returns>
-        public static IEnumerable<IMenuItem> Search(string terms) 
+        public static IEnumerable<IMenuItem> Search(IEnumerable<IMenuItem> menuItems, string? terms)
         {
-            if (terms == null) return FullMenu;
+            if (terms == null) return menuItems;
 
-            string[] splitTerms = terms.Split(' ');
-            return FullMenu;
+            string[] allTerms = terms.Split(' ');
+
+            List<IMenuItem> result = new List<IMenuItem>();
+
+            foreach(IMenuItem item in menuItems) 
+            {
+                bool flag = allTerms.All(term =>
+                    !string.IsNullOrWhiteSpace(term) &&
+                    (item.Name.Contains(term.Trim(), StringComparison.CurrentCultureIgnoreCase) ||
+                    item.PreparationInformation.Any(prep =>
+                    prep.Contains(term.Trim(), StringComparison.CurrentCultureIgnoreCase))));
+
+                if(item is Entree e) 
+                {
+                    foreach(IngredientItem i in e.PossibleToppingsList) 
+                    {
+                        foreach(string s in allTerms) 
+                        {
+                            if (i.Included && i.Name.Contains(s, StringComparison.CurrentCultureIgnoreCase)) flag = true;
+                        }
+                    }
+                }
+                if (flag) result.Add(item);
+            }
+            return result;
         }
     }
 }

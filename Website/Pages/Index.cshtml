@@ -1,4 +1,5 @@
 ﻿@page
+@using BuildYourBowl.Data;
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
@@ -6,6 +7,15 @@
 
 <h1 class="pageHeader">Welcome To Build Your Bowl!</h1>
 <p class="pageDescription">This is NOT Chipotle. Guacamole IS NOT an extra $2 here.</p>
+
+<nav class="navPages">
+    <ul>
+        <li><a href="#entrees">Entrees</a></li>
+        <li><a href="#sides">Sides</a></li>
+        <li><a href="#drinks">Drinks</a></li>
+        <li><a href="#kidsmeals">Kids Meals</a></li>
+    </ul>
+</nav>
 
 <form id="menu-database">
     <div id="search">
@@ -32,8 +42,8 @@
     </div>
 </form>
 
-<h3 class="menuItemHeaders">Entrees</h3>
-@foreach (BuildYourBowl.Data.Entree entree in Model.Entrees)
+<h3 class="menuItemHeaders" id="entrees">Entrees</h3>
+@foreach (Entree entree in Model.entreesList)
 {
     <table class="menuItemTable">
         <tr>
@@ -60,9 +70,9 @@
         <th>Name</th>
         <th>Calories</th>
         <th>Additional Cost (build-your-owns)</th>
-@foreach (BuildYourBowl.Data.Ingredient ingredient in Model.Ingredients)
+@foreach (Ingredient ingredient in Model.Ingredients)
 {
-    BuildYourBowl.Data.IngredientItem item = new BuildYourBowl.Data.IngredientItem(ingredient);
+    IngredientItem item = new IngredientItem(ingredient);
     
         <tr>
             <td>@item.Name</td>
@@ -76,7 +86,7 @@
     <tr>
         <th>Salsa Choice</th>
     </tr>
-@foreach (BuildYourBowl.Data.Salsa salsa in Model.Salsas)
+@foreach (Salsa salsa in Model.Salsas)
 {
     <tr>
         <td>@salsa.ToString()</td>
@@ -84,8 +94,8 @@
 }
 </table>
 
-<h3 class="menuItemHeaders">Sides</h3>
-@foreach (BuildYourBowl.Data.Side side in Model.Sides)
+<h3 class="menuItemHeaders" id="sides">Sides</h3>
+@foreach (Side side in Model.sidesList)
 {
     <table class="menuItemTable">
         <tr>
@@ -104,48 +114,49 @@
             <td>Calories: @side.Calories</td>
         </tr>
     </table>
+    
 }
 
-<h3 class="menuItemHeaders">Drinks</h3>
-@foreach (BuildYourBowl.Data.Drink drink in Model.Drinks)
+<h3 class="menuItemHeaders" id="drinks">Drinks</h3>
+@foreach (Drink drink in Model.drinksList)
 {
-    <table class="menuItemTable">
-        <tr>
-            <th>@drink.Name</th>
-        </tr>
-        @foreach (string prepInfo in drink.PreparationInformation)
-        {
+    @foreach (string prepInfo in drink.PreparationInformation)
+    {
+        <table class="menuItemTable">
+            <tr>
+                <th>@drink.Name</th>
+            </tr>
+            <tr>
+                <td>@prepInfo</td>
+            </tr><tr>
+        <td>Price: $@drink.Price</td>
+            </tr>
+            <tr>
+                <td>Calories: @drink.Calories</td>
+            </tr>
+        </table>
+    }
+        
+}
+
+<h3 class="menuItemHeaders" id="kidsmeals">Kids Meals</h3>
+@foreach (KidsMeal kidsMeal in Model.kidsMealsList)
+{
+    @foreach (string prepInfo in kidsMeal.PreparationInformation)
+    {
+        <table class="menuItemTable">
+            <tr>
+                <th>@kidsMeal.Name</th>
+            </tr>
             <tr>
                 <td>@prepInfo</td>
             </tr>
-        }
-        <tr>
-            <td>Price: $@drink.Price</td>
-        </tr>
-        <tr>
-            <td>Calories: @drink.Calories</td>
-        </tr>
-    </table>
-}
-
-<h3 class="menuItemHeaders">Kids Meals</h3>
-@foreach (BuildYourBowl.Data.KidsMeal kidsMeal in Model.KidsMeals)
-{
-    <table class="menuItemTable">
-        <tr>
-            <th>@kidsMeal.Name</th>
-        </tr>
-        @foreach (string prepInfo in kidsMeal.PreparationInformation)
-        {
             <tr>
-                <td>@prepInfo</td>
+                <td>Price: $@kidsMeal.Price</td>
             </tr>
-        }
-        <tr>
-            <td>Price: $@kidsMeal.Price</td>
-        </tr>
-        <tr>
-            <td>Calories: @kidsMeal.Calories</td>
-        </tr>
-    </table>
+            <tr>
+                <td>Calories: @kidsMeal.Calories</td>
+            </tr>
+        </table>
+    }
 }

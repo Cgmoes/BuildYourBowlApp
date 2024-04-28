@@ -98,5 +98,71 @@ namespace BuildYourBowl.DataTests
                 }
             }
         }
+
+        /// <summary>
+        /// Ensure the filter works correctly
+        /// </summary>
+        /// <param name="min">min price</param>
+        /// <param name="max">max price</param>
+        [Theory]
+        [InlineData(0, 9.99)]
+        [InlineData(4.00, 0)]
+        [InlineData(1.00, 1.00)]
+        [InlineData(2.10, 10.99)]
+        public void FilterByPriceTest(decimal min, decimal max)
+        {
+            IEnumerable<IMenuItem> menuItems = Menu.FilterByPrice(Menu.FullMenu, min, max);
+            
+            foreach(IMenuItem item in menuItems) 
+            {
+                Assert.True(item.Price >= min && item.Price <= max);
+            }
+
+            foreach(IMenuItem item in Menu.FullMenu) 
+            {
+                if (item.Price >= min && item.Price <= max) 
+                {
+                    Assert.Contains(menuItems, menuItem => menuItem.Equals(item));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Ensure the filter works correctly
+        /// </summary>
+        /// <param name="min">min calories</param>
+        /// <param name="max">max calories</param>
+        [Theory]
+        [InlineData(100, 100)]
+        [InlineData(null, 0)]
+        [InlineData(300, 0)]
+        [InlineData(200, 1000)]
+        public void FilterByCalories(int? min, int? max)
+        {
+            IEnumerable<IMenuItem> menuItems = Menu.FilterByCalories(Menu.FullMenu, min, max);
+
+            foreach (IMenuItem item in menuItems) 
+            {
+                Assert.True(item.Calories >= min && item.Calories <= max);
+            }
+
+            foreach (IMenuItem item in Menu.FullMenu)
+            {
+                if (item.Calories >= min && item.Calories <= max) 
+                {
+                    Assert.Contains(menuItems, menuItem => menuItem.Equals(item));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Ensure the filter works correctly
+        /// </summary>
+        [Fact]
+        public void FilterBySearchTest()
+        {
+            IEnumerable<IMenuItem> filteredItems = Menu.Search(Menu.FullMenu, "small refried");
+            Assert.Equal(4, filteredItems.Count());
+        }
     }
 }
