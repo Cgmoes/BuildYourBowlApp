@@ -118,7 +118,7 @@ namespace BuildYourBowl.DataTests
                 Assert.True(item.Price >= min && item.Price <= max);
             }
 
-            foreach(IMenuItem item in Menu.FullMenu) 
+            foreach(IMenuItem item in menuItems) 
             {
                 if (item.Price >= min && item.Price <= max) 
                 {
@@ -146,7 +146,7 @@ namespace BuildYourBowl.DataTests
                 Assert.True(item.Calories >= min && item.Calories <= max);
             }
 
-            foreach (IMenuItem item in Menu.FullMenu)
+            foreach (IMenuItem item in menuItems)
             {
                 if (item.Calories >= min && item.Calories <= max) 
                 {
@@ -163,6 +163,15 @@ namespace BuildYourBowl.DataTests
         {
             IEnumerable<IMenuItem> filteredItems = Menu.Search(Menu.FullMenu, "small refried");
             Assert.Equal(4, filteredItems.Count());
+
+            IEnumerable<IMenuItem> filteredItems2 = Menu.Search(Menu.FullMenu, null);
+            Assert.Equal(filteredItems2.Count(), Menu.FullMenu.Count());
+
+            IEnumerable<IMenuItem> filteredItems3 = Menu.Search(Menu.FullMenu, "large fries test");
+            Assert.Empty(filteredItems3);
+
+            IEnumerable<IMenuItem> filteredItems4 = Menu.Search(Menu.FullMenu, "large fries");
+            Assert.Equal(2, filteredItems4.Count());
         }
     }
 }

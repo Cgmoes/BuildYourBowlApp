@@ -102,8 +102,6 @@ namespace BuildYourBowl.Data
             }
         }
 
-        private static List<IMenuItem> fullMenu = new List<IMenuItem>();
-
         /// <summary>
         /// Returns all the items in the whole menu
         /// </summary>
@@ -111,6 +109,7 @@ namespace BuildYourBowl.Data
         {
             get 
             {
+                List<IMenuItem> fullMenu = new List<IMenuItem>();
                 fullMenu.AddRange(Entrees);
                 fullMenu.AddRange(Sides);
                 fullMenu.AddRange(Drinks);
