@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BuildYourBowl.DataTests
+namespace Website.Pages
 {
     public static class ReviewDatabase
     {

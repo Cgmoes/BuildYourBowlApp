@@ -1,5 +1,6 @@
 ﻿@page
 @model Website.Pages.ReviewsModel
+@using BuildYourBowl.Data
 @{
 	ViewData["Title"] = "Reviews";
 }
@@ -7,6 +8,16 @@
 <h1 class="reviewHeader">Reviews</h1>
 
 <form method="post">
-	<textarea cols=40 rows=5 placeholder="Enter review"></textarea>
+	<textarea cols=60 rows=5 placeholder="Enter review" name="ReviewText" class="reviewTextArea"></textarea>
+	<br/>
 	<input type="submit" value="Submit Review"/>
 </form>
+
+<ul>
+	@foreach(Review r in Model.AllReviews)
+	{
+		<hr class="reviewHr"/>
+		<p class="reviews">@r.ReviewText</p>
+		<p class="reviews">@r.ReviewDate</p>
+	}
+</ul>

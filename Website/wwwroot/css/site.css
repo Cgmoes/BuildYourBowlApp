@@ -65,27 +65,40 @@ body {
     margin: 10px auto;
 }
 
-.navPages {
+.navPages{
     text-align: center;
     margin-bottom: 20px;
 }
 
-    .navPages ul {
-        list-style-type: none;
-        padding: 0;
-    }
+.navPages ul{
+    list-style-type: none;
+    padding: 0;
+}
 
-    .navPages li {
-        display: inline-block;
-        margin-right: 20px;
-    }
+.navPages li{
+    display: inline-block;
+    margin-right: 20px;
+}
 
-    .navPages a {
-        text-decoration: none;
-        color: #333;
-        padding: 5px 10px;
-    }
+.navPages a{
+    text-decoration: none;
+    color: #333;
+    padding: 5px 10px;
+}
 
-        .navPages a:hover {
-            background-color: #f0f0f0;
-        }
+.navPages a:hover {
+    background-color: #f0f0f0;
+}
+
+.reviewHeader{
+    color: black;
+    font-weight:600;
+}
+
+hr.reviewHr {
+    border: 2px solid black;
+}
+
+.reviewTextArea{
+    border: 2px solid black;
+}

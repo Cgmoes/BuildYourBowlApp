@@ -1,5 +1,4 @@
 using BuildYourBowl.Data;
-using BuildYourBowl.DataTests;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -13,6 +12,9 @@ namespace Website.Pages
             ReviewText = null;
         }
 
+        [BindProperty]
         public string ReviewText { get; set; }
+
+        public IEnumerable<Review> AllReviews => ReviewDatabase.Reviews.OrderByDescending(review => review.ReviewDate);
     }
 }
